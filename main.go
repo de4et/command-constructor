@@ -13,6 +13,7 @@ import (
 )
 
 const dburi = "mongodb://localhost:27017"
+const dbname = "command-constructor"
 
 var config = fiber.Config{
 	// Override default error handler
@@ -38,7 +39,7 @@ func main() {
 
 	app := fiber.New(config)
 
-	mongoStore := db.NewMongoUserStore(client)
+	mongoStore := db.NewMongoUserStore(client, dbname)
 	userHandler := api.NewUserHandler(mongoStore)
 
 	apiv1 := app.Group("/api/v1")

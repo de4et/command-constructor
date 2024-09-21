@@ -5,4 +5,4 @@ run: build
 	@./bin/app.exe --port 5000
 
 test: 	
-	@go test -v ./..
+	@go test -v ./...
