@@ -7,17 +7,48 @@ import (
 )
 
 type UserHandler struct {
-	userStore db.UserStore
+	Store *db.Store
 }
 
-func NewUserHandler(userStore db.UserStore) *UserHandler {
+func NewUserHandler(store *db.Store) *UserHandler {
 	return &UserHandler{
-		userStore: userStore,
+		Store: store,
 	}
 }
 
+type AuthParams struct {
+	Name     string
+	Password string
+}
+
+type AuthResponseParams struct {
+	User  *types.User `json:"user"`
+	Token string      `json:"token"`
+}
+
+func (u *UserHandler) HandleAuthenticate(c *fiber.Ctx) error {
+	var params AuthParams
+	if err := c.BodyParser(&params); err != nil {
+		return err
+	}
+
+	user, err := u.Store.User.GetUserByName(c.Context(), params.Name)
+	if err != nil {
+		return err
+	}
+	if err := user.IsValidPassword(params.Password); err != nil {
+		return err
+	}
+
+	resp := AuthResponseParams{
+		User:  user,
+		Token: makeTokenFromUser(user),
+	}
+	return c.JSON(resp)
+}
+
 func (u *UserHandler) HandleGetUsers(c *fiber.Ctx) error {
-	users, err := u.userStore.GetUsers(c.Context())
+	users, err := u.Store.User.GetUsers(c.Context())
 	if err != nil {
 		return err
 	}
@@ -26,7 +57,7 @@ func (u *UserHandler) HandleGetUsers(c *fiber.Ctx) error {
 
 func (u *UserHandler) HandleGetUser(c *fiber.Ctx) error {
 	id := c.Params("id")
-	user, err := u.userStore.GetUserByID(c.Context(), id)
+	user, err := u.Store.User.GetUserByID(c.Context(), id)
 	if err != nil {
 		return err
 	}
@@ -35,7 +66,7 @@ func (u *UserHandler) HandleGetUser(c *fiber.Ctx) error {
 
 func (u *UserHandler) HandleDeleteUser(c *fiber.Ctx) error {
 	id := c.Params("id")
-	err := u.userStore.DeleteUserByID(c.Context(), id)
+	err := u.Store.User.DeleteUserByID(c.Context(), id)
 	if err != nil {
 		return err
 	}
@@ -57,7 +88,7 @@ func (u *UserHandler) HandleCreateUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	insertedUser, err := u.userStore.InsertUser(c.Context(), user)
+	insertedUser, err := u.Store.User.InsertUser(c.Context(), user)
 	if err != nil {
 		return err
 	}

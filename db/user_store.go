@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/de4et/command-constructor/types"
 	"go.mongodb.org/mongo-driver/bson"
@@ -14,6 +15,7 @@ const userColl = "users"
 type UserStore interface {
 	Dropper
 
+	GetUserByName(ctx context.Context, name string) (*types.User, error)
 	GetUserByID(ctx context.Context, id string) (*types.User, error)
 	GetUsers(context.Context) ([]*types.User, error)
 	InsertUser(ctx context.Context, user *types.User) (*types.User, error)
@@ -32,25 +34,56 @@ func NewMongoUserStore(client *mongo.Client, dbname string) *MongoUserStore {
 	}
 }
 
+func (s *MongoUserStore) Search(part string) error {
+	cur, err := s.coll.Find(context.Background(), bson.M{
+		"name": bson.M{
+			"$regex": primitive.Regex{
+				Pattern: part,
+				Options: "i",
+			},
+		},
+	})
+	if err != nil {
+		return err
+	}
+	var users []*types.User
+	if err := cur.All(context.Background(), &users); err != nil {
+		return err
+	}
+	fmt.Println(users)
+	if len(users) > 0 {
+		fmt.Println(users[0])
+	}
+	return nil
+}
+
 func (s *MongoUserStore) DeleteUserByID(ctx context.Context, id string) error {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return err
 	}
 	_, err = s.coll.DeleteOne(ctx, bson.M{"_id": oid})
+
 	if err != nil {
 		return err
 	}
 	return nil
 }
+
 func (s *MongoUserStore) GetUserByID(ctx context.Context, id string) (*types.User, error) {
-	var user types.User
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, err
 	}
+	return s.GetUserByFilter(ctx, bson.M{"_id": oid})
+}
+func (s *MongoUserStore) GetUserByName(ctx context.Context, name string) (*types.User, error) {
+	return s.GetUserByFilter(ctx, bson.M{"name": name})
+}
 
-	if err := s.coll.FindOne(ctx, bson.M{"_id": oid}).Decode(&user); err != nil {
+func (s *MongoUserStore) GetUserByFilter(ctx context.Context, filter bson.M) (*types.User, error) {
+	var user types.User
+	if err := s.coll.FindOne(ctx, filter).Decode(&user); err != nil {
 		return nil, err
 	}
 	return &user, nil
@@ -59,7 +92,7 @@ func (s *MongoUserStore) GetUserByID(ctx context.Context, id string) (*types.Use
 func (s *MongoUserStore) GetUsers(ctx context.Context) ([]*types.User, error) {
 	cur, err := s.coll.Find(ctx, bson.M{})
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
 
 	var users []*types.User

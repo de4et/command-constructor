@@ -1,6 +1,8 @@
 package types
 
 import (
+	"fmt"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -48,4 +50,12 @@ func NewUserFromParams(params CreateUserParams) (*User, error) {
 		EncryptedPassword: string(encpw),
 	}, nil
 
+}
+
+func (u *User) IsValidPassword(password string) error {
+	err := bcrypt.CompareHashAndPassword([]byte(u.EncryptedPassword), []byte(password))
+	if err != nil {
+		return fmt.Errorf("invalid credentials")
+	}
+	return nil
 }
