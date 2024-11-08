@@ -25,13 +25,10 @@ func AddUser(store *db.Store, name string) *types.User {
 	return insertedUser
 }
 
-func AddCommand(store *db.Store, user *types.User, name string, descr string, tParams, cParams []types.CommandParam) *types.CommandTemplate {
-	command := &types.CommandTemplate{
-		UserID:         user.ID,
-		Name:           name,
-		Description:    descr,
-		TemplateParams: tParams,
-		ConstantParams: cParams,
+func AddCommand(store *db.Store, user *types.User, params types.CreateCommandTemplateParams) *types.CommandTemplate {
+	command, err := types.NewCommandTemplateFromParams(user.ID, params)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	insertedCommand, err := store.Command.InsertCommand(context.TODO(), command)

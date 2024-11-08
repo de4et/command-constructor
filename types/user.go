@@ -2,20 +2,31 @@ package types
 
 import (
 	"fmt"
+	"regexp"
 
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )
 
 const (
-	bcryptCost = 12
+	minNameLength = 2
+	maxNameLength = 15
+
+	minPasswordLength = 6
+	maxPasswordLength = 15
+	bcryptCost        = 12
+)
+
+var (
+	nameref     *regexp.Regexp
+	emailref    *regexp.Regexp
+	passwordref *regexp.Regexp
 )
 
 type User struct {
-	ID                primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	Name              string             `bson:"name" json:"name"`
-	Email             string             `bson:"email" json:"email"`
-	EncryptedPassword string             `bson:"encryptedPassword" json:"-"`
+	ID                string `bson:"_id,omitempty" json:"id,omitempty"`
+	Name              string `bson:"name" json:"name"`
+	Email             string `bson:"email" json:"email"`
+	EncryptedPassword string `bson:"encryptedPassword" json:"-"`
 }
 
 type CreateUserParams struct {
@@ -27,14 +38,14 @@ type CreateUserParams struct {
 func (cup CreateUserParams) Validate() map[string]string {
 	errs := make(map[string]string)
 
-	if len(cup.Name) < 2 {
-		errs["name"] = "Length of name is less than 2"
+	if !userNameValidate(cup.Name) {
+		errs["name"] = fmt.Sprintf("name should be [%d,%d]length and contain only (a-z, 0-9)", minNameLength, maxNameLength)
 	}
-	if len(cup.Email) < 2 {
-		errs["email"] = "Length of email is less than 2"
+	if !userEmailValidate(cup.Email) {
+		errs["email"] = "invalid email"
 	}
-	if len(cup.Password) < 2 {
-		errs["email"] = "Length of password is less than 2"
+	if !userPasswordValidate(cup.Password) {
+		errs["password"] = fmt.Sprintf("password should be [%d,%d]length", minPasswordLength, maxPasswordLength)
 	}
 	return errs
 }
@@ -58,4 +69,27 @@ func (u *User) IsValidPassword(password string) error {
 		return fmt.Errorf("invalid credentials")
 	}
 	return nil
+}
+
+func userNameValidate(name string) bool {
+	if len(name) < minNameLength || len(name) > maxNameLength {
+		return false
+	}
+	return nameref.MatchString(name)
+}
+
+func userEmailValidate(email string) bool {
+	return emailref.MatchString(email)
+}
+
+func userPasswordValidate(password string) bool {
+	if len(password) < minPasswordLength || len(password) > maxPasswordLength {
+		return false
+	}
+	return passwordref.MatchString(password)
+}
+func init() {
+	nameref = regexp.MustCompile(`^[a-zA-Z0-9]\w*[a-z0-9A-Z]$`)
+	emailref = regexp.MustCompile(`^[a-z0-9.+-_]{1,}@[a-z0-9.]{1,}\.\w{2,}$`)
+	passwordref = regexp.MustCompile(`^.+$`)
 }

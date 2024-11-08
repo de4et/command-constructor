@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/de4et/command-constructor/types"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func TestConvertStructToBson(t *testing.T) {
@@ -28,6 +29,28 @@ func TestConvertStructToBson(t *testing.T) {
 	if err != nil {
 		t.FailNow()
 	}
-	fmt.Println(b)
+	correct := bson.M{
+		"name":        "scp send files",
+		"description": "send file or directories of files via ssh",
+		"templateparams": []bson.M{
+			{
+				"name":        "-r",
+				"description": "for directories",
+				"value":       "",
+			},
+		},
+		"constantparams": []bson.M{
+			{
+				"name":        "-v",
+				"description": "for debug",
+				"value":       "",
+			},
+		},
+	}
+
+	// this is bs
+	if fmt.Sprint(b) != fmt.Sprint(correct) {
+		t.Errorf("expected to be equal")
+	}
 
 }

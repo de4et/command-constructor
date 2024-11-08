@@ -2,30 +2,37 @@ package api
 
 import (
 	"fmt"
+	"log"
 	"os"
 
+	"github.com/de4et/command-constructor/db"
 	"github.com/de4et/command-constructor/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func JWTAuth(c *fiber.Ctx) error {
-	fmt.Println("-- JWT authenticating")
+func JWTAuth(store *db.Store) func(c *fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		token := c.Cookies("apiToken")
+		if token == "" {
+			return ErrUnauthorized()
+		}
 
-	token, ok := c.GetReqHeaders()["X-Api-Token"]
-	if !ok {
-		return fmt.Errorf("unauthorized")
+		claims, err := parseToken(token)
+		if err != nil {
+			fmt.Println("Failed to parse JWT token:", err)
+			return ErrUnauthorized()
+		}
+
+		user, err := store.User.GetUserByID(c.Context(), claims["id"].(string))
+		if err != nil {
+			log.Println(err)
+			return ErrUnauthorized()
+		}
+
+		c.Context().SetUserValue("user", user)
+		return c.Next()
 	}
-	fmt.Println(token)
-
-	claims, err := parseToken(token[0])
-	if err != nil {
-		fmt.Println("Failed to parse JWT token:", err)
-		return fmt.Errorf("unauthorized")
-	}
-	fmt.Println(claims)
-	return c.JSON("im here") // FIXME
-
 }
 
 func parseToken(tokenStr string) (jwt.MapClaims, error) { // lower case
@@ -35,16 +42,15 @@ func parseToken(tokenStr string) (jwt.MapClaims, error) { // lower case
 		}
 
 		secret := os.Getenv("JWT_SECRET")
-		fmt.Println("NEVER PRINT OUT SECRET", secret)
 		return []byte(secret), nil
 	})
 	if err != nil {
-		return nil, fmt.Errorf("unauthorized")
+		return nil, ErrUnauthorized()
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
-		return nil, fmt.Errorf("unauthorized")
+		return nil, ErrUnauthorized()
 	}
 	return claims, nil
 }

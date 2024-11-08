@@ -34,19 +34,37 @@ func main() {
 
 	user := fixtures.AddUser(store, "michael")
 	fmt.Println(user)
-	command := fixtures.AddCommand(store, user, "scp", "sending files via ssh",
-		[]types.CommandParam{
+
+	var params = types.CreateCommandTemplateParams{
+		Name:        "send files via ssh",
+		Description: "send files by pscp(Putty)",
+		CommandName: "pscp",
+		TemplateParams: []types.CommandParam{
 			{
-				Name:        "-r",
-				Description: "for sending entire directories",
+				// pscp -i "%USERPROFILE%/Documents/prin.ppk" -r ./bin root@77.232.42.104:/root/
+				Name:         "",
+				Description:  "Path: example -- root@127.0.0.1:/root/",
+				Type:         types.TypeNameless,
+				Value:        []string{},
+				DefaultValue: "",
+			},
+			{
+				Name:         "-i",
+				Description:  "private key to send without authentication\nexample -- %USERPROFILE%/Documents/prin.ppk",
+				Type:         types.TypeString,
+				Value:        []string{},
+				DefaultValue: "",
+			},
+			{
+				Name:         "-r",
+				Description:  "for sending directory\nexample -- ./bin",
+				Type:         types.TypeString,
+				Value:        []string{},
+				DefaultValue: "",
 			},
 		},
-		[]types.CommandParam{
-			{
-				Name:        "-v",
-				Description: "for Debug messages",
-			},
-		},
-	)
-	fmt.Println(command)
+		ConstantParams: []types.CommandParam{},
+	}
+	command := fixtures.AddCommand(store, user, params)
+	fmt.Println("commands:", command)
 }

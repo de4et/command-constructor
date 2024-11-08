@@ -1,10 +1,15 @@
 package api
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/de4et/command-constructor/db"
 	"github.com/de4et/command-constructor/types"
 	"github.com/gofiber/fiber/v2"
 )
+
+const tokenCookieName = "apiToken"
 
 type UserHandler struct {
 	Store *db.Store
@@ -17,8 +22,8 @@ func NewUserHandler(store *db.Store) *UserHandler {
 }
 
 type AuthParams struct {
-	Name     string
-	Password string
+	Name     string `json:"name"`
+	Password string `json:"password"`
 }
 
 type AuthResponseParams struct {
@@ -37,61 +42,79 @@ func (u *UserHandler) HandleAuthenticate(c *fiber.Ctx) error {
 		return err
 	}
 	if err := user.IsValidPassword(params.Password); err != nil {
-		return err
+		return ErrInvalidCredentials()
 	}
 
 	resp := AuthResponseParams{
 		User:  user,
 		Token: makeTokenFromUser(user),
 	}
+
+	// set apiToken to cookie
+	c.Cookie(prepareApiTokenCookie(resp.Token))
+
 	return c.JSON(resp)
 }
 
-func (u *UserHandler) HandleGetUsers(c *fiber.Ctx) error {
-	users, err := u.Store.User.GetUsers(c.Context())
-	if err != nil {
-		return err
-	}
-	return c.JSON(users)
-}
-
 func (u *UserHandler) HandleGetUser(c *fiber.Ctx) error {
-	id := c.Params("id")
-	user, err := u.Store.User.GetUserByID(c.Context(), id)
-	if err != nil {
-		return err
+	user := c.Context().Value("user").(*types.User)
+	if user == nil {
+		return fmt.Errorf("no user")
 	}
+
 	return c.JSON(user)
 }
 
 func (u *UserHandler) HandleDeleteUser(c *fiber.Ctx) error {
-	id := c.Params("id")
-	err := u.Store.User.DeleteUserByID(c.Context(), id)
+	user := c.Context().Value("user").(*types.User)
+	if user == nil {
+		return fmt.Errorf("no user")
+	}
+
+	err := u.Store.User.DeleteUserByID(c.Context(), user.ID)
 	if err != nil {
 		return err
 	}
 	return c.JSON("success")
-
 }
 
 func (u *UserHandler) HandleCreateUser(c *fiber.Ctx) error {
 	var params types.CreateUserParams
 	if err := c.BodyParser(&params); err != nil {
-		return err
+		return ErrInvalidData()
 	}
+
 	if errs := params.Validate(); len(errs) != 0 {
-		return c.JSON(errs)
+		return c.Status(http.StatusBadRequest).JSON(errs)
 	}
 
 	user, err := types.NewUserFromParams(params)
 	if err != nil {
-		return err
+		return ErrPrivateInternal()
+	}
+
+	ok, err := u.Store.User.IsExist(c.Context(), user.Name)
+	if err != nil {
+		return ErrPrivateInternal()
+	}
+
+	if ok {
+		return ErrAlreadyExists()
 	}
 
 	insertedUser, err := u.Store.User.InsertUser(c.Context(), user)
 	if err != nil {
-		return err
+		return ErrPrivateInternal()
 	}
-	return c.JSON(insertedUser)
 
+	c.Cookie(prepareApiTokenCookie(makeTokenFromUser(user)))
+
+	return c.JSON(insertedUser)
+}
+
+func prepareApiTokenCookie(token string) *fiber.Cookie {
+	cookie := new(fiber.Cookie)
+	cookie.Name = tokenCookieName
+	cookie.Value = token
+	return cookie
 }

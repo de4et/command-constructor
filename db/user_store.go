@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/de4et/command-constructor/types"
@@ -20,6 +21,7 @@ type UserStore interface {
 	GetUsers(context.Context) ([]*types.User, error)
 	InsertUser(ctx context.Context, user *types.User) (*types.User, error)
 	DeleteUserByID(ctx context.Context, id string) error
+	IsExist(ctx context.Context, name string) (bool, error)
 }
 
 type MongoUserStore struct {
@@ -62,9 +64,8 @@ func (s *MongoUserStore) DeleteUserByID(ctx context.Context, id string) error {
 	if err != nil {
 		return err
 	}
-	_, err = s.coll.DeleteOne(ctx, bson.M{"_id": oid})
 
-	if err != nil {
+	if _, err = s.coll.DeleteOne(ctx, bson.M{"_id": oid}); err != nil {
 		return err
 	}
 	return nil
@@ -95,9 +96,9 @@ func (s *MongoUserStore) GetUsers(ctx context.Context) ([]*types.User, error) {
 		return nil, err
 	}
 
-	var users []*types.User
+	users := []*types.User{}
 	if err := cur.All(ctx, &users); err != nil {
-		return nil, err
+		return []*types.User{}, err
 	}
 
 	return users, nil
@@ -109,8 +110,24 @@ func (s *MongoUserStore) InsertUser(ctx context.Context, user *types.User) (*typ
 		return nil, err
 	}
 
-	user.ID = res.InsertedID.(primitive.ObjectID)
+	user.ID = res.InsertedID.(primitive.ObjectID).Hex()
 	return user, nil
+}
+
+func (s *MongoUserStore) IsExist(ctx context.Context, name string) (bool, error) {
+	u, err := s.GetUserByName(ctx, name)
+	if err != nil {
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			return false, nil
+		}
+		return false, err
+	}
+	if u == nil {
+		return false, nil
+	}
+
+	return true, nil
+
 }
 
 func (s *MongoUserStore) Drop(ctx context.Context) error {

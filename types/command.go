@@ -6,28 +6,39 @@ import (
 
 type CommandParamType int
 
+const (
+	TypeString CommandParamType = iota
+	TypePopupMenu
+	TypeEmpty
+	TypeNameless // without name but with value. Omit Name? or leave it empty?
+)
+
 type CommandParam struct {
-	Name        string `bson:"name" json:"name"`
-	Description string `bson:"description" json:"description"`
-	Value       string `bson:"value" json:"value"`
+	Name         string           `bson:"name" json:"name"`
+	Description  string           `bson:"description" json:"description"`
+	Type         CommandParamType `bson:"type" json:"type"`
+	Value        []string         `bson:"value" json:"value"` // popup meny - array of strings, string - empty array, empty - empty array
+	DefaultValue string           `bson:"defaultValue" json:"defaultValue"`
 }
 
 type CommandTemplate struct {
-	ID          primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	UserID      primitive.ObjectID `bson:"userID" json:"userID"`
-	Name        string             `bson:"name" json:"name"`
-	Description string             `bson:"description" json:"description"`
+	ID          string `bson:"_id,omitempty" json:"id,omitempty"`
+	UserID      string `bson:"userID,omitempty" json:"userID,omitempty"`
+	Name        string `bson:"name" json:"name"`
+	Description string `bson:"description" json:"description"`
 
+	CommandName    string         `bson:"commandName" json:"commandName"`
 	TemplateParams []CommandParam `bson:"templateParams" json:"templateParams"` // popup menu, editable empty string (probably with some default value)
 	ConstantParams []CommandParam `bson:"constantParams" json:"constantParams"`
 }
 
 type CreateCommandTemplateParams struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name        string `json:"name" validate:"required"`
+	Description string `json:"description" validate:"required"`
 
-	TemplateParams []CommandParam `json:"templateParams"`
-	ConstantParams []CommandParam `json:"constantParams"`
+	CommandName    string         `json:"commandName" validate:"required"`
+	TemplateParams []CommandParam `json:"templateParams" validate:"required"`
+	ConstantParams []CommandParam `json:"constantParams" validate:"required"`
 }
 
 type UpdateCommandTemplateParams struct {
@@ -41,9 +52,10 @@ func NewCommandTemplateFromParams(userID string, params CreateCommandTemplatePar
 	}
 
 	return &CommandTemplate{
-		UserID:         ouserID,
+		UserID:         ouserID.Hex(),
 		Name:           params.Name,
 		Description:    params.Description,
+		CommandName:    params.CommandName,
 		TemplateParams: params.TemplateParams,
 		ConstantParams: params.ConstantParams,
 	}, nil
