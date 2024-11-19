@@ -3,7 +3,7 @@ module github.com/de4et/command-constructor
 go 1.21.0
 
 require (
-	github.com/a-h/templ v0.2.778
+	github.com/a-h/templ v0.2.793
 	github.com/go-playground/validator/v10 v10.22.1
 	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/gofiber/template/html/v2 v2.1.2

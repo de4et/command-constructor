@@ -45,7 +45,7 @@ func SetupRoutes(app *fiber.App, store *db.Store) {
 }
 
 func GetEngine() (engine *html.Engine) {
-	engine = html.New("./templates", ".html")
+	engine = html.New("./view", ".html")
 	return
 }
 

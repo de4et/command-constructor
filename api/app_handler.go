@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/de4et/command-constructor/db"
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,7 +18,11 @@ func NewMainHandler(store *db.Store) *MainHandler {
 }
 
 func (u *MainHandler) HandleMain(c *fiber.Ctx) error {
-	return nil
-	// return c.Render("index", nil)
+	// return nil
+	// c.Response().Header.Add("Cache-Control", "private, no-cache, no-store, must-revalidate")
+	// c.Request().Header.Add("Cache-Control", "private, no-cache, no-store, must-revalidate")
+	fmt.Println("im hereerererererer")
+	return c.Render("index", nil)
+
 	// API + Fetch(in js)
 }
