@@ -4,7 +4,7 @@ import "github.com/de4et/command-constructor/types"
 
 
 templ Index(commandTemplates []types.CommandTemplate, user *types.User) {
-	@page("Command-constructor", false) {
+	@page("Command-constructor", user) {
 		<div id="command-templates">
 			for _, v := range commandTemplates {
 				@CommandTemplate(v)

@@ -1,14 +1,16 @@
 package view
 
+import "github.com/de4et/command-constructor/types"
 
-templ page(title string, loggedIn bool) {
+
+templ page(title string, user *types.User) {
 	<!DOCTYPE html>
 	<html>
 		<head>
 			@Head(title)
 		</head>
 		<body>
-			@Header(loggedIn)
+			@Header(user)
 			<div class="main">
 				{ children... }
 			</div>

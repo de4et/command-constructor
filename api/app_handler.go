@@ -24,7 +24,7 @@ func (u *MainHandler) HandleMain(c *fiber.Ctx) error {
 	// c.Request().Header.Add("Cache-Control", "private, no-cache, no-store, must-revalidate")
 
 	commandTemplates := make([]types.CommandTemplate, 0)
-	index := view.Index(commandTemplates)
+	index := view.Index(commandTemplates, nil)
 	handler := adaptor.HTTPHandler(templ.Handler(index))
 	return handler(c)
 

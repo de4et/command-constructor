@@ -1,16 +1,20 @@
 package view
 
-templ Header(loggedIn bool) {
+import "github.com/de4et/command-constructor/types"
+
+templ Header(user *types.User) {
 	<header>
+	// <div id="header">
 	<img src="/static/img/main_ico.jpg" id="img-ico" />
 	@SearchBar()
 
-	if !loggedIn {
+	if user == nil {
 		@Profile("timur")
 	} else {
 		@LogOnto()
 	}
 	
 	// FIXME: Login form + profile?
+	// </div>
 	</header>
 }
