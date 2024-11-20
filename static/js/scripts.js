@@ -1,3 +1,6 @@
+function profileclick() {
+  console.log("clicked");
+}
 async function getData(url) {
   try {
     const response = await fetch(url);

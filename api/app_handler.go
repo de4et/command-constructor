@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/a-h/templ"
 	"github.com/de4et/command-constructor/db"
+	"github.com/de4et/command-constructor/types"
 	"github.com/de4et/command-constructor/view"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
@@ -19,12 +20,12 @@ func NewMainHandler(store *db.Store) *MainHandler {
 }
 
 func (u *MainHandler) HandleMain(c *fiber.Ctx) error {
-	// return nil
 	// c.Response().Header.Add("Cache-Control", "private, no-cache, no-store, must-revalidate")
 	// c.Request().Header.Add("Cache-Control", "private, no-cache, no-store, must-revalidate")
-	// fmt.Println("im hereerererererer")
-	hello := view.Hello("timur")
-	handler := adaptor.HTTPHandler(templ.Handler(hello))
+
+	commandTemplates := make([]types.CommandTemplate, 0)
+	index := view.Index(commandTemplates)
+	handler := adaptor.HTTPHandler(templ.Handler(index))
 	return handler(c)
 
 	// API + Fetch(in js)

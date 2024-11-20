@@ -1,14 +1,18 @@
 package view
 
 
-templ page(title string) {
+templ page(title string, loggedIn bool) {
 	<!DOCTYPE html>
 	<html>
 		<head>
 			@Head(title)
 		</head>
 		<body>
-		@Header()
+			@Header(loggedIn)
+			<div class="main">
+				{ children... }
+			</div>
+			// FIXME: Footer?
 		</body>
 	</html>
 }

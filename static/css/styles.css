@@ -1,3 +1,19 @@
-p {
-	font-size: 30px;
+body {
+margin: 0;
+padding: 0;
+background-color: #f2ecce;
+}
+
+header {
+	font-size: medium;
+	height: 8%;
+	width: 100%;
+	position:fixed;
+	background-color: #f3f0e1;
+}
+
+#img-ico {
+	margin-left: 0.5%;
+	height: 100%;
+	position: relative;
 }

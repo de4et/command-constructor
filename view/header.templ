@@ -1,8 +1,16 @@
 package view
 
-templ Header() {
+templ Header(loggedIn bool) {
 	<header>
-	<img src="/static/img/main_ico.jpg"/>
+	<img src="/static/img/main_ico.jpg" id="img-ico" />
 	@SearchBar()
+
+	if !loggedIn {
+		@Profile("timur")
+	} else {
+		@LogOnto()
+	}
+	
+	// FIXME: Login form + profile?
 	</header>
 }
