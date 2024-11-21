@@ -42,7 +42,7 @@ header {
 
 #profile_menu button:focus {
   background-color: #6e5d34;
-  box-shadow: #F4A460 0 0 0 2px;
+  box-shadow: #73563e 0 0 0 1.6px;
   outline: none;
 }
 
@@ -54,14 +54,16 @@ header {
 
 #search_bar {
 	width: 35%;
+	display:inline-block;
+	position: relative;
 }
 
 #search_input {
 	width: 100%;
 	font-size: 15px;
 	border-color:rgba(27, 31, 35, .1);
-	padding: 0 1.0rem;
-	height: 2.3rem;
+	padding: 0 40px 0 1rem;
+	height: 2.4rem;
 	border-radius: 0.7rem;
 	position: relative;
 }
@@ -69,9 +71,25 @@ header {
 #search_input:focus {
 	box-shadow: #F4A460 0 0 0 1px;
 	outline: none;
-	/* border-color: #A0522D; */
 }
 
 #search_input:focus::placeholder {
   color: transparent;
+}
+
+#search_button {
+	position: absolute;
+	right: 0px;
+	padding: 5px 10px;
+	height: 100%;
+	border:none;
+	background: none;
+	cursor: pointer;
+} 
+
+#search_icon {
+	display: block;
+	height: 100%;
+	filter: opacity(0.5) ;
+	/* color: red; */
 }

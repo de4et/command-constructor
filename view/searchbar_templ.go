@@ -29,7 +29,7 @@ func SearchBar() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"search_bar\"><input id=\"search_input\" placeholder=\"Поиск...\"></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"search_bar\"><input id=\"search_input\" placeholder=\"Поиск\"> <button id=\"search_button\"><img src=\"/static/img/lens.png\" id=\"search_icon\"></button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

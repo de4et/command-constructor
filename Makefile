@@ -3,6 +3,7 @@ build:
 
 run: build
 	templ generate
+	timeout 1
 	@./bin/app.exe --port 5000
 
 test: 	
