@@ -8,8 +8,8 @@ templ Header(user *types.User) {
 	<img src="/static/img/main_ico.jpg" id="img-ico" />
 	@SearchBar()
 
-	if user == nil {
-		@Profile("timur")
+	if user != nil {
+		@Profile(user.Name)
 	} else {
 		@LogOnto()
 	}

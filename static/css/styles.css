@@ -11,34 +11,25 @@ body {
 header {
 	height: 70px;
 	width: 100%;
-	/* position:fixed; */
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	background-color: #f3f0e1;
 }
 
-/* #header {
-	height: 100%;
-	position: relative;
-	margin:0;
-	width: 100%;
-	display: block;
-} */
-
 #profile_menu {
 	padding-right: 1%;
 }
 
 #profile_menu button {
-	background-color: #CD853F;
+	background-color: #ab9357;
 	box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
 	color: #fff;
 	border: 1px solid rgba(27, 31, 35, .15);
 	text-align:center;
 	padding: 6px 16px;
 	font-size: large;
-	border-radius: 6px;
+	border-radius: 19px;
 	box-sizing: border-box;
 	cursor: pointer;
 	display: inline-block;
@@ -46,25 +37,41 @@ header {
 }
 
 #profile_menu button:hover {
-  background-color: #A0522D;
+  background-color: #6e5d34;
 }
 
 #profile_menu button:focus {
-  background-color: #A0522D;
-  box-shadow: #F4A460 0 0 0 3px;
+  background-color: #6e5d34;
+  box-shadow: #F4A460 0 0 0 2px;
   outline: none;
 }
-
-#profile_menu button:disabled {
-	background-color: #94d3a2;
-	border-color: rgba(27, 31, 35, .1);
-	color: rgba(255, 255, 255, .8);
-	cursor: default;
-}
-
 
 #img-ico {
 	margin-left: 0.5%;
 	height: 100%;
 	position: relative;
+}
+
+#search_bar {
+	width: 35%;
+}
+
+#search_input {
+	width: 100%;
+	font-size: 15px;
+	border-color:rgba(27, 31, 35, .1);
+	padding: 0 1.0rem;
+	height: 2.3rem;
+	border-radius: 0.7rem;
+	position: relative;
+}
+
+#search_input:focus {
+	box-shadow: #F4A460 0 0 0 1px;
+	outline: none;
+	/* border-color: #A0522D; */
+}
+
+#search_input:focus::placeholder {
+  color: transparent;
 }
