@@ -46,7 +46,7 @@ header {
   outline: none;
 }
 
-#img-ico {
+#ico_link, #img-ico {
 	margin-left: 0.5%;
 	height: 100%;
 	position: relative;

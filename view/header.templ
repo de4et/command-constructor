@@ -5,7 +5,10 @@ import "github.com/de4et/command-constructor/types"
 templ Header(user *types.User) {
 	<header>
 	// <div id="header">
-	<img src="/static/img/main_ico.jpg" id="img-ico" />
+	<a href="/" id="ico_link">
+		<img src="/static/img/main_ico.jpg" id="img-ico" />
+	</a>
+
 	@SearchBar()
 
 	if user != nil {
