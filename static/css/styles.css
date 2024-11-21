@@ -13,8 +13,7 @@ header {
 	width: 100%;
 	display: flex;
 	align-items: center;
-
-	/* justify-content: space-between; */
+	flex-wrap: wrap;
 	background-color: #f3f0e1;
 	outline:1px solid rgb(189, 191, 159);
 }
@@ -47,25 +46,26 @@ header {
 
 #profile_menu_button button:focus {
   background-color: #6e5d34;
-  box-shadow: #73563e 0 0 0 1.6px;
+  /* box-shadow: #73563e 0 0 0 1.6px; */
   outline: none;
 }
 
-
 #profile_menu {
+	width:auto;
 	position: absolute;
-	right:0;
+	right:1%;
 	display: none;
-	top:100px;
+	top:54px;
 }
 
 #profile_menu_list {
-	width: 100%;
-	position: absolute;
+	border-radius: 8px;
+	width: auto;
+	position: relative;
 	z-index: 999;
 	display: block;
 	list-style: none;
-	background-color: red;
+	background-color: #ab9357;
 }
 
 #profile_menu_list li {
@@ -78,12 +78,14 @@ header {
 	padding: 20px 25px;
 	color: white;
 	text-decoration: none;
-	text-align: center;
+	text-align: right;
 	font-size: 15px;
 }
 
 #profile_menu_list li a:hover {
-	background-color: green;
+	opacity: 0.5;
+	background-color: #73563e;
+	border-radius: 8px;
 }
 
 #ico_link, #img-ico {

@@ -1,5 +1,14 @@
 function profile_click() {
-  document.getElementById("profile_menu").style.display = "block";
+  const target = document.getElementById("profile_menu");
+  const button = document.getElementById("profile_button");
+  if (target.style.display === "none") {
+    target.style.display = "block";
+    button.focus();
+  } else {
+    target.style.display = "none";
+    button.blur();
+  }
+  // document.getElementById("profile_menu").style.display = "block";
   console.log("clicked");
 }
 
@@ -17,4 +26,20 @@ async function getData(url) {
   }
 }
 
+function focusout_profile() {
+  const target = document.getElementById("profile_menu");
+  console.log("ima here");
+  target.style.display = "none";
+}
 // data = await getData()
+
+document.addEventListener("click", function (e) {
+  const target = document.getElementById("profile_menu");
+  if (
+    !document.getElementById("profile_menu").contains(e.target) &&
+    !document.getElementById("profile_button").contains(e.target)
+  ) {
+    console.log("im hereee");
+    target.style.display = "none";
+  }
+});
