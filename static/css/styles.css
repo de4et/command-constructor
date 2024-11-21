@@ -13,15 +13,20 @@ header {
 	width: 100%;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+
+	/* justify-content: space-between; */
 	background-color: #f3f0e1;
+	outline:1px solid rgb(189, 191, 159);
 }
 
-#profile_menu {
+#profile_menu_button {
 	padding-right: 1%;
+	position: relative;
+	margin-left: auto; 
+	margin-right: 0;
 }
 
-#profile_menu button {
+#profile_menu_button button {
 	background-color: #ab9357;
 	box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
 	color: #fff;
@@ -36,14 +41,49 @@ header {
 	font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
 }
 
-#profile_menu button:hover {
+#profile_menu_button button:hover {
   background-color: #6e5d34;
 }
 
-#profile_menu button:focus {
+#profile_menu_button button:focus {
   background-color: #6e5d34;
   box-shadow: #73563e 0 0 0 1.6px;
   outline: none;
+}
+
+
+#profile_menu {
+	position: absolute;
+	right:0;
+	display: none;
+	top:100px;
+}
+
+#profile_menu_list {
+	width: 100%;
+	position: absolute;
+	z-index: 999;
+	display: block;
+	list-style: none;
+	background-color: red;
+}
+
+#profile_menu_list li {
+	display: block;
+	position: relative;
+}
+
+#profile_menu_list li a {
+	display: block;
+	padding: 20px 25px;
+	color: white;
+	text-decoration: none;
+	text-align: center;
+	font-size: 15px;
+}
+
+#profile_menu_list li a:hover {
+	background-color: green;
 }
 
 #ico_link, #img-ico {
@@ -53,6 +93,7 @@ header {
 }
 
 #search_bar {
+	left: 10rem;
 	width: 35%;
 	display:inline-block;
 	position: relative;

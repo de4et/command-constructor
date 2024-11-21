@@ -2,9 +2,23 @@ package view
 
 
 templ Profile(name string) {
-	<div id="profile_menu">
+	<div id="profile_menu_button">
 		<button onclick="profile_click()">
 			{ name }
 		</button>
+	</div>
+	<div disabled="false" id="profile_menu">
+		<ul id="profile_menu_list">
+			<li>
+				<a href="#">
+					<span>Выйти</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span>Выйти 2</span>
+				</a>
+			</li>
+		</ul>
 	</div>
 }

@@ -1,6 +1,8 @@
-function profileclick() {
+function profile_click() {
+  document.getElementById("profile_menu").style.display = "block";
   console.log("clicked");
 }
+
 async function getData(url) {
   try {
     const response = await fetch(url);
