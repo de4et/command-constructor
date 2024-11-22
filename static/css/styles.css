@@ -69,11 +69,13 @@ header {
 }
 
 #profile_menu_list li {
+	border-radius: 8px;
 	display: block;
 	position: relative;
 }
 
 #profile_menu_list li a {
+	border-radius: inherit;
 	display: block;
 	padding: 20px 25px;
 	color: white;
@@ -83,9 +85,9 @@ header {
 }
 
 #profile_menu_list li a:hover {
-	opacity: 0.5;
-	background-color: #73563e;
-	border-radius: 8px;
+	opacity: 0.9;
+	background-color: #6e5d34;
+	box-shadow: 2px 2px 1px #6c5f3d;
 }
 
 #ico_link, #img-ico {
@@ -95,7 +97,7 @@ header {
 }
 
 #search_bar {
-	left: 10rem;
+	left: 3rem;
 	width: 35%;
 	display:inline-block;
 	position: relative;
