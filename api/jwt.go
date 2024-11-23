@@ -70,3 +70,29 @@ func makeTokenFromUser(user *types.User) string {
 	}
 	return tokenStr
 }
+func AuthMiddleware(store *db.Store) func(c *fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		var user *types.User = nil
+		c.Context().SetUserValue("user", user)
+
+		token := c.Cookies("apiToken")
+		if token == "" {
+			return c.Next()
+		}
+
+		claims, err := parseToken(token)
+		if err != nil {
+			fmt.Println("Failed to parse JWT token:", err)
+			return c.Next()
+		}
+
+		user, err = store.User.GetUserByID(c.Context(), claims["id"].(string))
+		if err != nil {
+			log.Println(err)
+			return c.Next()
+		}
+
+		c.Context().SetUserValue("user", user)
+		return c.Next()
+	}
+}

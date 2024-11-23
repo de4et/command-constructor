@@ -24,12 +24,19 @@ func (u *MainHandler) HandleMain(c *fiber.Ctx) error {
 	// c.Request().Header.Add("Cache-Control", "private, no-cache, no-store, must-revalidate")
 
 	commandTemplates := make([]types.CommandTemplate, 0)
-	user := &types.User{
-		Name: "de4et",
-	}
+	// user := &types.User{
+	// 	Name: "de4et",
+	// }
+	var user *types.User
 	index := view.Index(commandTemplates, user)
 	handler := adaptor.HTTPHandler(templ.Handler(index))
 	return handler(c)
 
 	// API + Fetch(in js)
+}
+
+func (u *MainHandler) HandleQuit(c *fiber.Ctx) error {
+	// TODO
+	c.ClearCookie("apiToken")
+	return c.Redirect("/main", 200)
 }

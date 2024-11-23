@@ -39,7 +39,6 @@ document.addEventListener("click", function (e) {
     !document.getElementById("profile_menu").contains(e.target) &&
     !document.getElementById("profile_button").contains(e.target)
   ) {
-    console.log("im hereee");
     target.style.display = "none";
   }
 });

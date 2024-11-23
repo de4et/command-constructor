@@ -1,11 +1,27 @@
 package view
 
 
+
 templ LogOnto() {
 	// FIXME: сделать только две кнопки вход и рег
+	<div id="log_menu">
+		<button onclick="login_click()" id="login_button" class="log_button">
+			Вход
+		</button>
+		<button onclick="reg_click()" id="reg_button" class="log_button">
+			Регистрация
+		</button>
+	</div>
+	<div>
+
+	</div>
 	<div id="login_menu">
-		<button onclick="login_click()">
+		<form id="login_form">
+		<input id="name" name="name" placeholder="Login" />
+		<input id="password" name="password" />
+		<button type="submit" id="login_submit_button">
 			Войти
 		</button>
+		</form>
 	</div>
 }
