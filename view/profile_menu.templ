@@ -9,4 +9,11 @@ templ Profile(name string) {
 			<a href="/quit">Выйти</a>
 		</div>
 	</div>
+	<script>
+		addOpenableBlockListeners(
+			".profile_block",
+			".profile_button",
+			".profile_menu_list"
+		);
+	</script>
 }

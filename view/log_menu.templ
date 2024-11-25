@@ -6,21 +6,37 @@ templ LogOnto() {
 	// FIXME: сделать только две кнопки вход и рег
 	<div class="log_menu">
 		<div class="login_block">
-			<button onclick="login_click()" id="login_button" class="log_button">
+			<button id="login_button" class="log_button">
 				Вход
 			</button>
-			<div class="login_content">
-				<form class="login_form">
-					<input id="name" name="name" placeholder="Login" />
-					<input id="password" name="password" />
-					<button type="submit" class="login_submit_button">
+			<div id="login_content" class="login_content">
+				<form class="login_form" method="post">
+					<input name="name" class="log_input" placeholder="Login" />
+					<input name="password" class="log_input" placeholder="Password"/>
+					<button type="submit" class="log_submit_button">
 						Войти
 					</button>
 				</form>
 			</div>
 		</div>
-		<button onclick="reg_click()" id="reg_button" class="log_button">
-			Регистрация
-		</button>
+		<div class="reg_block">
+			<button id="reg_button" class="log_button">
+				Регистрация
+			</button>
+			<div id="reg_content" class="login_content">
+				<form class="login_form" method="post">
+					<input name="name" class="log_input" placeholder="Login" />
+					<input name="email" class="log_input" placeholder="Email" />
+					<input name="password" class="log_input" placeholder="Password" />
+					<button type="submit" class="log_submit_button">
+						Зарегистрироваться
+					</button>
+				</form>
+			</div>
+		</div>
+		<script>
+			addOpenableBlockListeners(".login_block", "#login_button", "#login_content");
+			addOpenableBlockListeners(".reg_block", "#reg_button", "#reg_content");
+		</script>
 	</div>
 }

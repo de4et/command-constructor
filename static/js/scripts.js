@@ -12,20 +12,20 @@ async function getData(url) {
   }
 }
 
-// data = await getData()
-document.addEventListener("DOMContentLoaded", function (event) {
-  const dropdown = document.querySelector(".profile_block");
-  const dropdownButton = document.querySelector(".profile_button");
-  const dropdownContent = document.querySelector(".profile_menu_list");
+function addOpenableBlockListeners(block, button, content) {
+  const dropdown = document.querySelector(block);
+  const dropdownButton = document.querySelector(button);
+  const dropdownContent = document.querySelector(content);
 
-  // Обработчик для кнопки
   dropdownButton.addEventListener("click", (event) => {
-    event.stopPropagation();
     dropdownContent.classList.toggle("show");
   });
 
-  // Закрытие при клике вне dropdown
-  document.addEventListener("click", () => {
-    dropdownContent.classList.remove("show");
+  document.addEventListener("click", (event) => {
+    if (!dropdown.contains(event.target)) {
+      dropdownContent.classList.remove("show");
+    }
   });
-});
+}
+
+// data = await getData()

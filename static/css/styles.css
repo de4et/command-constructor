@@ -79,12 +79,16 @@ header {
 	margin-right: 0;
 }
 
-.login_block {
+.login_block, .reg_block {
   position: relative;
   display: inline-block;
 }
 
 .login_content {
+	margin-top: 0.1rem;
+	border-color: #e47220;
+	border-width: 0.1rem;
+	border-style: solid;
   visibility: hidden;
   position: absolute;
   background-color: rgb(245, 237, 208);
@@ -94,11 +98,13 @@ header {
   text-align: center;
   border-radius: 0.2rem;
   z-index: 1;
+  padding: 0.1rem 0.1rem;
+  
 }
 
-.login_block:hover .login_content {
+/* .login_block:hover .login_content {
 	visibility: visible;
-}
+} */
 
 .login_content.show {
   visibility: visible; /* Показываем меню при добавлении класса */
@@ -121,16 +127,59 @@ header {
 	border-radius: 10px;
 	box-sizing: border-box;
 	cursor: pointer;
+	margin-left: 5px;
 	display: inline-block;
 	font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
 }
 
-.log_button:hover {
-	background-color: #e47220aa;
+#reg_button {
+	background-color: #e47220;
+}
+
+#reg_button:hover {
+	background-color: #8e3f06;
+}
+
+#login_button {
+	background-color: white;
+	border-style: solid;
+	border-color: #e47220;
+	color:#e47220;
+}
+
+#login_button:hover {
+	background-color: #ffdcc3fa;
 }
 
 .login_form {
+	padding: 5px 10px;
 	display: block;
+}
+
+.log_input {
+  margin-bottom: 0.5rem;
+  padding: 8px 16px;
+  border-radius: 0.5rem;
+	border: none;
+	outline: none;
+}
+
+.log_input:hover {
+	background-color: #f0e5b0;
+}
+
+.log_submit_button {
+  padding: 8px 16px;
+  border-radius: 0.5rem;
+	border: none;
+	cursor: pointer;
+	outline: none;
+	background-color: #e47220;
+	color: white;
+}
+
+.log_submit_button:hover {
+	background-color: #8e3f06;
 }
 
 #header {
