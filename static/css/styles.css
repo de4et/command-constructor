@@ -15,76 +15,6 @@ header {
 	outline:1px solid rgb(189, 191, 159);
 }
 
-#profile_menu_button {
-	height: auto;
-	padding-right: 1%;
-	margin-left: auto; 
-	margin-right: 0;
-}
-
-#profile_menu_button button {
-	background-color: #ab9357;
-	box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-	color: #fff;
-	border: 1px solid rgba(27, 31, 35, .15);
-	text-align:center;
-	padding: 6px 16px;
-	font-size: large;
-	border-radius: 19px;
-	box-sizing: border-box;
-	cursor: pointer;
-	display: inline-block;
-	font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
-}
-
-#profile_menu_button button:hover {
-  background-color: #6e5d34;
-}
-
-#profile_menu_button button:focus {
-  background-color: #6e5d34;
-  /* box-shadow: #73563e 0 0 0 1.6px; */
-  outline: none;
-}
-
-#profile_menu {
-	width:auto;
-	position: absolute;
-	right:1%;
-	display: none;
-	top:54px;
-}
-
-#profile_menu_list {
-	border-radius: 8px;
-	width: auto;
-	z-index: 999;
-	display: block;
-	list-style: none;
-	background-color: #ab9357;
-}
-
-#profile_menu_list li {
-	border-radius: 8px;
-	display: block;
-}
-
-#profile_menu_list li a {
-	border-radius: inherit;
-	display: block;
-	padding: 20px 25px;
-	color: white;
-	text-decoration: none;
-	text-align: right;
-	font-size: 15px;
-}
-
-#profile_menu_list li a:hover {
-	opacity: 0.9;
-	background-color: #6e5d34;
-	box-shadow: 2px 2px 1px #6c5f3d;
-}
-
 #ico_link, #img-ico {
 	margin-left: 0.5%;
 	height: 100%;
@@ -143,11 +73,42 @@ header {
 	/* color: red; */
 }
 
-#log_menu {
+.log_menu {
 	padding-right: 1%;
 	margin-left: auto; 
 	margin-right: 0;
 }
+
+.login_block {
+  position: relative;
+  display: inline-block;
+}
+
+.login_content {
+  visibility: hidden;
+  position: absolute;
+  background-color: rgb(245, 237, 208);
+  min-width: 100px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  right: 0;
+  text-align: center;
+  border-radius: 0.2rem;
+  z-index: 1;
+}
+
+.login_block:hover .login_content {
+	visibility: visible;
+}
+
+.login_content.show {
+  visibility: visible; /* Показываем меню при добавлении класса */
+}
+
+.log_button:focus {
+  background-color: #6e5d34;
+  outline: none;
+}
+
 
 .log_button {
 	background-color: #e47220;
@@ -168,12 +129,7 @@ header {
 	background-color: #e47220aa;
 }
 
-#login_menu {
-	display: block;
-	margin-left: auto;
-}
-
-#login_form {
+.login_form {
 	display: block;
 }
 
@@ -184,52 +140,62 @@ header {
 	align-items: center;
 }
 
-/* Контейнер dropdown */
-.dropdown {
+.profile_block {
+	margin-right: 1%;
   position: relative;
   display: inline-block;
 }
 
-/* Кнопка для dropdown */
-.dropdown-button {
-  background-color: #4CAF50;
-  color: white;
+.profile_button {
+	background-color: #ab9357;
+	box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+	color: #fff;
   padding: 10px 20px;
+  border-radius: 10rem;
   font-size: 16px;
   border: none;
   cursor: pointer;
 }
 
 /* Скрытое содержимое dropdown */
-.dropdown-content {
-  display: none;
+.profile_menu_list {
+  visibility: hidden;
   position: absolute;
-  background-color: white;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: rgb(245, 237, 208);
+  min-width: 100px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   right: 0;
+  text-align: center;
+  border-radius: 0.2rem;
   z-index: 1;
 }
 
-/* Ссылки в dropdown */
-.dropdown-content a {
-  color: black;
+.profile_menu_list a {
+  color: rgb(59, 46, 20);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
+.profile_button:hover {
+  background-color: #6e5d34;
+}
+
+.profile_block:hover .profile_menu_list {
+	visibility: visible;
+}
+
 /* Стиль для ссылок при наведении */
-.dropdown-content a:hover {
-  background-color: #ddd;
+.profile_menu_list a:hover {
+  border-radius: inherit;
+  background-color: #aaa07f;
 }
 
-/* Показываем содержимое при наведении */
-.dropdown:hover .dropdown-content {
-  display: block;
+.profile_menu_list.show {
+  visibility: visible; /* Показываем меню при добавлении класса */
 }
 
-/* Изменяем стиль кнопки при наведении */
-.dropdown:hover .dropdown-button {
-  background-color: #3e8e41;
+.profile_button:focus {
+  background-color: #6e5d34;
+  outline: none;
 }

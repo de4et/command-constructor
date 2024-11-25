@@ -3,18 +3,10 @@ package view
 
 // TODO: add profile icon
 templ Profile(name string) {
-	<div id="profile_menu_button">
-		<button onclick="profile_click()" id="profile_button" >
-			{ name }
-		</button>
-	</div>
-	<div disabled="false" id="profile_menu" style="display: none">
-		<ul id="profile_menu_list">
-			<li>
-				<a href="/quit">
-					<span>Выйти</span>
-				</a>
-			</li>
-		</ul>
+	<div class="profile_block">
+		<button class="profile_button">{ name }</button>
+		<div class="profile_menu_list">
+			<a href="/quit">Выйти</a>
+		</div>
 	</div>
 }

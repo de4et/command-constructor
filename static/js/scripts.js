@@ -1,17 +1,3 @@
-function profile_click() {
-  const target = document.getElementById("profile_menu");
-  const button = document.getElementById("profile_button");
-  if (target.style.display === "none") {
-    target.style.display = "block";
-    button.focus();
-  } else {
-    target.style.display = "none";
-    button.blur();
-  }
-  // document.getElementById("profile_menu").style.display = "block";
-  console.log("clicked");
-}
-
 async function getData(url) {
   try {
     const response = await fetch(url);
@@ -26,19 +12,20 @@ async function getData(url) {
   }
 }
 
-function focusout_profile() {
-  const target = document.getElementById("profile_menu");
-  console.log("ima here");
-  target.style.display = "none";
-}
 // data = await getData()
+document.addEventListener("DOMContentLoaded", function (event) {
+  const dropdown = document.querySelector(".profile_block");
+  const dropdownButton = document.querySelector(".profile_button");
+  const dropdownContent = document.querySelector(".profile_menu_list");
 
-document.addEventListener("click", function (e) {
-  const target = document.getElementById("profile_menu");
-  if (
-    !document.getElementById("profile_menu").contains(e.target) &&
-    !document.getElementById("profile_button").contains(e.target)
-  ) {
-    target.style.display = "none";
-  }
+  // Обработчик для кнопки
+  dropdownButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    dropdownContent.classList.toggle("show");
+  });
+
+  // Закрытие при клике вне dropdown
+  document.addEventListener("click", () => {
+    dropdownContent.classList.remove("show");
+  });
 });
