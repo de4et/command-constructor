@@ -79,7 +79,6 @@ func (u *UserHandler) HandleDeleteUser(c *fiber.Ctx) error {
 }
 
 func (u *UserHandler) HandleCreateUser(c *fiber.Ctx) error {
-	fmt.Println("im here")
 	var params types.CreateUserParams
 	if err := c.BodyParser(&params); err != nil {
 		return ErrInvalidData()

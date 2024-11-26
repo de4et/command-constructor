@@ -129,7 +129,7 @@ header {
 	cursor: pointer;
 	margin-left: 5px;
 	display: inline-block;
-	font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+	/* font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif; */
 }
 
 #reg_button {
