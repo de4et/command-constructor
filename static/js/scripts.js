@@ -28,4 +28,22 @@ function addOpenableBlockListeners(block, button, content) {
   });
 }
 
+document.addEventListener("DOMContentLoaded", (event) => {
+  document.querySelectorAll(".login_form").forEach((logForm) => {
+    logForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(logForm);
+
+      const url = logForm.getAttribute("action");
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+    });
+  });
+});
+
 // data = await getData()

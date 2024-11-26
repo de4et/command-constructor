@@ -10,7 +10,7 @@ templ LogOnto() {
 				Вход
 			</button>
 			<div id="login_content" class="login_content">
-				<form class="login_form" method="post" action="/api/auth">
+				<form class="login_form" id="login_form" method="post" action="/api/auth">
 					<input name="name" class="log_input" placeholder="Логин" />
 					<input name="password" type="password" class="log_input" placeholder="Пароль"/>
 					<button type="submit" class="log_submit_button">
@@ -24,7 +24,7 @@ templ LogOnto() {
 				Регистрация
 			</button>
 			<div id="reg_content" class="login_content">
-				<form class="login_form" method="post" action="/api/reg">
+				<form class="login_form" id="reg_form" method="post" action="/api/reg">
 					<input name="name" class="log_input" placeholder="Логин" />
 					<input name="email" class="log_input" placeholder="Email" />
 					<input name="password" type="password" class="log_input" placeholder="Пароль" />
