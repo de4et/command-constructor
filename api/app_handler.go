@@ -32,5 +32,5 @@ func (u *MainHandler) HandleMain(c *fiber.Ctx) error {
 func (u *MainHandler) HandleQuit(c *fiber.Ctx) error {
 	// TODO
 	c.ClearCookie("apiToken")
-	return c.Redirect("/main", 200)
+	return c.Redirect("/main")
 }
