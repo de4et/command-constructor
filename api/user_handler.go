@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/de4et/command-constructor/db"
 	"github.com/de4et/command-constructor/types"
@@ -32,6 +33,7 @@ type AuthResponseParams struct {
 }
 
 func (u *UserHandler) HandleAuthenticate(c *fiber.Ctx) error {
+	time.Sleep(time.Second * 4)
 	var params AuthParams
 	if err := c.BodyParser(&params); err != nil {
 		return err
@@ -79,6 +81,7 @@ func (u *UserHandler) HandleDeleteUser(c *fiber.Ctx) error {
 }
 
 func (u *UserHandler) HandleCreateUser(c *fiber.Ctx) error {
+	time.Sleep(time.Second * 3)
 	var params types.CreateUserParams
 	if err := c.BodyParser(&params); err != nil {
 		return ErrInvalidData()

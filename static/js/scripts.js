@@ -32,6 +32,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
   document.querySelectorAll(".login_form").forEach((logForm) => {
     logForm.addEventListener("submit", (event) => {
       event.preventDefault();
+
+      const button = logForm.querySelector("button");
+      const loading_animation = logForm.querySelector(".loading-animation");
+
+      button.hidden = true;
+      loading_animation.hidden = false;
+
       const formData = new FormData(logForm);
 
       const url = logForm.getAttribute("action");
@@ -40,7 +47,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
         body: formData,
       })
         .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => {
+          console.log(res.status);
+          if (res.status != 200) {
+            button.hidden = false;
+            loading_animation.hidden = true;
+          }
+          console.log(data);
+          console.log(data.error);
+        })
         .catch((error) => console.log(error));
     });
   });
