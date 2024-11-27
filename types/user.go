@@ -88,6 +88,7 @@ func userPasswordValidate(password string) bool {
 	}
 	return passwordref.MatchString(password)
 }
+
 func init() {
 	nameref = regexp.MustCompile(`^[a-zA-Z0-9]\w*[a-z0-9A-Z]$`)
 	emailref = regexp.MustCompile(`^[a-z0-9.+-_]{1,}@[a-z0-9.]{1,}\.\w{2,}$`)

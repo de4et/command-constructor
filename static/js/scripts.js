@@ -45,18 +45,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
       fetch(url, {
         method: "POST",
         body: formData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(res.status);
-          if (res.status != 200) {
+      }).then((res) => {
+        let status = res.status;
+        res.json().then((data) => {
+          console.log(status);
+          console.log(data);
+          if (status != 200) {
             button.hidden = false;
             loading_animation.hidden = true;
+          } else {
+            window.location.reload();
           }
-          console.log(data);
-          console.log(data.error);
-        })
-        .catch((error) => console.log(error));
+        });
+      });
     });
   });
 });
