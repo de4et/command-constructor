@@ -42,8 +42,8 @@ func SetupRoutes(app *fiber.App, store *db.Store) {
 		StatusCode: http.StatusMovedPermanently,
 	}))
 
-	app.Get("/main", mainHandler.HandleMain, AuthMiddleware(store))
-	app.Get("/quit", mainHandler.HandleQuit, AuthMiddleware(store))
+	app.Get("/main", AuthMiddleware(store), mainHandler.HandleMain)
+	app.Get("/quit", AuthMiddleware(store), mainHandler.HandleQuit)
 }
 
 func GetEngine() (engine *html.Engine) {

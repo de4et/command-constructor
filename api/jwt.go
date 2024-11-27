@@ -72,7 +72,7 @@ func makeTokenFromUser(user *types.User) string {
 }
 func AuthMiddleware(store *db.Store) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
-		var user *types.User
+		var user *types.User = nil
 		c.Context().SetUserValue("user", user)
 
 		token := c.Cookies("apiToken")

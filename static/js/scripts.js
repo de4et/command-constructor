@@ -48,8 +48,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       }).then((res) => {
         let status = res.status;
         res.json().then((data) => {
-          console.log(status);
-          console.log(data);
           if (status != 200) {
             button.hidden = false;
             loading_animation.hidden = true;
