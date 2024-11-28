@@ -83,3 +83,10 @@ func ErrUnauthorized() Error {
 		Err:  "unauthorized",
 	}
 }
+
+func ErrWrongParams() Error {
+	return Error{
+		Code: http.StatusBadRequest,
+		Err:  "wrong params",
+	}
+}

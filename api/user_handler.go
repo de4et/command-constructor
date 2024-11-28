@@ -33,15 +33,15 @@ type AuthResponseParams struct {
 }
 
 func (u *UserHandler) HandleAuthenticate(c *fiber.Ctx) error {
-	time.Sleep(time.Second * 4)
+	time.Sleep(time.Second * 1)
 	var params AuthParams
 	if err := c.BodyParser(&params); err != nil {
-		return err
+		return ErrWrongParams()
 	}
 
 	user, err := u.Store.User.GetUserByName(c.Context(), params.Name)
 	if err != nil {
-		return err
+		return ErrInvalidCredentials()
 	}
 	if err := user.IsValidPassword(params.Password); err != nil {
 		return ErrInvalidCredentials()

@@ -192,7 +192,7 @@ header {
 .profile_block {
 	margin-right: 1%;
   position: relative;
-  display: inline-block;
+  display: inline;
 }
 
 .profile_button {
@@ -200,10 +200,21 @@ header {
 	box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
 	color: #fff;
   padding: 10px 20px;
-  border-radius: 10rem;
+  border-radius: 0.7rem;
   font-size: 16px;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.profile_icon {
+  flex-shrink: 0;
+	margin: auto;
+}
+
+.profile_name {
+	margin-left: 0.25rem;
 }
 
 /* Скрытое содержимое dropdown */
@@ -217,6 +228,9 @@ header {
   text-align: center;
   border-radius: 0.2rem;
   z-index: 1;
+  border-style: solid;
+  border-color: #e6b5a1ab;
+  border-width: 1px;
 }
 
 .profile_menu_list a {
