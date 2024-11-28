@@ -5,10 +5,28 @@ import "github.com/de4et/command-constructor/types"
 
 templ Index(commandTemplates []types.CommandTemplate, user *types.User) {
 	@page("Command-constructor", user) {
-		<div id="command-templates">
-			for _, v := range commandTemplates {
-				@CommandTemplate(v)
-			}
-		</div>
+		if len(commandTemplates) == 0 {
+			<div class="no-command-templates">
+				<div class="no-command-templates-common">
+					<img src="/static/img/nothing-found.png" /> 
+					<span class="nothing-text-common">
+						asdlkfjaslk;dfjaslkdfaskldjflkasjdflkjasd;fklasjdflk;asdkflasjkldjfaskljdfasdfasdfkasklfjaskldjfkasljfkljasdflkjasdlkfjaslkdfjaslkjdflaskjfasl;dfas;ldf;lasdfljasdlfkjaslkdjfaslk;djfasf;ksj;dfljas;dlfjas;ljf
+					</span>
+				</div>
+				if user == nil {
+					<div class="log_advise">
+					</div>
+				} else {
+					<div class="create_advise">
+					</div>
+				}
+			</div>
+		} else {
+			<div id="command-templates">
+				for _, v := range commandTemplates {
+					@CommandTemplate(v)
+				}
+			</div>
+		}
 	}
 }

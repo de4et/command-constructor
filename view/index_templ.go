@@ -43,19 +43,41 @@ func Index(commandTemplates []types.CommandTemplate, user *types.User) templ.Com
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"command-templates\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			for _, v := range commandTemplates {
-				templ_7745c5c3_Err = CommandTemplate(v).Render(ctx, templ_7745c5c3_Buffer)
+			if len(commandTemplates) == 0 {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"no-command-templates\"><div class=\"no-command-templates-common\"><img src=\"/static/img/nothing-found.png\"> <span class=\"nothing-text-common\">asdlkfjaslk;dfjaslkdfaskldjflkasjdflkjasd;fklasjdflk;asdkflasjkldjfaskljdfasdfasdfkasklfjaskldjfkasljfkljasdflkjasdlkfjaslkdfjaslkjdflaskjfasl;dfas;ldf;lasdfljasdlfkjaslkdjfaslk;djfasf;ksj;dfljas;dlfjas;ljf</span></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
+				if user == nil {
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"log_advise\"></div>")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				} else {
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"create_advise\"></div>")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			} else {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"command-templates\">")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				for _, v := range commandTemplates {
+					templ_7745c5c3_Err = CommandTemplate(v).Render(ctx, templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
 			}
 			return templ_7745c5c3_Err
 		})

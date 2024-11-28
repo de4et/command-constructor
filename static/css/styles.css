@@ -324,3 +324,20 @@ header {
   }
 }
 
+.no-command-templates {
+  margin:auto;
+  margin-top: 1rem;
+  max-width: 30rem;
+}
+
+.no-command-templates-common {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.nothing-text-common {
+  word-wrap: break-word;
+  margin-left: 1%;
+  width: 100%;
+}
