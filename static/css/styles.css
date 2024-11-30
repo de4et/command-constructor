@@ -331,13 +331,27 @@ header {
 }
 
 .no-command-templates-common {
-  display: flex;
-  align-items: center;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .nothing-text-common {
   word-wrap: break-word;
-  margin-left: 1%;
+  /* margin-left: 1%; */
   width: 100%;
+  color: #8f7944d9;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.nothing-img {
+  height: 7rem;
+  width: 100%;
+  fill: #c6a960bd;
+}
+
+.advise {
+  text-align: center;
 }
