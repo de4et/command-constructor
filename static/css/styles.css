@@ -151,6 +151,11 @@ header {
 	background-color: #ffdcc3fa;
 }
 
+.log_button.focus {
+  box-shadow: 0 0 26px rgba(244, 90, 90, 0.6);
+}
+
+
 .login_form {
 	padding: 5px 10px;
 	display: block;
@@ -180,6 +185,16 @@ header {
 
 .log_submit_button:hover {
 	background-color: #8e3f06;
+}
+
+.log-error-message-list {
+  text-align: left;
+  list-style: none;
+}
+
+.log-error-message {
+  color: rgb(182, 81, 81);
+  font-size: smaller;
 }
 
 #header {
@@ -352,6 +367,11 @@ header {
   fill: #c6a960bd;
 }
 
-.advise {
-  text-align: center;
+.advise-button {
+  color:rgb(194, 78, 0);
+  cursor: pointer;
+}
+
+.advise-button:hover {
+  text-decoration: underline;
 }

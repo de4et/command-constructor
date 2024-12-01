@@ -39,13 +39,13 @@ func (cup CreateUserParams) Validate() map[string]string {
 	errs := make(map[string]string)
 
 	if !userNameValidate(cup.Name) {
-		errs["name"] = fmt.Sprintf("name should be [%d,%d]length and contain only (a-z, 0-9)", minNameLength, maxNameLength)
+		errs["name"] = fmt.Sprintf("Имя должно быть длиной[%d,%d] и содержать только латинские символы", minNameLength, maxNameLength)
 	}
 	if !userEmailValidate(cup.Email) {
-		errs["email"] = "invalid email"
+		errs["email"] = "Неправильный email"
 	}
 	if !userPasswordValidate(cup.Password) {
-		errs["password"] = fmt.Sprintf("password should be [%d,%d]length", minPasswordLength, maxPasswordLength)
+		errs["password"] = fmt.Sprintf("Пароль должен быть длиной[%d,%d]", minPasswordLength, maxPasswordLength)
 	}
 	return errs
 }
