@@ -27,6 +27,8 @@ function addFocusListeners(button, block) {
   });
 }
 
+openableBlocks = {};
+
 function addOpenableBlockListeners(block, button, content) {
   const dropdown = document.querySelector(block);
   const dropdownButton = document.querySelector(button);
@@ -36,8 +38,17 @@ function addOpenableBlockListeners(block, button, content) {
     dropdownContent.classList.toggle("show");
   });
 
+  if (openableBlocks[block] == undefined) {
+    openableBlocks[block] = [];
+  }
+  openableBlocks[block].push(dropdownButton);
+
   document.addEventListener("click", (event) => {
-    if (!dropdown.contains(event.target)) {
+    console.log();
+    if (
+      !dropdown.contains(event.target) &&
+      !openableBlocks[block].includes(event.target)
+    ) {
       dropdownContent.classList.remove("show");
     }
   });
@@ -54,7 +65,6 @@ function setError(parent, error_message_block, ...error_messages) {
     main_error_el.classList.add(error_block);
     parent.appendChild(main_error_el);
   } else {
-    console.log("hjer");
     main_error_el.innerHTML = "";
   }
 

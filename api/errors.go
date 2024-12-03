@@ -73,7 +73,7 @@ func ErrInvalidData() Error {
 func ErrInvalidCredentials() Error {
 	return Error{
 		Code: http.StatusBadRequest,
-		Err:  "invalid credentials",
+		Err:  "Неправильный логин или пароль",
 	}
 }
 

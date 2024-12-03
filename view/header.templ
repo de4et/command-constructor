@@ -12,6 +12,11 @@ templ Header(user *types.User) {
 	@SearchBar()
 
 	if user != nil {
+		<div class="create-templates">
+		<a class="create-template-button" href="#">
+			Создать
+		</a>
+		</div>
 		@Profile(user.Name)
 	} else {
 		@LogOnto()

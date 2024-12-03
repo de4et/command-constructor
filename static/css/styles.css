@@ -375,3 +375,17 @@ header {
 .advise-button:hover {
   text-decoration: underline;
 }
+
+
+.create-template-button {
+  margin-right: 1rem;
+  color: white;
+  padding: 15px 10px;
+  background-color: #a05016;
+  text-decoration: none;
+  border-radius: 0.7rem;
+}
+
+.create-template-button:hover {
+  background-color: #e47220;
+}
