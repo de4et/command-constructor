@@ -43,6 +43,7 @@ func SetupRoutes(app *fiber.App, store *db.Store) {
 	}))
 
 	app.Get("/main", AuthMiddleware(store), mainHandler.HandleMain)
+	app.Get("/create", AuthMiddleware(store), mainHandler.HandleCreate)
 	app.Get("/quit", AuthMiddleware(store), mainHandler.HandleQuit)
 }
 

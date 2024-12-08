@@ -29,8 +29,14 @@ func (u *MainHandler) HandleMain(c *fiber.Ctx) error {
 	return handler(c)
 }
 
+func (u *MainHandler) HandleCreate(c *fiber.Ctx) error {
+	user, _ := c.Context().Value("user").(*types.User)
+	create := view.CreateTemplate(user)
+	handler := adaptor.HTTPHandler(templ.Handler(create))
+	return handler(c)
+}
+
 func (u *MainHandler) HandleQuit(c *fiber.Ctx) error {
-	// TODO
 	c.ClearCookie("apiToken")
 	return c.Redirect("/main")
 }
