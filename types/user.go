@@ -37,6 +37,7 @@ type CreateUserParams struct {
 
 func (cup CreateUserParams) Validate() map[string]string {
 	errs := make(map[string]string)
+	fmt.Printf("%+v\n", cup)
 
 	if !userNameValidate(cup.Name) {
 		errs["name"] = fmt.Sprintf("Имя должно быть длиной[%d,%d] и содержать только латинские символы", minNameLength, maxNameLength)

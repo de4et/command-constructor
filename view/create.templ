@@ -6,9 +6,24 @@ import "github.com/de4et/command-constructor/types"
 templ CreateTemplate(user *types.User) {
 	@page("Создание шаблона", user) {
 		<div class="create-menu">
-			<h2>
+			<h2 class="body-title">
 				Создание шаблона
 			</h2>
+
+			<form class="create-form">
+			<input placeholder="Название" class="create-form-input form-input-name"/>
+			<textarea placeholder="Описание" class="create-form-input form-input-description"/>
+			<input placeholder="Имя команды" class="create-form-input form-input-commandName"/>
+
+			<div class="create-form-params">
+				<div class="create-form-param">
+				</div>
+			</div>
+
+			<button type="submit" class="create-form-button">
+				Создать
+			</button>
+			</form>
 		</div>
 	}
 }

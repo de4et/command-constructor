@@ -420,5 +420,60 @@ header {
 
 .create-menu {
   padding: 3rem;
+}
+
+.body-title {
   color: #59524f;
+}
+
+.create-form-input {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  font-size: medium;
+  border: none;
+  border-radius: 0.7rem;
+}
+
+.create-form-input:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.create-form-input:focus::placeholder {
+  color: transparent;
+}
+
+.create-form-button {
+  color: white;
+  padding: 10px 15px;
+  background-color: #e47220;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  border: 0 solid;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+  outline: 1px solid;
+  outline-color: rgba(241, 52, 52, 0.5);
+  outline-offset: 0px;
+  text-shadow: none;
+  font-size: medium;
+}
+
+.create-form-button:hover {
+  box-shadow: inset 0 0 20px rgba(107, 12, 12, 0.5), 0 0 20px rgba(255, 255, 255, .2);
+  outline-color: rgba(153, 79, 79, 0);
+  text-shadow: 1px 1px 2px #e7ae44; 
+}
+
+.create-form-button:focus {
+  box-shadow: inset 0 0 20px rgba(107, 12, 12, 0.5), 0 0 20px rgba(255, 255, 255, .2);
+  background-color: #ad4e0a;
+}
+
+.create-form-params {
+  display: flex;
+}
+
+.create-form * {
+  margin-top: 1rem;
 }
