@@ -43,7 +43,7 @@ func CreateTemplate(user *types.User) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"create-menu\"><h2 class=\"body-title\">Создание шаблона</h2><form class=\"create-form\"><input placeholder=\"Название\" class=\"create-form-input form-input-name\"> <textarea placeholder=\"Описание\" class=\"create-form-textarea form-input-name\"></textarea> <input placeholder=\"Имя команды\" class=\"create-form-input form-input-name\"><div class=\"create-form-params\"><div class=\"create-form-param\"></div></div><button type=\"submit\" class=\"create-form-button\">Создать</button></form></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"create-menu\"><h2 class=\"body-title\">Создание шаблона</h2><div class=\"preview-command\"><span class=\"preview-command-text\">pscp -i</span></div><form class=\"create-form\"><input placeholder=\"Название\" class=\"create-form-input form-input-name\"> <textarea placeholder=\"Описание\" class=\"create-form-input form-input-description\"></textarea> <input placeholder=\"Имя команды\" class=\"create-form-input form-input-commandName\"><div class=\"create-form-params\"><div class=\"create-form-param\"></div></div><button type=\"submit\" class=\"create-form-button\">Создать</button></form></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

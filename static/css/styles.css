@@ -477,3 +477,16 @@ header {
 .create-form * {
   margin-top: 1rem;
 }
+
+.preview-command {
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: grey;
+  border-radius: 0.5rem;
+}
+
+.preview-command-text {
+  color: rgb(255, 173, 72);
+  font-weight: bold;
+}

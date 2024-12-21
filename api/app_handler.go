@@ -31,6 +31,11 @@ func (u *MainHandler) HandleMain(c *fiber.Ctx) error {
 
 func (u *MainHandler) HandleCreate(c *fiber.Ctx) error {
 	user, _ := c.Context().Value("user").(*types.User)
+
+	if user == nil {
+		return c.Redirect("/main")
+	}
+
 	create := view.CreateTemplate(user)
 	handler := adaptor.HTTPHandler(templ.Handler(create))
 	return handler(c)

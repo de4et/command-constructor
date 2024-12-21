@@ -51,5 +51,3 @@ func GetEngine() (engine *html.Engine) {
 	engine = html.New("./view", ".html")
 	return
 }
-
-// TODO: redirect everything to /main?noauth=True ???
