@@ -11,7 +11,39 @@ templ CreateTemplate(user *types.User) {
 			</h2>
 
 			<div class="preview-command">
-				<span class="preview-command-text">pscp -i</span>
+				<span class="preview-command-text preview-command-commandname">pscp</span>
+
+				<div data-paramtype="constant" class="preview-command-commandparam">
+					<span class="preview-command-text preview-commandparam-empty">-i</span> 
+				</div>
+
+				<div data-paramtype="template" class="preview-command-commandparam">
+					<div class="preview-command-popup">
+					<select name="preview-command-popup" class="preview-command-popup-select">
+						<option value="Youtube">Youtube</option>
+						<option value="Twitter">Twitter</option>
+						<option value="Google">Google</option>
+					</select>
+					<script>
+						document.querySelector(".preview-command-popup-select").selectedIndex=1;
+					</script>
+						
+					</div>
+				</div>
+
+				<div data-paramtype="template" class="preview-command-commandparam">
+					<input class="preview-command-nameless" value="root@127.0.0.1"/>
+				</div>
+
+				<div data-paramtype="template" class="preview-command-commandparam">
+					<span class="preview-command-string-name">-r</span>
+					<input class="preview-command-string-input" value="~/"/>
+				</div>
+
+				<div data-paramtype="template" class="preview-command-commandparam">
+					<span class="preview-command-string-name">-r</span>
+					<input class="preview-command-string-input" value="~/"/>
+				</div>
 			</div>
 
 			<form class="create-form">

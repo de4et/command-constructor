@@ -479,14 +479,30 @@ header {
 }
 
 .preview-command {
-  padding: 1rem;
+  padding: 1.1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  background-color: grey;
+  background-color: rgba(167, 167, 167, 0.637);
   border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.preview-command * {
+  font-size: 1.1rem;
+}
+
+.preview-command input {
+  border-radius: 0.5rem;
+  padding: 0.1rem;
+}
+
+.preview-command-commandparam {
+  margin-left: 0.3rem;
+  background-color: rgba(170, 170, 170, 0.651);
 }
 
 .preview-command-text {
-  color: rgb(255, 173, 72);
+  color: rgba(211, 120, 9, 0.877);
   font-weight: bold;
 }

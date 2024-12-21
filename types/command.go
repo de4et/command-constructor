@@ -11,7 +11,6 @@ const (
 	TypePopupMenu
 	TypeEmpty
 	TypeNameless // without name but with value. Omit Name? or leave it empty?
-	TypeCheckbox
 )
 
 type CommandParam struct {
