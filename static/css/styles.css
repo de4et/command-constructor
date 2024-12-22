@@ -516,8 +516,8 @@ header {
       content: "";
       position: absolute;
       top: 50%; /* Центрируем линию по вертикали */
-      left: 0;
-      width: 100%;
+      left: -1.5%;
+      width: 103%;
       height: 2px; /* Толщина линии */
       background-color: rgb(94, 80, 49); /* Цвет линии */
       transform: translateY(-50%); 
