@@ -498,11 +498,27 @@ header {
 }
 
 .preview-command-commandparam {
-  margin-left: 0.3rem;
+  margin-left: 0.5rem;
   background-color: rgba(170, 170, 170, 0.651);
 }
 
 .preview-command-text {
   color: rgba(211, 120, 9, 0.877);
   font-weight: bold;
+}
+
+.param-excluded{
+  position: relative;
+  display: inline-block; 
+}
+
+.param-excluded::before {
+      content: "";
+      position: absolute;
+      top: 50%; /* Центрируем линию по вертикали */
+      left: 0;
+      width: 100%;
+      height: 2px; /* Толщина линии */
+      background-color: rgb(94, 80, 49); /* Цвет линии */
+      transform: translateY(-50%); 
 }
