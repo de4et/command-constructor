@@ -1,4 +1,5 @@
 build: 
+	@templ generate
 	@go build -o bin/app.exe main.go
 
 run: build

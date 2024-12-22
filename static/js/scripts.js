@@ -149,4 +149,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
-// data = await getData()
+function addArgumentClick(event) {
+  event.preventDefault();
+
+  addNewArgumentBlock();
+}
+
+function addNewArgumentBlock() {
+  console.log("creating argument block");
+  var arguments_block = document.querySelector(".create-form-arguments");
+  var button = arguments_block.querySelector(".add-argument-button");
+
+  var template = document.querySelector("#argument-template");
+  const item = template.content.cloneNode(true);
+  button.before(item);
+}

@@ -10,7 +10,7 @@ templ CreateTemplate(user *types.User) {
 				Создание шаблона
 			</h2>
 
-			<div class="preview-command">
+			<div class="preview-command"> // FIXME: Example(to delete)
 				<span class="preview-command-text preview-command-commandname">pscp</span>
 
 				<div data-paramtype="constant" class="preview-command-commandparam">
@@ -47,18 +47,51 @@ templ CreateTemplate(user *types.User) {
 			</div>
 
 			<form class="create-form">
-			<input placeholder="Название" class="create-form-input form-input-name"/>
-			<textarea placeholder="Описание" class="create-form-input form-input-description"/>
-			<input placeholder="Имя команды" class="create-form-input form-input-commandName"/>
+				<input placeholder="Название" class="create-form-input form-input-name"/>
+				<textarea placeholder="Описание" class="create-form-input form-input-description"/>
+				<input placeholder="Имя команды" class="create-form-input form-input-commandName"/>
 
-			<div class="create-form-params">
-				<div class="create-form-param">
+				<h4 class="arguments-title">Аргументы</h4>
+				<div class="create-form-arguments">
+					<button class="add-argument-button" onclick="addArgumentClick(event)"> 
+						<svg fill="white" class="add-argument-icon" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="white" viewBox="0 0 45.402 45.402" xml:space="preserve">
+						<g>
+							<path d="M41.267,18.557H26.832V4.134C26.832,1.851,24.99,0,22.707,0c-2.283,0-4.124,1.851-4.124,4.135v14.432H4.141   c-2.283,0-4.139,1.851-4.138,4.135c-0.001,1.141,0.46,2.187,1.207,2.934c0.748,0.749,1.78,1.222,2.92,1.222h14.453V41.27   c0,1.142,0.453,2.176,1.201,2.922c0.748,0.748,1.777,1.211,2.919,1.211c2.282,0,4.129-1.851,4.129-4.133V26.857h14.435   c2.283,0,4.134-1.867,4.133-4.15C45.399,20.425,43.548,18.557,41.267,18.557z"/>
+						</g>
+						</svg>
+					</button>
 				</div>
-			</div>
 
-			<button type="submit" class="create-form-button">
-				Создать
-			</button>
+				<template id="argument-template">
+					<div class="argument-edit"> 
+						<span>Тип: </span>
+						<select>
+							<option>
+								Имя - значение
+							</option>
+							<option>
+								Без значения(только имя)
+							</option>
+							<option>
+								Без имени(только значение)
+							</option>
+							<option>
+								Выпадающее меню
+							</option>
+						</select>
+						<label class="isconstant-label"><input type="checkbox" name="isconstant" />Неизменяемый</label>
+					</div>
+				</template>
+
+				<template id="common-argument">
+					<input name="argument-name" class="argument-name-input" placeholder="Имя*" />
+					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
+					<input name="argument-default" class="argument-description-textarea" placeholder="Значение по умолчанию" />
+				</template>
+
+				<button type="submit" class="create-form-button">
+					Создать
+				</button>
 			</form>
 		</div>
 	}
