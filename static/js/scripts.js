@@ -44,7 +44,6 @@ function addOpenableBlockListeners(block, button, content) {
   openableBlocks[block].push(dropdownButton);
 
   document.addEventListener("click", (event) => {
-    console.log();
     if (
       !dropdown.contains(event.target) &&
       !openableBlocks[block].includes(event.target)
@@ -148,6 +147,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
   });
 });
+
+function selectArgumentTypeChange(event) {
+  console.log(event);
+  const selectValue = event.target.value; // id of template
+  console.log(selectValue);
+  var template = document.getElementById(selectValue);
+  const item = template.content.cloneNode(true);
+  var argument_block = event.target.closest(".argument-edit");
+  lastChild = argument_block.querySelector(".isconstant-label");
+
+  while (lastChild.nextSibling) {
+    argument_block.removeChild(lastChild.nextSibling);
+  }
+  lastChild.after(item);
+}
 
 function addArgumentClick(event) {
   event.preventDefault();

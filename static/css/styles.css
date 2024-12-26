@@ -573,3 +573,7 @@ header {
 .isconstant-label input {
   margin-right: 0.2rem;
 }
+
+.argument-edit > * {
+  display: block;
+}
