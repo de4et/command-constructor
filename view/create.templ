@@ -81,14 +81,19 @@ templ CreateTemplate(user *types.User) {
 								</option>
 							</select>
 						</div>
-						<label class="isconstant-label"><input type="checkbox" class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
 					</div>
 				</template>
 
 				<template id="common-argument">
+					<label class="isconstant-label"><input type="checkbox" class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
 					<input name="argument-name" class="argument-name-input argument-input" placeholder="Имя*" />
 					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
 					<input name="argument-default-value" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
+				</template>
+
+				<template id="withoutvalue-argument">
+					<input name="argument-name" class="argument-name-input argument-input" placeholder="Имя*" />
+					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
 				</template>
 
 				<button type="submit" class="create-form-button">

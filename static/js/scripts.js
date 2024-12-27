@@ -155,7 +155,7 @@ function selectArgumentTypeChange(event) {
   var template = document.getElementById(selectValue);
   const item = template.content.cloneNode(true);
   var argument_block = event.target.closest(".argument-edit");
-  lastChild = argument_block.querySelector(".isconstant-label");
+  lastChild = argument_block.querySelector(".argument-type");
 
   while (lastChild.nextSibling) {
     argument_block.removeChild(lastChild.nextSibling);
