@@ -621,7 +621,3 @@ header {
 .select-argument-type-block:hover::after {
   color: #f39c12;
 }
-
-option:hover {
-  background-color: red;
-}

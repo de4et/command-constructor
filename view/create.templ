@@ -111,9 +111,10 @@ templ CreateTemplate(user *types.User) {
 					<input name="argument-default-value" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
 					<div class="dropdown-values">
 						<button class="dropdown-add-value-button">
+						+
 						</button>
 					</div>
-					<template>
+					<template id="argument-dropdown-value-template">
 						<div class="dropdown-value">
 							<input class="dropdown-value-input" />
 							<button class="dropdown-value-delete">
