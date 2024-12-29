@@ -66,20 +66,23 @@ templ CreateTemplate(user *types.User) {
 					<div class="argument-edit"> 
 						<div class="argument-type">
 							<span>Тип: </span>
-							<select onchange="selectArgumentTypeChange(event)" >
-								<option value="common-argument">
-									Имя - значение
-								</option>
-								<option value="withoutvalue-argument">
-									Без значения(только имя)
-								</option>
-								<option value="nameless-argument">
-									Без имени(только значение)
-								</option>
-								<option value="dropdown-argument">
-									Выпадающее меню
-								</option>
-							</select>
+
+							<div class="select-argument-type-block">
+								<select class="select-argument-type" onchange="selectArgumentTypeChange(event)" >
+									<option value="common-argument">
+										Имя - значение
+									</option>
+									<option value="withoutvalue-argument">
+										Без значения(только имя)
+									</option>
+									<option value="nameless-argument">
+										Без имени(только значение)
+									</option>
+									<option value="dropdown-argument">
+										Выпадающее меню
+									</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</template>
@@ -94,6 +97,29 @@ templ CreateTemplate(user *types.User) {
 				<template id="withoutvalue-argument">
 					<input name="argument-name" class="argument-name-input argument-input" placeholder="Имя*" />
 					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
+				</template>
+
+				<template id="nameless-argument">
+					<label class="isconstant-label"><input type="checkbox" class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
+					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
+					<input name="argument-default-value" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
+				</template>
+
+				<template id="dropdown-argument">
+					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
+					// TODO: add values, default-argument(deside)
+					<input name="argument-default-value" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
+					<div class="dropdown-values">
+						<button class="dropdown-add-value-button">
+						</button>
+					</div>
+					<template>
+						<div class="dropdown-value">
+							<input class="dropdown-value-input" />
+							<button class="dropdown-value-delete">
+							</button>
+						</div>
+					</template>
 				</template>
 
 				<button type="submit" class="create-form-button">
