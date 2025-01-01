@@ -46,7 +46,6 @@ func TestCommandUpdate(t *testing.T) {
 				DefaultValue: "",
 			},
 		},
-		ConstantParams: []CommandParam{},
 	}
 	user := fixtures.AddUser(&ta.store, "Timur")
 	token := makeTokenFromUser(user)

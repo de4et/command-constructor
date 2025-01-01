@@ -18,12 +18,6 @@ func TestConvertStructToBson(t *testing.T) {
 				Description: "for directories",
 			},
 		},
-		ConstantParams: []types.CommandParam{
-			{
-				Name:        "-v",
-				Description: "for debug",
-			},
-		},
 	}
 	b, err := ConvertStructToBson(s)
 	if err != nil {

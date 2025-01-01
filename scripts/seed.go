@@ -63,7 +63,6 @@ func main() {
 				DefaultValue: "",
 			},
 		},
-		ConstantParams: []types.CommandParam{},
 	}
 	command := fixtures.AddCommand(store, user, params)
 	fmt.Println("commands:", command)

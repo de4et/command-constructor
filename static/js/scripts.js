@@ -149,9 +149,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 function selectArgumentTypeChange(event) {
-  console.log(event);
+  // console.log(event);
   const selectValue = event.target.value; // id of template
-  console.log(selectValue);
+  // console.log(selectValue);
   var template = document.getElementById(selectValue);
   const item = template.content.cloneNode(true);
   var argument_block = event.target.closest(".argument-edit");
@@ -166,15 +166,160 @@ function selectArgumentTypeChange(event) {
 function addArgumentClick(event) {
   event.preventDefault();
 
-  addNewArgumentBlock();
+  var argument_id = generateArgumentID();
+
+  addNewArgumentBlock(argument_id);
+  updatePreviewCommand();
 }
 
-function addNewArgumentBlock() {
-  console.log("creating argument block");
+var lastArgumentID = 0;
+
+function addNewArgumentBlock(argument_id) {
+  // console.log("creating argument block");
   var arguments_block = document.querySelector(".create-form-arguments");
   var button = arguments_block.querySelector(".add-argument-button");
 
   var template = document.querySelector("#argument-template");
-  const item = template.content.cloneNode(true);
+  var item = template.content.cloneNode(true);
+  item.querySelector("div").id = "argument-" + argument_id;
   button.before(item);
+}
+
+function generateArgumentID() {
+  return lastArgumentID++;
+}
+
+function updatePreviewCommand() {
+  var previewEl = document.querySelector(".preview-command");
+
+  const commandName = document.getElementsByName("commandName")[0].value;
+  const argumentsBlocks = document
+    .querySelector(".create-form-arguments")
+    .querySelectorAll(".argument-edit");
+
+  previewCommandNameEl = previewEl.getElementsByClassName(
+    "preview-command-commandname"
+  )[0];
+  previewCommandNameEl.textContent = commandName;
+
+  while (previewCommandNameEl.nextSibling) {
+    if (previewCommandNameEl.nextSibling.tagName == "TEMPLATE") break;
+    previewEl.removeChild(previewCommandNameEl.nextSibling);
+  }
+
+  args = argumentsToMap();
+  console.log(args);
+  args.forEach((arg) => {
+    elem = getPreviewParamElem(arg);
+    previewEl.appendChild(elem);
+  });
+}
+
+function getPreviewParamElem(arg) {
+  var paramTemplate = document.querySelector("#preview-param-template");
+  var itemParam = paramTemplate.content.cloneNode(true).firstElementChild;
+
+  if (arg.get("isconstant")) {
+    itemParam.setAttribute("data-paramtype", "constant");
+    itemParam.classList.add("constant");
+
+    sParamTemplate = document.querySelector("#preview-param-constant-template");
+    itemSParam = sParamTemplate.content.cloneNode(true).firstElementChild;
+    itemSParam.textContent = [arg.get("name"), arg.get("defaultValue")].join(
+      " "
+    );
+    itemParam.appendChild(itemSParam);
+    return itemParam;
+  }
+
+  itemParam.setAttribute("data-paramtype", "template");
+  switch (arg.get("type")) {
+    case "0":
+      sParamTemplate = document.querySelector("#preview-param-string-template");
+      itemSParam = sParamTemplate.content.cloneNode(true);
+      itemSParam.querySelector("span").textContent = arg.get("name");
+      itemSParam.querySelector("input").value = arg.get("defaultValue");
+      break;
+    case "1":
+      sParamTemplate = document.querySelector("#preview-param-empty-template");
+      itemSParam = sParamTemplate.content.cloneNode(true);
+      itemSParam.querySelector("span").textContent = arg.get("name");
+      break;
+    case "2":
+      sParamTemplate = document.querySelector(
+        "#preview-param-nameless-template"
+      );
+      itemSParam = sParamTemplate.content.cloneNode(true);
+      itemSParam[0].value = arg.get("defaultValue");
+      break;
+    case "3":
+      sParamTemplate = document.querySelector("#preview-param-popup-template");
+      itemSParam = sParamTemplate.content.cloneNode(true);
+      fillSelectWithValues(
+        itemSParam.querySelector(".preview-command-popup-select"),
+        arg.get("value")
+      );
+      break;
+  }
+  itemParam.appendChild(itemSParam);
+
+  return itemParam;
+}
+
+function fillSelectWithValues(selectEl, values) {
+  for (var i = 0; i < values.length; i++) {
+    var val = values[i];
+
+    var el = document.createElement("option");
+    el.text = val;
+
+    selectEl.add(el);
+  }
+}
+
+function commandNameInput(event) {
+  updatePreviewCommand();
+}
+
+function argumentsToMap() {
+  var args = [];
+
+  Array.from(document.getElementsByClassName("argument-edit")).forEach(
+    (elem) => {
+      args.push(argumentToMap(elem));
+    }
+  );
+  return args;
+}
+
+function argumentToMap(elem) {
+  typeEl = elem.querySelector(".select-argument-type");
+  var type = typeEl.options[typeEl.selectedIndex].getAttribute("data-type-id");
+
+  default_value =
+    elem.querySelector("input[name='argument-default-value']") != null
+      ? elem.querySelector("input[name='argument-default-value']").value
+      : "";
+  isconstant = elem.querySelector("input[name='isconstant']").checked;
+  description = elem.querySelector(
+    "textarea[name='argument-description']"
+  ).value;
+  name =
+    elem.querySelector("input[name='argument-name']") != null
+      ? elem.querySelector("input[name='argument-name']").value
+      : "";
+
+  value = [];
+  if (type == "3") {
+    value = ["0"]; // FIXME
+  }
+
+  m = new Map();
+  m.set("name", name);
+  m.set("description", description);
+  m.set("type", type);
+  m.set("defaultValue", default_value);
+  m.set("value", value);
+  m.set("isconstant", isconstant);
+  return m;
 }

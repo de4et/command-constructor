@@ -37,7 +37,6 @@ func TestCreateCommandFromParams(t *testing.T) {
 				DefaultValue: "",
 			},
 		},
-		ConstantParams: []CommandParam{},
 	}
 	c, err := NewCommandTemplateFromParams("66fae8ad5f4221f1bd7399eb", params)
 	spew.Dump(c)

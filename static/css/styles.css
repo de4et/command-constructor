@@ -485,6 +485,7 @@ header {
   background-color: rgba(167, 167, 167, 0.637);
   border-radius: 0.5rem;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -563,10 +564,11 @@ header {
   color: white;
   background-color: #59524f;
   border-radius: 0.3rem;
+  align-self: flex-start;  
 }
 
 .isconstant-label {
-  margin-top: 0.4rem;
+  user-select: none;
   display: block;
 }
 
@@ -574,7 +576,8 @@ header {
   margin-right: 0.2rem;
 }
 
-.argument-edit > * {
+.argument-edit > *:not(.argument-type) {
+  margin-top: 0.4rem;
   display: block;
 }
 
@@ -620,4 +623,8 @@ header {
 /* Transition */
 .select-argument-type-block:hover::after {
   color: #f39c12;
+}
+
+textarea {
+  resize: none;
 }

@@ -18,17 +18,11 @@ templ CreateTemplate(user *types.User) {
 				</div>
 
 				<div data-paramtype="template" class="preview-command-commandparam">
-					<div class="preview-command-popup">
 					<select name="preview-command-popup" class="preview-command-popup-select">
 						<option value="Youtube">Youtube</option>
 						<option value="Twitter">Twitter</option>
 						<option value="Google">Google</option>
 					</select>
-					<script>
-						document.querySelector(".preview-command-popup-select").selectedIndex=1;
-					</script>
-						
-					</div>
 				</div>
 
 				<div data-paramtype="template" class="preview-command-commandparam">
@@ -44,12 +38,13 @@ templ CreateTemplate(user *types.User) {
 					<span class="preview-command-string-name">-r</span>
 					<input class="preview-command-string-input" value="~/"/>
 				</div>
+
 			</div>
 
 			<form class="create-form">
-				<input placeholder="Название" class="create-form-input form-input-name"/>
-				<textarea placeholder="Описание" class="create-form-input form-input-description"/>
-				<input placeholder="Имя команды" class="create-form-input form-input-commandName"/>
+				<input name="name" placeholder="Название" class="create-form-input form-input-name"/>
+				<textarea name="description" placeholder="Описание" class="create-form-input form-input-description"/>
+				<input name="commandName" oninput="commandNameInput(event)" placeholder="Имя команды" class="create-form-input form-input-commandName"/>
 
 				<h4 class="arguments-title">Аргументы</h4>
 				<div class="create-form-arguments">
@@ -69,19 +64,22 @@ templ CreateTemplate(user *types.User) {
 
 							<div class="select-argument-type-block">
 								<select class="select-argument-type" onchange="selectArgumentTypeChange(event)" >
-									<option value="common-argument">
+									<option value="common-argument" data-type-id="0">
 										Имя - значение
 									</option>
-									<option value="withoutvalue-argument">
+									<option value="withoutvalue-argument" data-type-id="1">
 										Без значения(только имя)
 									</option>
-									<option value="nameless-argument">
+									<option value="nameless-argument" data-type-id="2">
 										Без имени(только значение)
 									</option>
-									<option value="dropdown-argument">
+									<option value="dropdown-argument" data-type-id="3">
 										Выпадающее меню
 									</option>
 								</select>
+								<script>
+									document.currentScript.parentElement.querySelector(".select-argument-type").dispatchEvent(new Event('change'))
+								</script>
 							</div>
 						</div>
 					</div>
@@ -95,6 +93,7 @@ templ CreateTemplate(user *types.User) {
 				</template>
 
 				<template id="withoutvalue-argument">
+					<label class="isconstant-label"><input type="checkbox" checked="checked" disabled class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
 					<input name="argument-name" class="argument-name-input argument-input" placeholder="Имя*" />
 					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
 				</template>
@@ -106,8 +105,9 @@ templ CreateTemplate(user *types.User) {
 				</template>
 
 				<template id="dropdown-argument">
+					<label class="isconstant-label"><input type="checkbox" disabled class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
 					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
-					// TODO: add values, default-argument(deside)
+					// TODO: add values, default-argument(deside) --> select menu for default(index from default to preview)
 					<input name="argument-default-value" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
 					<div class="dropdown-values">
 						<button class="dropdown-add-value-button">
@@ -127,6 +127,28 @@ templ CreateTemplate(user *types.User) {
 					Создать
 				</button>
 			</form>
+
+			<template id="preview-param-template">
+				<div class="preview-command-commandparam">
+				</div>
+			</template>
+			<template id="preview-param-empty-template">
+				<span class="preview-command-text preview-commandparam-empty"></span> 
+			</template>
+			<template id="preview-param-popup-template">
+				<select name="preview-command-popup" class="preview-command-popup-select">
+				</select>
+			</template>
+			<template id="preview-param-nameless-template">
+				<input class="preview-command-nameless" />
+			</template>
+			<template id="preview-param-string-template">
+				<span class="preview-command-text preview-command-string-name"></span>
+				<input class="preview-command-string-input" />
+			</template>
+			<template id="preview-param-constant-template">
+				<span class="preview-command-text"></span> 
+			</template>
 		</div>
 	}
 }
