@@ -354,3 +354,113 @@ function deleteDropdownValue(event) {
   valueEl.remove();
   updatePreviewCommand();
 }
+
+function deleteArgumentClick(event) {
+  event.preventDefault();
+  const buttonEl = event.target;
+  argumentBlock = buttonEl.closest(".argument-edit");
+  argumentBlock.remove();
+}
+
+let newX,
+  newY,
+  startX,
+  startY = 0;
+let relativePos = {};
+let initialPos = {};
+
+function argumentMouseDown(event) {
+  const buttonEl = event.currentTarget;
+  argumentBlock = buttonEl.closest(".argument-edit");
+
+  const parentPos = argumentBlock.getBoundingClientRect();
+  const childPos = buttonEl.getBoundingClientRect();
+  initialPos = parentPos;
+
+  relativePos.top = childPos.top - parentPos.top + childPos.height / 2;
+  relativePos.left = childPos.left - parentPos.left + childPos.width / 2;
+
+  argumentBlock.classList.add("dragging");
+
+  startX = event.clientX;
+  startY = event.clientY;
+
+  document.addEventListener("mousemove", argumentMouseMove);
+  document.addEventListener("mouseup", argumentMouseUp);
+  argumentMouseMove(event);
+
+  // add targets
+  var template = document.querySelector("#argument-target-template");
+  document.querySelectorAll(".argument-edit").forEach((elem) => {
+    if (elem.classList.contains("dragging")) return;
+    var item = template.content.cloneNode(true).firstElementChild;
+    elem.after(item);
+  });
+
+  var item = template.content.cloneNode(true).firstElementChild;
+  argsBlock = document.querySelector(".create-form-arguments");
+  argsBlock.prepend(item);
+}
+
+function argumentMouseMove(event) {
+  newX = startX - event.clientX;
+  newY = startY - event.clientY;
+
+  startX = event.clientX;
+  startY = event.clientY;
+
+  upPos = {};
+  upPos.x = event.clientX;
+  upPos.y = event.clientY;
+
+  const isInside = (point, rect) =>
+    point.x > rect.left &&
+    point.x < rect.right &&
+    point.y > rect.top &&
+    point.y < rect.bottom;
+
+  document.querySelectorAll(".argument-target").forEach((elem) => {
+    var elRect = elem.getBoundingClientRect();
+    elSvg = elem.querySelector("svg");
+    elSvg.style.fill = "white";
+    if (isInside(upPos, elRect)) {
+      console.log(elRect, upPos);
+      elSvg.style.fill = "orange";
+    }
+  });
+
+  argumentBlock = document.querySelector(".dragging");
+  argumentBlock.style.top = startY - relativePos.top + "px";
+  argumentBlock.style.left = startX - relativePos.left + "px";
+}
+
+function argumentMouseUp(event) {
+  document.removeEventListener("mousemove", argumentMouseMove);
+  document.removeEventListener("mouseup", argumentMouseUp);
+
+  upPos = {};
+  upPos.x = event.clientX;
+  upPos.y = event.clientY;
+
+  const isInside = (point, rect) =>
+    point.x > rect.left &&
+    point.x < rect.right &&
+    point.y > rect.top &&
+    point.y < rect.bottom;
+
+  document.querySelectorAll(".argument-target").forEach((elem) => {
+    var elRect = elem.getBoundingClientRect();
+    if (isInside(upPos, elRect)) {
+      elem.after(argumentBlock);
+    }
+  });
+
+  document.querySelectorAll(".argument-target").forEach((elem) => {
+    elem.remove();
+  });
+
+  argumentBlock.style = "";
+  argumentBlock.classList.remove("dragging");
+
+  updatePreviewCommand();
+}

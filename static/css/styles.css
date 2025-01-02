@@ -646,7 +646,7 @@ textarea {
 
 .argument-delimiter {
   padding: 3px;
-  width: 8rem;
+  width: 10rem;
   background-color: #625f5d;
   border-radius: 25%;
 }
@@ -669,8 +669,8 @@ textarea {
   background-color: #c56e6e24;
 }
 
-.argument-delete:hover svg{
-  fill: #b34747;
+.argument-delete:active {
+  background-color: #5c0202;
 }
 
 .argument-delete svg {
@@ -680,17 +680,52 @@ textarea {
 }
 
 .argument-drag {
-  height: 1.5rem;
-  width: 1.5rem;
   margin-left: -0.3rem;
 }
 
 .argument-drag svg {
-  height: 100%;
-  width: 100%;
-  fill: black;
+  fill: rgb(48, 48, 48);
 }
 
 .argument-drag:hover svg{
-  fill: rgb(48, 48, 48);
+  fill: black;
+}
+
+.dragging {
+  position: fixed;
+  z-index: 1000;
+
+  background-color: #59524fb0;
+}
+
+.dragging > *:not(.argument-header) {
+  opacity: 0.5;
+}
+
+.argument-target{
+  height: 1.6rem;
+  width: 1.6rem;
+}
+
+.argument-drag  {
+  height: 1.3rem;
+  width: 1.3rem;
+}
+
+.argument-target svg, .argument-drag svg {
+  height: 100%;
+  width: 100%;
+}
+
+.argument-target {
+  display: none;
+  background-color: #b4562dd8;
+  border-radius: 10%;
+}
+.argument-target svg {
+  fill: white;
+}
+
+.argument-target.show {
+  display: block;
 }

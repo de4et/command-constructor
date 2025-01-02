@@ -60,7 +60,7 @@ templ CreateTemplate(user *types.User) {
 				<template id="argument-template">
 					<div class="argument-edit"> 
 						<div class="argument-header">
-							<div class="argument-drag"> 
+							<div class="argument-drag" onmousedown="argumentMouseDown(event)"> 
 								<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt" height="512.000000pt" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
 
 									<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
@@ -73,7 +73,7 @@ templ CreateTemplate(user *types.User) {
 							</div>
 							<div class="argument-delimiter">
 							</div>
-							<button class="argument-delete">
+							<button onclick="deleteArgumentClick(event)" class="argument-delete">
 								<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 64 64" width="48px" height="48px"><path d="M 28 11 C 26.895 11 26 11.895 26 13 L 26 14 L 13 14 C 11.896 14 11 14.896 11 16 C 11 17.104 11.896 18 13 18 L 14.160156 18 L 16.701172 48.498047 C 16.957172 51.583047 19.585641 54 22.681641 54 L 41.318359 54 C 44.414359 54 47.041828 51.583047 47.298828 48.498047 L 49.839844 18 L 51 18 C 52.104 18 53 17.104 53 16 C 53 14.896 52.104 14 51 14 L 38 14 L 38 13 C 38 11.895 37.105 11 36 11 L 28 11 z M 18.173828 18 L 45.828125 18 L 43.3125 48.166016 C 43.2265 49.194016 42.352313 50 41.320312 50 L 22.681641 50 C 21.648641 50 20.7725 49.194016 20.6875 48.166016 L 18.173828 18 z"/></svg>
 							</button>
 						</div>
@@ -100,6 +100,23 @@ templ CreateTemplate(user *types.User) {
 								</script>
 							</div>
 						</div>
+					</div>
+					<script>
+
+
+					</script>
+				</template>
+
+				<template id="argument-target-template">
+					<div class="argument-target show">
+						<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt" height="512.000000pt" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+							<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+								<path d="M1749 4977 c-70 -26 -131 -90 -149 -157 -6 -21 -10 -282 -10 -662 l0 -627 -647 -3 c-717 -3 -673 1 -742 -69 -52 -52 -66 -86 -66 -170 0 -67 3 -81 30 -125 19 -30 49 -60 79 -79 l49 -30 807 0 807 0 49 30 c30 19 60 49 79 79 l30 49 0 807 0 807 -30 49 c-42 68 -105 105 -187 110 -39 3 -77 -1 -99 -9z"/>
+								<path d="M3207 4976 c-59 -22 -103 -62 -131 -119 l-26 -53 2 -795 3 -796 30 -49 c19 -30 49 -60 79 -79 l49 -30 796 -3 795 -2 52 25 c176 86 177 336 1 432 -29 17 -85 18 -679 21 l-647 3 -3 647 c-3 590 -5 650 -20 678 -23 41 -72 90 -111 111 -43 22 -143 27 -190 9z"/>
+								<path d="M259 2042 c-187 -97 -161 -386 41 -442 21 -6 282 -10 662 -10 l627 0 3 -647 c3 -595 4 -651 21 -680 96 -176 346 -175 432 1 l25 52 -2 795 -3 796 -30 49 c-19 30 -49 60 -79 79 l-49 30 -797 3 -797 2 -54 -28z"/>
+								<path d="M3181 2044 c-58 -29 -104 -84 -122 -143 -7 -24 -9 -298 -7 -822 l3 -786 30 -49 c98 -157 332 -147 422 19 17 29 18 85 21 679 l3 647 647 3 c594 3 650 4 679 21 166 90 176 324 19 422 l-49 30 -796 3 -796 2 -54 -26z"/>
+							</g>
+						</svg>
 					</div>
 				</template>
 
