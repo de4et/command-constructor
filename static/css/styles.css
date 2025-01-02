@@ -561,6 +561,7 @@ header {
 
 .argument-edit {
   padding: 1rem;
+  padding-top: 0;
   color: white;
   background-color: #59524f;
   border-radius: 0.3rem;
@@ -576,7 +577,7 @@ header {
   margin-right: 0.2rem;
 }
 
-.argument-edit > *:not(.argument-type) {
+.argument-edit > *:not(.argument-header) {
   margin-top: 0.4rem;
   display: block;
 }
@@ -627,4 +628,69 @@ header {
 
 textarea {
   resize: none;
+}
+
+.argument-type {
+  margin-top: 1rem;
+}
+
+.argument-header {
+  display:flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between ;
+  padding-top:0.2rem;
+  padding-left:0.2rem;
+}
+
+.argument-delimiter {
+  padding: 3px;
+  width: 8rem;
+  background-color: #625f5d;
+  border-radius: 25%;
+}
+
+.argument-delete {
+  height: 1.5rem;
+  margin-right: -0.6rem;
+
+  color: white;
+  /* background-color: #e47220; */
+  text-decoration: none;
+  /* border-radius: 0.5rem; */
+  border: 0 solid;
+  text-shadow: none;
+  background-color: #aa000024;
+  border-radius: 30%;
+}
+
+.argument-delete:hover {
+  background-color: #c56e6e24;
+}
+
+.argument-delete:hover svg{
+  fill: #b34747;
+}
+
+.argument-delete svg {
+  height: 100%;
+  width: 100%;
+  fill: #df2626;
+}
+
+.argument-drag {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-left: -0.3rem;
+}
+
+.argument-drag svg {
+  height: 100%;
+  width: 100%;
+  fill: black;
+}
+
+.argument-drag:hover svg{
+  fill: rgb(48, 48, 48);
 }
