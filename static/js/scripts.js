@@ -108,10 +108,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         return;
       }
 
-      // logForm.form.forEach((formEl) => {
-      //   console.log(formEl);
-      // });
-
       const button = logForm.querySelector("button");
       const loading_animation = logForm.querySelector(".loading-animation");
 
@@ -149,9 +145,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 function selectArgumentTypeChange(event) {
-  // console.log(event);
   const selectValue = event.target.value; // id of template
-  // console.log(selectValue);
   var template = document.getElementById(selectValue);
   const item = template.content.cloneNode(true);
   var argument_block = event.target.closest(".argument-edit");
@@ -161,6 +155,7 @@ function selectArgumentTypeChange(event) {
     argument_block.removeChild(lastChild.nextSibling);
   }
   lastChild.after(item);
+  updatePreviewCommand();
 }
 
 function addArgumentClick(event) {
@@ -175,7 +170,6 @@ function addArgumentClick(event) {
 var lastArgumentID = 0;
 
 function addNewArgumentBlock(argument_id) {
-  // console.log("creating argument block");
   var arguments_block = document.querySelector(".create-form-arguments");
   var button = arguments_block.querySelector(".add-argument-button");
 
@@ -208,7 +202,6 @@ function updatePreviewCommand() {
   }
 
   args = argumentsToMap();
-  console.log(args);
   args.forEach((arg) => {
     elem = getPreviewParamElem(arg);
     previewEl.appendChild(elem);
@@ -250,13 +243,14 @@ function getPreviewParamElem(arg) {
         "#preview-param-nameless-template"
       );
       itemSParam = sParamTemplate.content.cloneNode(true);
-      itemSParam[0].value = arg.get("defaultValue");
+      itemSParam.querySelector("input").value = arg.get("defaultValue");
       break;
     case "3":
       sParamTemplate = document.querySelector("#preview-param-popup-template");
       itemSParam = sParamTemplate.content.cloneNode(true);
+      console.log("im here");
       fillSelectWithValues(
-        itemSParam.querySelector(".preview-command-popup-select"),
+        itemSParam.querySelector(".dropdown-menu"),
         arg.get("value")
       );
       break;
@@ -267,13 +261,29 @@ function getPreviewParamElem(arg) {
 }
 
 function fillSelectWithValues(selectEl, values) {
+  var button = selectEl.closest(".dropdown").querySelector("button");
+  if (values != 0) {
+    button.textContent = values[0];
+  } else {
+    button.textContent = "-";
+  }
+
   for (var i = 0; i < values.length; i++) {
     var val = values[i];
 
-    var el = document.createElement("option");
+    var paramTemplate = document.querySelector("#param-value-template");
+    var itemParam = paramTemplate.content.cloneNode(true).firstElementChild;
+    var el = itemParam.querySelector("a");
     el.text = val;
 
-    selectEl.add(el);
+    $(el).click(function () {
+      var selText = $(this).text();
+      console.log(selText);
+      console.log($(this));
+      $(this).parents(".dropdown").find(".dropdown-toggle").text(selText);
+    });
+
+    selectEl.appendChild(itemParam);
   }
 }
 
@@ -311,7 +321,9 @@ function argumentToMap(elem) {
 
   value = [];
   if (type == "3") {
-    value = ["0"]; // FIXME
+    elem.querySelectorAll(".dropdown-value").forEach((valEl) => {
+      value.push(valEl.querySelector("input").value);
+    });
   }
 
   m = new Map();
@@ -322,4 +334,23 @@ function argumentToMap(elem) {
   m.set("value", value);
   m.set("isconstant", isconstant);
   return m;
+}
+
+function addDropdownValueClick(e) {
+  e.preventDefault();
+  var buttonEl = e.target;
+
+  var template = document.querySelector("#argument-dropdown-value-template");
+  var item = template.content.cloneNode(true).firstElementChild;
+
+  buttonEl.before(item);
+  updatePreviewCommand();
+}
+
+function deleteDropdownValue(event) {
+  event.preventDefault();
+  var buttonEl = event.target;
+  var valueEl = buttonEl.closest(".dropdown-value");
+  valueEl.remove();
+  updatePreviewCommand();
 }

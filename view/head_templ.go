@@ -42,7 +42,7 @@ func Head(title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><meta charset=\"utf-8\"><link rel=\"stylesheet\" type=\"text/css\" href=\"/static/css/styles.css\"><script type=\"text/javascript\" src=\"/static/js/scripts.js\"></script><link rel=\"icon\" type=\"image/x-icon\" href=\"/static/img/favicon.ico\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><meta charset=\"utf-8\"><link rel=\"icon\" type=\"image/x-icon\" href=\"/static/img/favicon.ico\"><link href=\"/static/css/bootstrap.css\" rel=\"stylesheet\"><link rel=\"stylesheet\" type=\"text/css\" href=\"/static/css/styles.css\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js\"></script><script type=\"text/javascript\" src=\"/static/js/scripts.js\"></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

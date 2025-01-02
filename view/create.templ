@@ -86,38 +86,37 @@ templ CreateTemplate(user *types.User) {
 				</template>
 
 				<template id="common-argument">
-					<label class="isconstant-label"><input type="checkbox" class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
-					<input name="argument-name" class="argument-name-input argument-input" placeholder="Имя*" />
+					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
+					<input name="argument-name" oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя*" />
 					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
-					<input name="argument-default-value" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
+					<input name="argument-default-value" oninput="updatePreviewCommand()" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
 				</template>
 
 				<template id="withoutvalue-argument">
-					<label class="isconstant-label"><input type="checkbox" checked="checked" disabled class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
-					<input name="argument-name" class="argument-name-input argument-input" placeholder="Имя*" />
+					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" checked="checked" disabled class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
+					<input name="argument-name" oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя*" />
 					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
 				</template>
 
 				<template id="nameless-argument">
-					<label class="isconstant-label"><input type="checkbox" class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
+					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
 					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
-					<input name="argument-default-value" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
+					<input name="argument-default-value" oninput="updatePreviewCommand()" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
 				</template>
 
 				<template id="dropdown-argument">
-					<label class="isconstant-label"><input type="checkbox" disabled class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
+					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" disabled class="argument-isconstant-checkbox" name="isconstant" />Неизменяемый</label>
 					<textarea name="argument-description" class="argument-description-textarea" placeholder="Краткое описание" />
-					// TODO: add values, default-argument(deside) --> select menu for default(index from default to preview)
-					<input name="argument-default-value" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
+					// first element - default
 					<div class="dropdown-values">
-						<button class="dropdown-add-value-button">
+						<button onclick="addDropdownValueClick(event)" class="dropdown-add-value-button">
 						+
 						</button>
 					</div>
 					<template id="argument-dropdown-value-template">
 						<div class="dropdown-value">
-							<input class="dropdown-value-input" />
-							<button class="dropdown-value-delete">
+							<input oninput="updatePreviewCommand()" class="dropdown-value-input" />
+							<button onclick="deleteDropdownValue(event)" class="dropdown-value-delete">-
 							</button>
 						</div>
 					</template>
@@ -136,8 +135,15 @@ templ CreateTemplate(user *types.User) {
 				<span class="preview-command-text preview-commandparam-empty"></span> 
 			</template>
 			<template id="preview-param-popup-template">
-				<select name="preview-command-popup" class="preview-command-popup-select">
-				</select>
+				<div class="dropdown">
+				<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				</button>
+				<ul class="dropdown-menu">
+				</ul>
+				</div>
+			</template>
+			<template id="param-value-template">
+				<li><a class="dropdown-item" href="#"></a></li>
 			</template>
 			<template id="preview-param-nameless-template">
 				<input class="preview-command-nameless" />
@@ -152,3 +158,5 @@ templ CreateTemplate(user *types.User) {
 		</div>
 	}
 }
+// сделать добавление значений в dropdown меню
+// по дефолту заранее стоит один инпут 
