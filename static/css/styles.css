@@ -515,14 +515,17 @@ header {
 
 .param-excluded::before {
       content: "";
+      z-index: 10001;
       position: absolute;
       top: 50%; 
       left: -1.5%;
       width: 103%;
       height: 2px; 
-      background-color: rgb(94, 80, 49); 
+      background-color: rgb(146, 56, 56); 
       transform: translateY(-50%); 
 }
+
+input[disabled] {pointer-events:none}
 
 .create-form-arguments {
   display: flex;

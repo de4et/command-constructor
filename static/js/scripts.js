@@ -57,7 +57,6 @@ function setError(parent, error_message_block, ...error_messages) {
   let error_block = error_message_block + "-list";
 
   let main_error_el = document.querySelector("." + error_block);
-  console.log(main_error_el);
 
   if (main_error_el == null) {
     main_error_el = document.createElement("ul");
@@ -95,8 +94,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
           formFilled = false;
           break;
         }
-
-        console.log(Name + " : " + Value);
       }
 
       if (!formFilled) {
@@ -248,14 +245,13 @@ function getPreviewParamElem(arg) {
     case "3":
       sParamTemplate = document.querySelector("#preview-param-popup-template");
       itemSParam = sParamTemplate.content.cloneNode(true);
-      console.log("im here");
       fillSelectWithValues(
         itemSParam.querySelector(".dropdown-menu"),
         arg.get("value")
       );
       break;
   }
-  itemParam.appendChild(itemSParam);
+  itemParam.prepend(itemSParam);
 
   return itemParam;
 }
@@ -278,8 +274,6 @@ function fillSelectWithValues(selectEl, values) {
 
     $(el).click(function () {
       var selText = $(this).text();
-      console.log(selText);
-      console.log($(this));
       $(this).parents(".dropdown").find(".dropdown-toggle").text(selText);
     });
 
@@ -307,16 +301,14 @@ function argumentToMap(elem) {
   var type = typeEl.options[typeEl.selectedIndex].getAttribute("data-type-id");
 
   default_value =
-    elem.querySelector("input[name='argument-default-value']") != null
-      ? elem.querySelector("input[name='argument-default-value']").value
+    elem.querySelector(".argument-default-value") != null
+      ? elem.querySelector(".argument-default-value").value
       : "";
-  isconstant = elem.querySelector("input[name='isconstant']").checked;
-  description = elem.querySelector(
-    "textarea[name='argument-description']"
-  ).value;
+  isconstant = elem.querySelector(".argument-isconstant-checkbox").checked;
+  description = elem.querySelector(".argument-description-textarea").value;
   name =
-    elem.querySelector("input[name='argument-name']") != null
-      ? elem.querySelector("input[name='argument-name']").value
+    elem.querySelector(".argument-name-input") != null
+      ? elem.querySelector(".argument-name-input").value
       : "";
 
   value = [];
@@ -360,6 +352,7 @@ function deleteArgumentClick(event) {
   const buttonEl = event.target;
   argumentBlock = buttonEl.closest(".argument-edit");
   argumentBlock.remove();
+  updatePreviewCommand();
 }
 
 let newX,
@@ -424,7 +417,6 @@ function argumentMouseMove(event) {
     elSvg = elem.querySelector("svg");
     elSvg.style.fill = "white";
     if (isInside(upPos, elRect)) {
-      console.log(elRect, upPos);
       elSvg.style.fill = "orange";
     }
   });
@@ -463,4 +455,80 @@ function argumentMouseUp(event) {
   argumentBlock.classList.remove("dragging");
 
   updatePreviewCommand();
+}
+
+function excludeParamClick(event) {
+  console.log(event.eventPhase);
+  elem = event.currentTarget;
+  console.log(event.currentTarget);
+  console.log(elem);
+  if (event.shiftKey) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    console.log("stopped everything");
+    elem.classList.toggle("param-excluded");
+
+    childInput = elem.querySelector("input");
+    if (childInput) childInput.toggleAttribute("disabled");
+
+    childDropdown = elem.querySelector(".dropdown-toggle");
+    if (childDropdown) {
+      childDropdown.classList.toggle("disabled");
+      disabled = childDropdown.classList.contains("disabled");
+      $(childDropdown).dropdown("toggle");
+      console.log("aaaaa");
+      childDropdown.addEventListener(
+        "show.bs.dropdown",
+        (event) => {
+          console.log("aaaa");
+          if (disabled) {
+            event.preventDefault();
+          }
+        },
+        { once: true }
+      );
+    }
+  }
+}
+
+function createTemplateClick(event) {
+  form = document.querySelector(".create-form");
+  formdata = new FormData(form);
+  mapdata = new Map(formdata);
+  // jsondata = JSON.stringify(Object.fromEntries(formdata));
+  args = argumentsToMap();
+  mapdata.set("templateParams", args);
+  console.log(mapdata);
+
+  const url = form.getAttribute("action");
+  fetch(url, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(mapdata),
+  }).then((res) => {
+    let status = res.status;
+    res.json().then((data) => {
+      if (status != 200) {
+        button.hidden = false;
+        loading_animation.hidden = true;
+        if (data.error) {
+          setError(logForm, "log-error-message", data.error);
+        } else {
+          setError(
+            logForm,
+            "log-error-message",
+            data.name,
+            data.email,
+            data.password
+          );
+        }
+      } else {
+        window.location.reload();
+      }
+    });
+  });
 }
