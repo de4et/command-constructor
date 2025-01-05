@@ -1,6 +1,6 @@
 build: 
 	@templ generate
-	@go build -o bin/app.exe main.go
+	@go build -o bin/app.exe -v main.go
 
 run: build
 	@./bin/app.exe --port 5000

@@ -432,7 +432,7 @@ header {
   margin-top: 1rem;
   font-size: medium;
   border: none;
-  border-radius: 0.7rem;
+  border-radius: 0.3em;
 }
 
 .create-form-input:focus {
@@ -482,11 +482,12 @@ header {
   padding: 1.1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  background-color: rgba(167, 167, 167, 0.637);
+  background-color: rgb(234, 168, 110);
   border-radius: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  min-height: 4.2rem;
 }
 
 .preview-command * {
@@ -495,22 +496,33 @@ header {
 
 .preview-command input {
   border-radius: 0.5rem;
-  padding: 0.1rem;
+  padding: 0.15rem 0.4rem;
+  border: none;
+  box-shadow: none;
+  outline: none;
 }
 
 .preview-command-commandparam {
   margin-left: 0.5rem;
-  background-color: rgba(170, 170, 170, 0.651);
+  background-color: rgba(255, 130, 91, 0.65);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .preview-command-text {
-  color: rgba(211, 120, 9, 0.877);
+  color: rgba(89, 49, 0, 0.93);
   font-weight: bold;
 }
 
 .param-excluded{
   position: relative;
   display: inline-block; 
+}
+
+.param-excluded {
+  user-select: none;
 }
 
 .param-excluded::before {
@@ -540,7 +552,7 @@ input[disabled] {pointer-events:none}
 
 .add-argument-button {
   padding: 0.2rem;
-  background-color: #a7a09d;
+  background-color: #e472208c;;
   border-style: none;
   border-radius: 0.3rem;
   height: 2.5rem;
@@ -548,7 +560,7 @@ input[disabled] {pointer-events:none}
 
 
 .add-argument-button:hover {
-  background-color: #bfb7b4;
+  background-color: #e47220;
   box-shadow: inset 0 0 19px rgb(189, 130, 86), 0 0 20px rgba(183, 152, 152, 0.2);
 }
 
@@ -730,5 +742,115 @@ textarea {
 }
 
 .argument-target.show {
+  animation:  shake 0.9s;
+  animation-iteration-count: infinite; 
   display: block;
 }
+
+.argument-input {
+  width: 85%;
+}
+
+.argument-description-textarea {
+  width: 90%;
+}
+
+.argument-input, .argument-description-textarea {
+  padding: 0.3rem 0.5rem;
+  font-size: medium;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #ffffffe5;
+}
+
+.argument-input:focus, .argument-description-textarea:focus {
+  box-shadow: none;
+  outline: none;
+  background-color: #ffffff69;
+}
+
+.argument-input:focus::placeholder, .argument-description-textarea:focus::placeholder {
+  color: transparent;
+}
+
+.argument-isconstant-checkbox {
+  accent-color: brown;
+}
+
+.dropdown-value-input {
+  padding: 0.3rem 0.37rem;
+  width: 100%;
+}
+
+.dropdown {
+  display: inline;
+}
+
+.dropdown-value {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+
+.dropdown-value-delete {
+  display: flex;
+  height: 0.8rem;
+  text-decoration: none;
+  border: 0 solid;
+  text-shadow: none;
+  background-color: transparent;
+  margin-left: 0.3rem;
+}
+
+.dropdown-value-delete svg {
+  height: 100%;
+  width: 100%;
+  fill: #fd0c00a3;
+}
+
+.dropdown-value-delete:hover svg {
+  fill: #fd0d00;
+}
+
+.trembling {
+  animation:  shake 0.3s;
+  animation-iteration-count: 1; 
+}
+
+@keyframes shake{
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -1px) rotate(-1deg); }
+  20% { transform: translate(-1px, 0px) rotate(1deg); }
+  30% { transform: translate(1px, 1px) rotate(0deg); }
+  70% { transform: translate(1px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 1px) rotate(0deg); }
+  100% { transform: translate(1px, -1px) rotate(-1deg); }
+}
+
+.dropdown-add-value-button {
+  height: 1.2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  border: 0 solid;
+  text-shadow: none;
+  background-image: linear-gradient(to bottom, #7d95ffb2, #abbaffb2);
+  background-color: transparent;
+  padding: 0.2rem 0;
+  box-shadow: -6px 8px 10px rgba(75, 251, 218, 0.02),0px 2px 2px rgba(153, 255, 255, 0.23);
+  border-radius: 0.1rem;
+  transition: background-color .2s cubic-bezier(.2,0,.6,1);
+}
+
+.dropdown-add-value-button:hover {
+  background-color: #000;
+}
+
+.dropdown-add-value-button svg {
+  height: 100%;
+  fill: #e0fbff;
+}
+
+

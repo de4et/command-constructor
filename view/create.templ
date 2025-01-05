@@ -10,14 +10,14 @@ templ CreateTemplate(user *types.User) {
 				Создание шаблона
 			</h2>
 
-			<div class="preview-command"> // FIXME: Example(to delete)
-				<span class="preview-command-text preview-command-commandname">Имякоманды</span>
+			<div class="preview-command"> 
+				<span class="preview-command-text preview-command-commandname">имя</span>
 			</div>
 
-			<form action="/command" class="create-form">
+			<form action="api/v1/command" class="create-form">
 				<input name="name" placeholder="Название" class="create-form-input form-input-name"/>
-				<textarea name="description" placeholder="Описание" class="create-form-input form-input-description"/>
-				<input name="commandName" oninput="commandNameInput(event)" placeholder="Имя команды" class="create-form-input form-input-commandName"/>
+				<textarea spellcheck="false" name="description" placeholder="Описание" class="create-form-input form-input-description"/>
+				<input name="commandName" oninput="commandNameInput(event)" placeholder="имя" class="create-form-input form-input-commandName"/>
 
 				<h4 class="arguments-title">Аргументы</h4>
 				<div class="create-form-arguments">
@@ -49,6 +49,11 @@ templ CreateTemplate(user *types.User) {
 							<button onclick="deleteArgumentClick(event)" class="argument-delete">
 								<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 64 64" width="48px" height="48px"><path d="M 28 11 C 26.895 11 26 11.895 26 13 L 26 14 L 13 14 C 11.896 14 11 14.896 11 16 C 11 17.104 11.896 18 13 18 L 14.160156 18 L 16.701172 48.498047 C 16.957172 51.583047 19.585641 54 22.681641 54 L 41.318359 54 C 44.414359 54 47.041828 51.583047 47.298828 48.498047 L 49.839844 18 L 51 18 C 52.104 18 53 17.104 53 16 C 53 14.896 52.104 14 51 14 L 38 14 L 38 13 C 38 11.895 37.105 11 36 11 L 28 11 z M 18.173828 18 L 45.828125 18 L 43.3125 48.166016 C 43.2265 49.194016 42.352313 50 41.320312 50 L 22.681641 50 C 21.648641 50 20.7725 49.194016 20.6875 48.166016 L 18.173828 18 z"/></svg>
 							</button>
+							<script>
+								$(document.currentScript.previousElementSibling).hover(function(){
+									$(this).closest(".argument-edit").toggleClass('trembling');
+								});
+							</script>
 						</div>
 						<div class="argument-type">
 							<span>Тип: </span>
@@ -95,37 +100,46 @@ templ CreateTemplate(user *types.User) {
 
 				<template id="common-argument">
 					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" class="argument-isconstant-checkbox" />Неизменяемый</label>
-					<input oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя*" />
-					<textarea class="argument-description-textarea" placeholder="Краткое описание" />
+					<input oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя" />
+					<textarea spellcheck="false" class="argument-description-textarea" placeholder="Краткое описание" />
 					<input oninput="updatePreviewCommand()" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
 				</template>
 
 				<template id="withoutvalue-argument">
 					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" checked="checked" disabled class="argument-isconstant-checkbox" />Неизменяемый</label>
-					<input oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя*" />
-					<textarea class="argument-description-textarea" placeholder="Краткое описание" />
+					<input oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя" />
+					<textarea spellcheck="false" class="argument-description-textarea" placeholder="Краткое описание" />
 				</template>
 
 				<template id="nameless-argument">
 					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" class="argument-isconstant-checkbox" />Неизменяемый</label>
-					<textarea class="argument-description-textarea" placeholder="Краткое описание" />
+					<textarea spellcheck="false" class="argument-description-textarea" placeholder="Краткое описание" />
 					<input oninput="updatePreviewCommand()" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
 				</template>
 
 				<template id="dropdown-argument">
 					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" disabled class="argument-isconstant-checkbox" />Неизменяемый</label>
-					<textarea class="argument-description-textarea" placeholder="Краткое описание" />
+					<input oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя" />
+					<textarea spellcheck="false" class="argument-description-textarea" placeholder="Краткое описание" />
 					// first element - default
 					<div class="dropdown-values">
 						<button onclick="addDropdownValueClick(event)" class="dropdown-add-value-button">
-						+
+							<svg fill="white" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 45.402 45.402" xml:space="preserve"><g><path d="M41.267,18.557H26.832V4.134C26.832,1.851,24.99,0,22.707,0c-2.283,0-4.124,1.851-4.124,4.135v14.432H4.141   c-2.283,0-4.139,1.851-4.138,4.135c-0.001,1.141,0.46,2.187,1.207,2.934c0.748,0.749,1.78,1.222,2.92,1.222h14.453V41.27   c0,1.142,0.453,2.176,1.201,2.922c0.748,0.748,1.777,1.211,2.919,1.211c2.282,0,4.129-1.851,4.129-4.133V26.857h14.435   c2.283,0,4.134-1.867,4.133-4.15C45.399,20.425,43.548,18.557,41.267,18.557z"></path></g></svg>
 						</button>
 					</div>
 					<template id="argument-dropdown-value-template">
 						<div class="dropdown-value">
-							<input oninput="updatePreviewCommand()" class="dropdown-value-input" />
-							<button onclick="deleteDropdownValue(event)" class="dropdown-value-delete">-
+							<input oninput="updatePreviewCommand()" class="dropdown-value-input argument-input" />
+							<button onclick="deleteDropdownValue(event)" class="dropdown-value-delete">
+								<svg fill="#000000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490 490" xml:space="preserve">
+									<polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490   489.292,457.678 277.331,245.004 489.292,32.337 "/>
+								</svg>
 							</button>
+							<script>
+								$(document.currentScript.previousElementSibling).hover(function(){
+									$(this).prev().toggleClass('trembling');
+								});
+							</script>
 						</div>
 					</template>
 				</template>
@@ -139,7 +153,13 @@ templ CreateTemplate(user *types.User) {
 				<div class="preview-command-commandparam">
 					<script>
 						el = document.currentScript.closest(".preview-command-commandparam");
-						el.addEventListener("click", (event) => excludeParamClick(event), true);
+						el.addEventListener("click", (event) => excludeParamClick(event));
+
+						el.addEventListener('mousedown', event => {
+							if (event.shiftKey) {
+								event.preventDefault();
+							}
+						});
 					</script>
 				</div>
 			</template>
@@ -147,6 +167,7 @@ templ CreateTemplate(user *types.User) {
 				<span class="preview-command-text preview-commandparam-empty"></span> 
 			</template>
 			<template id="preview-param-popup-template">
+				<span class="preview-command-text preview-command-string-name"></span>
 				<div class="dropdown">
 				<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 				</button>
@@ -169,6 +190,7 @@ templ CreateTemplate(user *types.User) {
 			</template>
 		</div>
 		<script>
+
 		function disabledDropdownToogle(event) {
 			console.log("here");
 			event.preventDefault();

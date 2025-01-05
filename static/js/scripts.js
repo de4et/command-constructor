@@ -192,6 +192,9 @@ function updatePreviewCommand() {
     "preview-command-commandname"
   )[0];
   previewCommandNameEl.textContent = commandName;
+  if (previewCommandNameEl.textContent == "") {
+    previewCommandNameEl.textContent = "имя";
+  }
 
   while (previewCommandNameEl.nextSibling) {
     if (previewCommandNameEl.nextSibling.tagName == "TEMPLATE") break;
@@ -224,27 +227,38 @@ function getPreviewParamElem(arg) {
 
   itemParam.setAttribute("data-paramtype", "template");
   switch (arg.get("type")) {
-    case "0":
+    case 0:
       sParamTemplate = document.querySelector("#preview-param-string-template");
       itemSParam = sParamTemplate.content.cloneNode(true);
       itemSParam.querySelector("span").textContent = arg.get("name");
+      if (itemSParam.querySelector("span").textContent == "") {
+        itemSParam.querySelector("span").remove();
+      }
       itemSParam.querySelector("input").value = arg.get("defaultValue");
       break;
-    case "1":
+    case 1:
       sParamTemplate = document.querySelector("#preview-param-empty-template");
       itemSParam = sParamTemplate.content.cloneNode(true);
       itemSParam.querySelector("span").textContent = arg.get("name");
+      if (itemSParam.querySelector("span").textContent == "") {
+        itemSParam.querySelector("span").remove();
+      }
+
       break;
-    case "2":
+    case 2:
       sParamTemplate = document.querySelector(
         "#preview-param-nameless-template"
       );
       itemSParam = sParamTemplate.content.cloneNode(true);
       itemSParam.querySelector("input").value = arg.get("defaultValue");
       break;
-    case "3":
+    case 3:
       sParamTemplate = document.querySelector("#preview-param-popup-template");
       itemSParam = sParamTemplate.content.cloneNode(true);
+      itemSParam.querySelector("span").textContent = arg.get("name");
+      if (itemSParam.querySelector("span").textContent == "") {
+        itemSParam.querySelector("span").remove();
+      }
       fillSelectWithValues(
         itemSParam.querySelector(".dropdown-menu"),
         arg.get("value")
@@ -261,7 +275,7 @@ function fillSelectWithValues(selectEl, values) {
   if (values != 0) {
     button.textContent = values[0];
   } else {
-    button.textContent = "-";
+    button.textContent = "";
   }
 
   for (var i = 0; i < values.length; i++) {
@@ -321,7 +335,7 @@ function argumentToMap(elem) {
   m = new Map();
   m.set("name", name);
   m.set("description", description);
-  m.set("type", type);
+  m.set("type", parseInt(type));
   m.set("defaultValue", default_value);
   m.set("value", value);
   m.set("isconstant", isconstant);
@@ -330,7 +344,7 @@ function argumentToMap(elem) {
 
 function addDropdownValueClick(e) {
   e.preventDefault();
-  var buttonEl = e.target;
+  var buttonEl = e.currentTarget;
 
   var template = document.querySelector("#argument-dropdown-value-template");
   var item = template.content.cloneNode(true).firstElementChild;
@@ -457,16 +471,24 @@ function argumentMouseUp(event) {
   updatePreviewCommand();
 }
 
+function makeUnselectable(elem) {
+  if (typeof elem == "string") elem = document.getElementById(elem);
+  if (elem) {
+    elem.onselectstart = function () {
+      return false;
+    };
+    elem.style.MozUserSelect = "none";
+    elem.style.KhtmlUserSelect = "none";
+    elem.unselectable = "on";
+  }
+}
+
 function excludeParamClick(event) {
-  console.log(event.eventPhase);
   elem = event.currentTarget;
-  console.log(event.currentTarget);
-  console.log(elem);
   if (event.shiftKey) {
     event.preventDefault();
     event.stopPropagation();
     event.stopImmediatePropagation();
-    console.log("stopped everything");
     elem.classList.toggle("param-excluded");
 
     childInput = elem.querySelector("input");
@@ -477,11 +499,9 @@ function excludeParamClick(event) {
       childDropdown.classList.toggle("disabled");
       disabled = childDropdown.classList.contains("disabled");
       $(childDropdown).dropdown("toggle");
-      console.log("aaaaa");
       childDropdown.addEventListener(
         "show.bs.dropdown",
         (event) => {
-          console.log("aaaa");
           if (disabled) {
             event.preventDefault();
           }
@@ -499,7 +519,15 @@ function createTemplateClick(event) {
   // jsondata = JSON.stringify(Object.fromEntries(formdata));
   args = argumentsToMap();
   mapdata.set("templateParams", args);
-  console.log(mapdata);
+
+  const serializedMap = Object.fromEntries(
+    Array.from(mapdata.entries()).map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return [key, value.map((innerMap) => Object.fromEntries(innerMap))];
+      }
+      return [key, value];
+    })
+  );
 
   const url = form.getAttribute("action");
   fetch(url, {
@@ -508,7 +536,7 @@ function createTemplateClick(event) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(mapdata),
+    body: JSON.stringify(serializedMap),
   }).then((res) => {
     let status = res.status;
     res.json().then((data) => {
@@ -532,3 +560,11 @@ function createTemplateClick(event) {
     });
   });
 }
+
+$(document).ready(function () {
+  $("form").bind("keypress", function (e) {
+    if (e.keyCode == 13) {
+      return false;
+    }
+  });
+});

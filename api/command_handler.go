@@ -54,10 +54,11 @@ func (u *CommandHandler) HandleDeleteCommand(c *fiber.Ctx) error {
 }
 
 func (u *CommandHandler) HandleCreateCommand(c *fiber.Ctx) error {
+	fmt.Println("creating command")
 	var params types.CreateCommandTemplateParams
 	err := c.BodyParser(&params)
 	if err != nil {
-		return err
+		return ErrInvalidData()
 	}
 
 	valid := validator.New()
@@ -67,7 +68,7 @@ func (u *CommandHandler) HandleCreateCommand(c *fiber.Ctx) error {
 
 	user := c.Context().Value("user").(*types.User)
 	if user == nil {
-		return fmt.Errorf("no user")
+		return ErrUnauthorized()
 	}
 
 	cmd, err := types.NewCommandTemplateFromParams(user.ID, params)
