@@ -68,8 +68,8 @@ func Index(commandTemplates []*types.CommandTemplate, user *types.User) templ.Co
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				for _, v := range commandTemplates {
-					templ_7745c5c3_Err = CommandTemplate(v).Render(ctx, templ_7745c5c3_Buffer)
+				for i := len(commandTemplates) - 1; i >= 0; i-- {
+					templ_7745c5c3_Err = CommandTemplate(commandTemplates[i]).Render(ctx, templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
