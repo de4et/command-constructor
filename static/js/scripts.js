@@ -192,13 +192,14 @@ function fillArgument(elem, arg) {
   );
   $(select).change();
 
-  name = elem.querySelector(".argument-name-input");
-  if (name) name.value = arg.get("name");
+  nameEl = elem.querySelector(".argument-name-input");
+  if (nameEl) nameEl.value = arg.get("name");
 
   description = elem.querySelector(".argument-description-textarea");
   description.value = arg.get("description");
 
   isconstant = elem.querySelector(".argument-isconstant-checkbox");
+  console.log(isconstant);
   isconstant.checked = arg.get("isconstant");
 
   default_value = elem.querySelector(".argument-default-value");
@@ -683,59 +684,3 @@ $(document).ready(function () {
     }
   });
 });
-// {
-//   "name": "send files via ssh",
-//   "description": "send files by pscp(putty)",
-//   "commandname": "pscp",
-//   "templateparams": [
-//     {
-//       "name": "",
-//       "description": "path: example -- root@127.0.0.1:/root/",
-//       "type": 3,
-//       "value": [],
-//       "defaultvalue": ""
-//     },
-//     {
-//       "name": "-i",
-//       "description": "private key to send without authentication\nexample -- %userprofile%/documents/prin.ppk",
-//       "type": 0,
-//       "value": [],
-//       "defaultvalue": ""
-//     },
-//     {
-//       "name": "-r",
-//       "description": "for sending directory\nexample -- ./bin",
-//       "type": 0,
-//       "value": [],
-//       "defaultvalue": ""
-//     }
-//   ],
-// }
-// {
-//   "name": "send files via ssh",
-//   "description": "send files by pscp(Putty)",
-//   "commandName": "pscp",
-//   "templateParams": [
-//     {
-//       "name": "",
-//       "description": "Path: example -- root@127.0.0.1:/root/",
-//       "type": 3,
-//       "value": [],
-//       "defaultValue": ""
-//     },
-//     {
-//       "name": "-i",
-//       "description": "private key to send without authentication\nexample -- %USERPROFILE%/Documents/prin.ppk",
-//       "type": 0,
-//       "value": [],
-//       "defaultValue": ""
-//     },
-//     {
-//       "name": "-r",
-//       "description": "for sending directory\nexample -- ./bin",
-//       "type": 0,
-//       "value": [],
-//       "defaultValue": ""
-//     }
-//   ]
-// }

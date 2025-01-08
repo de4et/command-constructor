@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/a-h/templ"
 	"github.com/de4et/command-constructor/db"
 	"github.com/de4et/command-constructor/types"
@@ -61,6 +63,7 @@ func (u *MainHandler) HandleEdit(c *fiber.Ctx) error {
 		return err
 	}
 
+	fmt.Printf("%+v\n", command)
 	create := view.EditTemplate(user, command)
 	handler := adaptor.HTTPHandler(templ.Handler(create))
 	return handler(c)

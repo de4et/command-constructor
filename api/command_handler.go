@@ -58,6 +58,7 @@ func (u *CommandHandler) HandleCreateCommand(c *fiber.Ctx) error {
 	if err != nil {
 		return ErrInvalidData()
 	}
+	fmt.Printf("%+v\n", params)
 
 	user := c.Context().Value("user").(*types.User)
 	if user == nil {
