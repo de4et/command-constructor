@@ -3,8 +3,11 @@ package view
 import "github.com/de4et/command-constructor/types"
 
 
-templ CommandTemplate(ct types.CommandTemplate) {
+templ CommandTemplate(ct *types.CommandTemplate) {
 	<div class="command-template" id={ct.ID}>
-		<span>{ct.Name}</span>
+		<span class="template-name">{ct.Name}</span>
+		<div class="preview-command"> 
+			<span class="preview-command-text preview-command-commandname">имя</span>
+		</div>
 	</div>
 }

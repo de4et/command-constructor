@@ -5,7 +5,6 @@ import (
 
 	"github.com/de4et/command-constructor/db"
 	"github.com/de4et/command-constructor/types"
-	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -54,15 +53,9 @@ func (u *CommandHandler) HandleDeleteCommand(c *fiber.Ctx) error {
 }
 
 func (u *CommandHandler) HandleCreateCommand(c *fiber.Ctx) error {
-	fmt.Println("creating command")
 	var params types.CreateCommandTemplateParams
 	err := c.BodyParser(&params)
 	if err != nil {
-		return ErrInvalidData()
-	}
-
-	valid := validator.New()
-	if err := valid.Struct(params); err != nil {
 		return ErrInvalidData()
 	}
 
@@ -99,6 +92,7 @@ func (u *CommandHandler) HandleSearchCommands(c *fiber.Ctx) error {
 }
 
 func (u *CommandHandler) HandleUpdateCommand(c *fiber.Ctx) error {
+	fmt.Println("im here putting")
 	id := c.Params("id")
 	var params types.UpdateCommandTemplateParams
 	if err := c.BodyParser(&params); err != nil {

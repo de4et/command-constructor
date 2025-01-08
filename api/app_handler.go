@@ -21,8 +21,15 @@ func NewMainHandler(store *db.Store) *MainHandler {
 
 func (u *MainHandler) HandleMain(c *fiber.Ctx) error {
 	user, _ := c.Context().Value("user").(*types.User)
+	commandTemplates := []*types.CommandTemplate{}
 
-	commandTemplates := make([]types.CommandTemplate, 0)
+	if user != nil {
+		var err error
+		commandTemplates, err = u.Store.Command.GetCommandsOfUser(c.Context(), user.ID)
+		if err != nil {
+			return ErrPrivateInternal()
+		}
+	}
 
 	index := view.Index(commandTemplates, user)
 	handler := adaptor.HTTPHandler(templ.Handler(index))
@@ -36,7 +43,25 @@ func (u *MainHandler) HandleCreate(c *fiber.Ctx) error {
 		return c.Redirect("/main")
 	}
 
-	create := view.CreateTemplate(user)
+	create := view.CreateTemplate(user, "Создание шаблона")
+	handler := adaptor.HTTPHandler(templ.Handler(create))
+	return handler(c)
+}
+
+func (u *MainHandler) HandleEdit(c *fiber.Ctx) error {
+	user, _ := c.Context().Value("user").(*types.User)
+	id := c.Params("id")
+
+	if user == nil {
+		return c.Redirect("/main")
+	}
+
+	command, err := u.Store.Command.GetCommandByID(c.Context(), id)
+	if err != nil {
+		return err
+	}
+
+	create := view.EditTemplate(user, command)
 	handler := adaptor.HTTPHandler(templ.Handler(create))
 	return handler(c)
 }

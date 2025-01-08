@@ -164,6 +164,52 @@ function addArgumentClick(event) {
   updatePreviewCommand();
 }
 
+function fillCommandTemplate(commandTemplate) {
+  // fill main inputs
+  document.querySelector(".form-input-name").value =
+    commandTemplate.get("name");
+  document.querySelector(".form-input-description").value =
+    commandTemplate.get("description");
+  document.querySelector(".form-input-commandName").value =
+    commandTemplate.get("commandName");
+
+  // fill arguments
+  commandTemplate.get("templateParams").forEach((param) => {
+    var argument_id = generateArgumentID();
+    argEl = addNewArgumentBlock(argument_id);
+    fillArgument(argEl, param);
+  });
+
+  updatePreviewCommand();
+}
+
+function fillArgument(elem, arg) {
+  select = elem.querySelector("select");
+  $(select).val(
+    select.querySelector(
+      "option[data-type-id='" + arg.get("type").toString() + "']"
+    ).value
+  );
+  $(select).change();
+
+  name = elem.querySelector(".argument-name-input");
+  if (name) name.value = arg.get("name");
+
+  description = elem.querySelector(".argument-description-textarea");
+  description.value = arg.get("description");
+
+  isconstant = elem.querySelector(".argument-isconstant-checkbox");
+  isconstant.checked = arg.get("isconstant");
+
+  default_value = elem.querySelector(".argument-default-value");
+  if (default_value) default_value.value = arg.get("defaultValue");
+
+  buttonEl = elem.querySelector(".dropdown-add-value-button");
+  if (arg.get("type") == "3") {
+    arg.get("value").forEach((val) => addDropdownValue(buttonEl, val));
+  }
+}
+
 var lastArgumentID = 0;
 
 function addNewArgumentBlock(argument_id) {
@@ -172,8 +218,10 @@ function addNewArgumentBlock(argument_id) {
 
   var template = document.querySelector("#argument-template");
   var item = template.content.cloneNode(true);
+  argBlock = item.querySelector("div");
   item.querySelector("div").id = "argument-" + argument_id;
   button.before(item);
+  return argBlock;
 }
 
 function generateArgumentID() {
@@ -353,6 +401,14 @@ function addDropdownValueClick(e) {
   updatePreviewCommand();
 }
 
+function addDropdownValue(buttonEl, value) {
+  var template = document.querySelector("#argument-dropdown-value-template");
+  var item = template.content.cloneNode(true).firstElementChild;
+  item.querySelector("input").value = value;
+
+  buttonEl.before(item);
+}
+
 function deleteDropdownValue(event) {
   event.preventDefault();
   var buttonEl = event.target;
@@ -511,12 +567,26 @@ function excludeParamClick(event) {
     }
   }
 }
+function toMap(obj) {
+  if (Array.isArray(obj)) {
+    // If it's an array, recursively convert each element
+    return obj.map(toMap);
+  } else if (obj !== null && typeof obj === "object") {
+    // If it's an object, convert it into a Map
+    const map = new Map();
+    for (const [key, value] of Object.entries(obj)) {
+      map.set(key, toMap(value)); // Recursively process values
+    }
+    return map;
+  }
+  // If it's neither an array nor an object, return it as-is (primitive values)
+  return obj;
+}
 
 function createTemplateClick(event) {
   form = document.querySelector(".create-form");
   formdata = new FormData(form);
   mapdata = new Map(formdata);
-  // jsondata = JSON.stringify(Object.fromEntries(formdata));
   args = argumentsToMap();
   mapdata.set("templateParams", args);
 
@@ -529,6 +599,12 @@ function createTemplateClick(event) {
     })
   );
 
+  const button = form.querySelector(".create-form-button");
+  const loading_animation = form.querySelector(".loading-animation");
+
+  button.hidden = true;
+  loading_animation.hidden = false;
+
   const url = form.getAttribute("action");
   fetch(url, {
     method: "POST",
@@ -540,20 +616,59 @@ function createTemplateClick(event) {
   }).then((res) => {
     let status = res.status;
     res.json().then((data) => {
+      button.hidden = false;
+      loading_animation.hidden = true;
       if (status != 200) {
-        button.hidden = false;
-        loading_animation.hidden = true;
-        if (data.error) {
-          setError(logForm, "log-error-message", data.error);
-        } else {
-          setError(
-            logForm,
-            "log-error-message",
-            data.name,
-            data.email,
-            data.password
-          );
-        }
+        setError(form, "log-error-message", data.error);
+      } else {
+        window.location.href = window.location.origin + "/edit/" + data.id;
+      }
+    });
+  });
+}
+
+function editTemplateClick(event) {
+  form = document.querySelector(".create-form");
+  formdata = new FormData(form);
+  mapdata = new Map(formdata);
+  args = argumentsToMap();
+  mapdata.set("templateParams", args);
+
+  const serializedMap = Object.fromEntries(
+    Array.from(mapdata.entries()).map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return [key, value.map((innerMap) => Object.fromEntries(innerMap))];
+      }
+      return [key, value];
+    })
+  );
+
+  const queryString = window.location.href;
+  const segments = new URL(queryString).pathname.split("/");
+  const id = segments.pop() || segments.pop();
+
+  const button = form.querySelector(".create-form-button");
+  const loading_animation = form.querySelector(".loading-animation");
+
+  button.hidden = true;
+  loading_animation.hidden = false;
+
+  const url =
+    window.location.origin + "/" + form.getAttribute("action") + "/" + id;
+  fetch(url, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(serializedMap),
+  }).then((res) => {
+    let status = res.status;
+    res.json().then((data) => {
+      button.hidden = false;
+      loading_animation.hidden = true;
+      if (status != 200) {
+        setError(form, "log-error-message", data.error);
       } else {
         window.location.reload();
       }
@@ -562,9 +677,65 @@ function createTemplateClick(event) {
 }
 
 $(document).ready(function () {
-  $("form").bind("keypress", function (e) {
+  $(".create-form").bind("keypress", function (e) {
     if (e.keyCode == 13) {
       return false;
     }
   });
 });
+// {
+//   "name": "send files via ssh",
+//   "description": "send files by pscp(putty)",
+//   "commandname": "pscp",
+//   "templateparams": [
+//     {
+//       "name": "",
+//       "description": "path: example -- root@127.0.0.1:/root/",
+//       "type": 3,
+//       "value": [],
+//       "defaultvalue": ""
+//     },
+//     {
+//       "name": "-i",
+//       "description": "private key to send without authentication\nexample -- %userprofile%/documents/prin.ppk",
+//       "type": 0,
+//       "value": [],
+//       "defaultvalue": ""
+//     },
+//     {
+//       "name": "-r",
+//       "description": "for sending directory\nexample -- ./bin",
+//       "type": 0,
+//       "value": [],
+//       "defaultvalue": ""
+//     }
+//   ],
+// }
+// {
+//   "name": "send files via ssh",
+//   "description": "send files by pscp(Putty)",
+//   "commandName": "pscp",
+//   "templateParams": [
+//     {
+//       "name": "",
+//       "description": "Path: example -- root@127.0.0.1:/root/",
+//       "type": 3,
+//       "value": [],
+//       "defaultValue": ""
+//     },
+//     {
+//       "name": "-i",
+//       "description": "private key to send without authentication\nexample -- %USERPROFILE%/Documents/prin.ppk",
+//       "type": 0,
+//       "value": [],
+//       "defaultValue": ""
+//     },
+//     {
+//       "name": "-r",
+//       "description": "for sending directory\nexample -- ./bin",
+//       "type": 0,
+//       "value": [],
+//       "defaultValue": ""
+//     }
+//   ]
+// }

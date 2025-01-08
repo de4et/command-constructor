@@ -9,7 +9,7 @@ type CommandParamType int
 const (
 	TypeString CommandParamType = iota
 	TypeEmpty
-	TypeNameless // without name but with value. Omit Name? or leave it empty?
+	TypeNameless // without name but with value. Omit Name? or leave it empty? => leave it empty
 	TypePopupMenu
 )
 
@@ -29,15 +29,15 @@ type CommandTemplate struct {
 	Description string `bson:"description" json:"description"`
 
 	CommandName    string         `bson:"commandName" json:"commandName"`
-	TemplateParams []CommandParam `bson:"templateParams" json:"templateParams"` // popup menu, editable empty string (probably with some default value)
+	TemplateParams []CommandParam `bson:"templateParams" json:"templateParams"`
 }
 
 type CreateCommandTemplateParams struct {
-	Name        string `json:"name" validate:"required"`
-	Description string `json:"description" validate:"required"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
 
-	CommandName    string         `json:"commandName" validate:"required"`
-	TemplateParams []CommandParam `json:"templateParams" validate:"required"`
+	CommandName    string         `json:"commandName"`
+	TemplateParams []CommandParam `json:"templateParams"`
 }
 
 type UpdateCommandTemplateParams struct {

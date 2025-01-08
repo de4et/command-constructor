@@ -17,6 +17,7 @@ type CommandStore interface {
 	Dropper
 
 	GetCommands(context.Context) ([]*types.CommandTemplate, error)
+	GetCommandByID(ctx context.Context, id string) (*types.CommandTemplate, error)
 	InsertCommand(ctx context.Context, command *types.CommandTemplate) (*types.CommandTemplate, error)
 	SearchCommands(ctx context.Context, userID string, name string) ([]*types.CommandTemplate, error)
 	UpdateCommand(ctx context.Context, id string, command *types.CommandTemplate) error
@@ -39,6 +40,14 @@ func NewMongoCommandStore(client *mongo.Client, dbname string) *MongoCommandStor
 
 func (s *MongoCommandStore) GetCommands(ctx context.Context) ([]*types.CommandTemplate, error) {
 	return s.getCommandsByFilter(ctx, bson.M{})
+}
+
+func (s *MongoCommandStore) GetCommandByID(ctx context.Context, id string) (*types.CommandTemplate, error) {
+	oid, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return nil, err
+	}
+	return s.getCommandByFilter(ctx, bson.M{"_id": oid})
 }
 
 func (s *MongoCommandStore) GetCommandsOfUser(ctx context.Context, userID string) ([]*types.CommandTemplate, error) {
@@ -136,13 +145,6 @@ func (s *MongoCommandStore) Drop(ctx context.Context) error {
 	return s.coll.Drop(ctx)
 }
 
-func (s *MongoCommandStore) GetCommandByID(ctx context.Context, id string) (*types.CommandTemplate, error) {
-	oid, err := primitive.ObjectIDFromHex(id)
-	if err != nil {
-		return nil, err
-	}
-	return s.getCommandByFilter(ctx, bson.M{"_id": oid})
-}
 func (s *MongoCommandStore) IsExists(ctx context.Context, userID, id string) (bool, error) {
 	u, err := s.GetCommandByID(ctx, id)
 	if err != nil {

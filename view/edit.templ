@@ -1,0 +1,15 @@
+package view
+
+import "github.com/de4et/command-constructor/types"
+
+
+templ EditTemplate(user *types.User, commandTemplates *types.CommandTemplate) {
+	@CreateTemplate(user, "Шаблон #"+commandTemplates.ID)
+	<div id="json-arg-text" style="display:none;">{templ.JSONString(commandTemplates)}</div>
+	<script>
+		var json1String = document.getElementById("json-arg-text").textContent;
+		var json1Object = JSON.parse(json1String);
+		var deepMap = toMap(json1Object);
+		fillCommandTemplate(deepMap);
+	</script>
+}

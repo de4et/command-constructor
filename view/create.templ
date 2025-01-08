@@ -1,13 +1,14 @@
 package view
 
 import "github.com/de4et/command-constructor/types"
+import "strings"
 
 
-templ CreateTemplate(user *types.User) {
-	@page("Создание шаблона", user) {
+templ CreateTemplate(user *types.User, title string) {
+	@page(title, user) {
 		<div class="create-menu">
 			<h2 class="body-title">
-				Создание шаблона
+				{ title }
 			</h2>
 
 			<div class="preview-command"> 
@@ -144,9 +145,17 @@ templ CreateTemplate(user *types.User) {
 					</template>
 				</template>
 
-				<button onclick="createTemplateClick(event)" type="button" class="create-form-button">
-					Создать
-				</button>
+				if (strings.HasPrefix(title, "Создание")) {
+					<button onclick="createTemplateClick(event)" type="button" class="create-form-button">
+						Создать
+					</button>
+				} else {
+					<button onclick="editTemplateClick(event)" type="button" class="create-form-button">
+						Изменить
+					</button>
+				}
+
+				<div hidden="true" class="lds-ellipsis loading-animation"><div></div><div></div><div></div><div></div></div>
 			</form>
 
 			<template id="preview-param-template">

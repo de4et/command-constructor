@@ -78,6 +78,7 @@ func (s *MongoUserStore) GetUserByID(ctx context.Context, id string) (*types.Use
 	}
 	return s.GetUserByFilter(ctx, bson.M{"_id": oid})
 }
+
 func (s *MongoUserStore) GetUserByName(ctx context.Context, name string) (*types.User, error) {
 	return s.GetUserByFilter(ctx, bson.M{"name": name})
 }
