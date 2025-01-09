@@ -1,0 +1,45 @@
+package view
+
+templ PreviewTemplates() {
+	<template id="preview-param-template">
+		<div class="preview-command-commandparam">
+			<script>
+				el = document.currentScript.closest(".preview-command-commandparam");
+				el.addEventListener("click", (event) => excludeParamClick(event));
+
+				el.addEventListener('mousedown', event => {
+					if (event.shiftKey) {
+						event.preventDefault();
+					}
+				});
+			</script>
+			<div class="preview-param-description">
+			</div>
+		</div>
+	</template>
+	<template id="preview-param-empty-template">
+		<span class="preview-command-text preview-commandparam-empty"></span> 
+	</template>
+	<template id="preview-param-popup-template">
+		<span class="preview-command-text preview-command-string-name"></span>
+		<div class="dropdown">
+		<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+		</button>
+		<ul class="dropdown-menu">
+		</ul>
+		</div>
+	</template>
+	<template id="param-value-template">
+		<li><a class="dropdown-item" href="#"></a></li>
+	</template>
+	<template id="preview-param-nameless-template">
+		<input class="preview-command-nameless" />
+	</template>
+	<template id="preview-param-string-template">
+		<span class="preview-command-text preview-command-string-name"></span>
+		<input class="preview-command-string-input" />
+	</template>
+	<template id="preview-param-constant-template">
+		<span class="preview-command-text"></span> 
+	</template>
+}

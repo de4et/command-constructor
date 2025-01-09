@@ -909,6 +909,7 @@ textarea {
   transform: translate3d(0px, 1.7rem, 0px);
   z-index: 2;
   word-wrap: break-word;
+  min-width: 33%;
   max-width: 100%;
 }
 

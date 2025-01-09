@@ -7,7 +7,19 @@ templ CommandTemplate(ct *types.CommandTemplate) {
 	<div class="command-template" id={ct.ID}>
 		<span class="template-name">{ct.Name}</span>
 		<div class="preview-command"> 
-			<span class="preview-command-text preview-command-commandname">имя</span>
+			<span class="preview-command-text preview-command-commandname">{ct.CommandName}</span>
 		</div>
+		<div data-name="jsonCT" style="display:none;">{templ.JSONString(ct)}</div>
+		<script>
+			var el = document.currentScript.closest(".command-template");
+			var previewEl = el.querySelector(".preview-command");
+			var text = el.querySelector("div[data-name='jsonCT'").textContent;
+			var json1Object = JSON.parse(text);
+			var deepMap = toMap(json1Object);
+			deepMap.get("templateParams").forEach((arg) => {
+				elem = getPreviewParamElem(arg);
+				previewEl.appendChild(elem);
+			});
+		</script>
 	</div>
 }

@@ -10,7 +10,6 @@ templ EditTemplate(user *types.User, commandTemplates *types.CommandTemplate) {
 		var json1String = document.getElementById("json-arg-text").textContent;
 		var json1Object = JSON.parse(json1String);
 		var deepMap = toMap(json1Object);
-		console.log(deepMap);
 		fillCommandTemplate(deepMap);
 	</script>
 }

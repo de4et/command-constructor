@@ -57,7 +57,33 @@ func CommandTemplate(ct *types.CommandTemplate) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span><div class=\"preview-command\"><span class=\"preview-command-text preview-command-commandname\">имя</span></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span><div class=\"preview-command\"><span class=\"preview-command-text preview-command-commandname\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(ct.CommandName)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/command_template.templ`, Line: 10, Col: 81}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></div><div data-name=\"jsonCT\" style=\"display:none;\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(ct))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/command_template.templ`, Line: 12, Col: 69}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><script>\r\n\t\t\tvar el = document.currentScript.closest(\".command-template\");\r\n\t\t\tvar previewEl = el.querySelector(\".preview-command\");\r\n\t\t\tvar text = el.querySelector(\"div[data-name='jsonCT'\").textContent;\r\n\t\t\tvar json1Object = JSON.parse(text);\r\n\t\t\tvar deepMap = toMap(json1Object);\r\n\t\t\tdeepMap.get(\"templateParams\").forEach((arg) => {\r\n\t\t\t\telem = getPreviewParamElem(arg);\r\n\t\t\t\tpreviewEl.appendChild(elem);\r\n\t\t\t});\r\n\t\t</script></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -31,6 +31,7 @@ templ Index(commandTemplates []*types.CommandTemplate, user *types.User) {
 				for i := len(commandTemplates)-1; i >= 0; i-- {
 					@CommandTemplate(commandTemplates[i])
 				}
+			@PreviewTemplates()
 			</div>
 		}
 	}
