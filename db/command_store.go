@@ -3,7 +3,6 @@ package db
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/de4et/command-constructor/types"
 	"go.mongodb.org/mongo-driver/bson"
@@ -67,12 +66,6 @@ func (s *MongoCommandStore) InsertCommand(ctx context.Context, command *types.Co
 }
 
 func (s *MongoCommandStore) SearchCommands(ctx context.Context, userID string, name string) ([]*types.CommandTemplate, error) {
-	oid, err := primitive.ObjectIDFromHex(userID)
-	if err != nil {
-		return nil, err
-	}
-
-	fmt.Println(oid)
 	cur, err := s.coll.Find(ctx, bson.M{
 		// "$text": bson.M{
 		// 	"$search": name,

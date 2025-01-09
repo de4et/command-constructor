@@ -58,7 +58,6 @@ func (u *CommandHandler) HandleCreateCommand(c *fiber.Ctx) error {
 	if err != nil {
 		return ErrInvalidData()
 	}
-	fmt.Printf("%+v\n", params)
 
 	user := c.Context().Value("user").(*types.User)
 	if user == nil {
@@ -93,7 +92,6 @@ func (u *CommandHandler) HandleSearchCommands(c *fiber.Ctx) error {
 }
 
 func (u *CommandHandler) HandleUpdateCommand(c *fiber.Ctx) error {
-	fmt.Println("im here putting")
 	id := c.Params("id")
 	var params types.UpdateCommandTemplateParams
 	if err := c.BodyParser(&params); err != nil {
@@ -105,7 +103,6 @@ func (u *CommandHandler) HandleUpdateCommand(c *fiber.Ctx) error {
 		return fmt.Errorf("no user")
 	}
 
-	fmt.Println(user.ID, id)
 	if ok, err := u.Store.Command.IsExists(c.Context(), user.ID, id); err != nil {
 		return ErrPrivateInternal()
 	} else if !ok {

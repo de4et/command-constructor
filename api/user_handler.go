@@ -81,9 +81,7 @@ func (u *UserHandler) HandleDeleteUser(c *fiber.Ctx) error {
 }
 
 func (u *UserHandler) HandleCreateUser(c *fiber.Ctx) error {
-	// time.Sleep(time.Second * 3)
 	var params types.CreateUserParams
-	fmt.Printf("%+v\n", params)
 	if err := c.BodyParser(&params); err != nil {
 		return ErrInvalidData()
 	}

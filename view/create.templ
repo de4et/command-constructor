@@ -102,26 +102,26 @@ templ CreateTemplate(user *types.User, title string) {
 				<template id="common-argument">
 					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" class="argument-isconstant-checkbox" />Неизменяемый</label>
 					<input oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя" />
-					<textarea spellcheck="false" class="argument-description-textarea" placeholder="Краткое описание" />
+					<textarea spellcheck="false" oninput="updatePreviewCommand()" class="argument-description-textarea" placeholder="Краткое описание" />
 					<input oninput="updatePreviewCommand()" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
 				</template>
 
 				<template id="withoutvalue-argument">
 					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" checked="checked" disabled class="argument-isconstant-checkbox" />Неизменяемый</label>
 					<input oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя" />
-					<textarea spellcheck="false" class="argument-description-textarea" placeholder="Краткое описание" />
+					<textarea spellcheck="false" oninput="updatePreviewCommand()" class="argument-description-textarea" placeholder="Краткое описание" />
 				</template>
 
 				<template id="nameless-argument">
 					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" class="argument-isconstant-checkbox" />Неизменяемый</label>
-					<textarea spellcheck="false" class="argument-description-textarea" placeholder="Краткое описание" />
+					<textarea spellcheck="false" oninput="updatePreviewCommand()" class="argument-description-textarea" placeholder="Краткое описание" />
 					<input oninput="updatePreviewCommand()" class="argument-default-value argument-input" placeholder="Значение по умолчанию" />
 				</template>
 
 				<template id="dropdown-argument">
 					<label class="isconstant-label"><input oninput="updatePreviewCommand()" type="checkbox" disabled class="argument-isconstant-checkbox" />Неизменяемый</label>
 					<input oninput="updatePreviewCommand()" class="argument-name-input argument-input" placeholder="Имя" />
-					<textarea spellcheck="false" class="argument-description-textarea" placeholder="Краткое описание" />
+					<textarea spellcheck="false" oninput="updatePreviewCommand()" class="argument-description-textarea" placeholder="Краткое описание" />
 					// first element - default
 					<div class="dropdown-values">
 						<button onclick="addDropdownValueClick(event)" class="dropdown-add-value-button">
@@ -171,7 +171,6 @@ templ CreateTemplate(user *types.User, title string) {
 						});
 					</script>
 					<div class="preview-param-description">
-
 					</div>
 				</div>
 			</template>

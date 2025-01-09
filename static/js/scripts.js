@@ -262,7 +262,7 @@ function getPreviewParamElem(arg) {
   var itemParam = paramTemplate.content.cloneNode(true).firstElementChild;
 
   descriptionEl = itemParam.querySelector(".preview-param-description");
-  descriptionEl.textContent = arg.get("description");
+  descriptionEl.innerText = arg.get("description");
 
   if (arg.get("isconstant")) {
     itemParam.setAttribute("data-paramtype", "constant");
@@ -386,6 +386,7 @@ function argumentToMap(elem) {
 
   m = new Map();
   m.set("name", name);
+  console.log(description);
   m.set("description", description);
   m.set("type", parseInt(type));
   m.set("defaultValue", default_value);
