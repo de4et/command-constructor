@@ -12,13 +12,13 @@ templ CreateTemplate(user *types.User, title string) {
 			</h2>
 
 			<div class="preview-command"> 
-				<span class="preview-command-text preview-command-commandname">имя</span>
+				<span class="preview-command-text preview-command-commandname"></span>
 			</div>
 
 			<form action="api/v1/command" class="create-form">
 				<input name="name" placeholder="Название" class="create-form-input form-input-name"/>
 				<textarea spellcheck="false" name="description" placeholder="Описание" class="create-form-input form-input-description"/>
-				<input name="commandName" oninput="commandNameInput(event)" placeholder="имя" class="create-form-input form-input-commandName"/>
+				<input name="commandName" oninput="commandNameInput(event)" placeholder="Имя команды" class="create-form-input form-input-commandName"/>
 
 				<h4 class="arguments-title">Аргументы</h4>
 				<div class="create-form-arguments">
@@ -170,6 +170,9 @@ templ CreateTemplate(user *types.User, title string) {
 							}
 						});
 					</script>
+					<div class="preview-param-description">
+
+					</div>
 				</div>
 			</template>
 			<template id="preview-param-empty-template">

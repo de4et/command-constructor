@@ -500,9 +500,15 @@ header {
   border: none;
   box-shadow: none;
   outline: none;
+  transition: .1s all;
+}
+
+.preview-command input:hover {
+  background-color: #f7c598;
 }
 
 .preview-command-commandparam {
+  position:relative;
   margin-left: 0.5rem;
   background-color: rgba(255, 130, 91, 0.65);
   display: flex;
@@ -888,4 +894,20 @@ textarea {
   width: 100%;
   margin-left:0;
   box-shadow:0 4px 10px 0px rgba(0,0,0,0.125);
+}
+
+.preview-param-description {
+  position: absolute;
+  display: none;
+  inset: 0px auto auto 0px;
+  margin:0px;
+  padding: 0.3rem;
+  border: 1px black solid;
+  border-radius: 0.3rem;
+  background-color: rgba(255, 255, 255, 0.786);
+  transform: translate3d(0px, 1.7rem, 0px);
+}
+
+.preview-command-commandparam:hover .preview-param-description {
+  display: block;
 }

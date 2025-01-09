@@ -261,6 +261,9 @@ function getPreviewParamElem(arg) {
   var paramTemplate = document.querySelector("#preview-param-template");
   var itemParam = paramTemplate.content.cloneNode(true).firstElementChild;
 
+  descriptionEl = itemParam.querySelector(".preview-param-description");
+  descriptionEl.textContent = arg.get("description");
+
   if (arg.get("isconstant")) {
     itemParam.setAttribute("data-paramtype", "constant");
     itemParam.classList.add("constant");
@@ -679,7 +682,7 @@ function editTemplateClick(event) {
 
 $(document).ready(function () {
   $(".create-form").bind("keypress", function (e) {
-    if (e.keyCode == 13) {
+    if (e.keyCode == 13 && e.target.tagName != "TEXTAREA") {
       return false;
     }
   });
