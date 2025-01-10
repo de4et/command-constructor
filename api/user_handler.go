@@ -118,5 +118,6 @@ func prepareApiTokenCookie(token string) *fiber.Cookie {
 	cookie := new(fiber.Cookie)
 	cookie.Name = tokenCookieName
 	cookie.Value = token
+	cookie.Expires = time.Now().AddDate(1, 0, 0)
 	return cookie
 }

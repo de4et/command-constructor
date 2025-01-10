@@ -30,6 +30,7 @@ templ Index(commandTemplates []*types.CommandTemplate, user *types.User) {
 			<div>@PreviewTemplates()
 			</div>
 			<div class="command-templates">
+				<h2 class="body-title templates-title">Шаблоны</h2>
 				for i := len(commandTemplates)-1; i >= 0; i-- {
 					@CommandTemplate(commandTemplates[i])
 				}

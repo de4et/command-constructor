@@ -479,9 +479,10 @@ header {
 }
 
 .preview-command {
+  width: 100%;
   padding: 1.1rem;
   margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   background-color: rgb(234, 168, 110);
   border-radius: 0.5rem;
   display: flex;
@@ -884,7 +885,7 @@ textarea {
 }
 
 .command-template:hover {
-  background-color: #ffab8194;
+  background-color: #ff59063b;
 }
 
 .command-templates:hover .command-template{
@@ -915,4 +916,60 @@ textarea {
 
 .preview-command-commandparam:hover .preview-param-description {
   display: block;
+}
+
+.templates-title {
+  margin-bottom: 0.2rem;
+}
+
+.template-name {
+  font-weight: bold;
+}
+
+.template-command {
+  height: 4.2rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+  overflow: hidden;
+}
+
+.template-buttons {
+  display: flex;
+  gap: 0.2rem;
+  align-self: stretch;
+  padding: 0.6rem;
+  background-color: #aa6246;
+}
+
+.preview-command-main {
+  margin: 0;
+  border-radius: 0;
+}
+
+.template-button svg {
+  height: 100%;
+}
+
+.template-button {
+  padding: 0.7rem;
+  border-radius: 0.4rem;
+  background-color: #9d523b;
+  text-decoration: none;
+  color: white;
+  transition: all .4s;
+}
+
+.template-button:hover {
+  background-color: #532c1d;
+  color: orange;
+  box-shadow: 0px 0px 6px 3px #883f14;
+}
+
+.template-button:active {
+  background-color: #2b1c16;
+  color: orange;
+  box-shadow: 0px 0px 6px 3px #883f14;
 }
