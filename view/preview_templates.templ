@@ -12,6 +12,23 @@ templ PreviewTemplates() {
 						event.preventDefault();
 					}
 				});
+
+
+				el.addEventListener("mouseenter", (event) => {
+					let elem = event.currentTarget;
+					descEl = elem.querySelector(".preview-param-description");
+					clearTimeout(timeouts.get(elem));
+					if (descEl.innerHTML != "") descEl.classList.add("hovered");
+				});
+
+				el.addEventListener("mouseleave", (event) => {
+					let elem = event.currentTarget;
+					const descEl = elem.querySelector(".preview-param-description");
+					timeO = setTimeout(() => {
+						descEl.classList.remove("hovered");
+					}, 100);
+					timeouts.set(elem, timeO);
+				});
 			</script>
 			<div class="preview-param-description">
 			</div>

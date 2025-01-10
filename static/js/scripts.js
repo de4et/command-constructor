@@ -688,3 +688,5 @@ $(document).ready(function () {
     }
   });
 });
+
+var timeouts = new Map();
