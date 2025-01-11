@@ -932,7 +932,6 @@ textarea {
 }
 
 .template-command {
-  height: 4.2rem;
   display: flex;
   align-items: center;
   width: 100%;
@@ -944,6 +943,7 @@ textarea {
   display: flex;
   gap: 0.2rem;
   align-self: stretch;
+  align-items: center;
   padding: 0.6rem;
   background-color: #aa6246;
   border-radius: 0 0.5rem 0.5rem 0;
@@ -966,6 +966,7 @@ textarea {
   color: white;
   transition: all .4s;
   border: none;
+  height: 3rem;
 }
 
 .template-button:hover {
@@ -986,4 +987,12 @@ textarea {
 
 .template-delete:hover svg {
   fill:#ff1010;
+}
+
+.template-copy svg {
+  fill: #dfdfdf;
+}
+
+.template-copy:hover svg {
+  fill: white;
 }

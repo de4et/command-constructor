@@ -690,3 +690,41 @@ $(document).ready(function () {
 });
 
 var timeouts = new Map();
+
+function templateCopyClick(event) {
+  const button = event.currentTarget;
+  const preview = button
+    .closest(".template-command")
+    .querySelector(".preview-command");
+  text = getTextFromPreview(preview);
+
+  navigator.clipboard.writeText(text);
+  console.log(text);
+}
+
+function getTextFromPreview(elem) {
+  let finalString = "";
+  const name = elem.querySelector(".preview-command-commandname");
+  finalString += name.innerText;
+
+  [...elem.querySelectorAll(".preview-command-commandparam")].forEach(
+    (paramEl) => {
+      [...paramEl.children].forEach((parPart) => {
+        switch (parPart.tagName) {
+          case "SPAN":
+            finalString += " " + parPart.innerText;
+            break;
+          case "INPUT":
+            finalString += " " + parPart.value;
+            break;
+          case "DIV":
+            if (!parPart.classList.contains("dropdown")) break;
+            button = parPart.querySelector("button");
+            finalString += " " + button.innerText;
+            break;
+        }
+      });
+    }
+  );
+  return finalString;
+}
