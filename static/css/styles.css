@@ -970,9 +970,9 @@ textarea {
 }
 
 .template-button:hover {
-  background-color: #532c1d;
+  background-color: #843e24;
   color: orange;
-  box-shadow: 0px 0px 6px 3px #883f14;
+  box-shadow: 0px 0px 4px 1px #883f14;
 }
 
 .template-button:active {
