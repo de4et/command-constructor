@@ -977,7 +977,7 @@ textarea {
 }
 
 .template-button:active {
-  background-color: #2b1c16;
+  background-color: #4a2d22;
   color: orange;
   box-shadow: 0px 0px 6px 3px #883f14;
 }
@@ -1004,4 +1004,59 @@ textarea {
 
 #Copy_Success {
   fill: white;
+}
+
+.template-delete-confirmation {
+  border-radius: 0.2rem;
+  padding: 0.3rem 0.6rem;
+  display: none;
+  position:absolute;
+  background-color: #f9ebe1;
+  z-index: 4;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%); 
+  width: 6rem;
+}
+
+.template-delete-confirmation.show {
+  display: block;
+}
+
+.template-delete-confirmation > * {
+  display: block;
+}
+
+.delete-confirmation-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.template-delete-confirmation-button {
+  padding: 0.3rem 0.5rem;
+  border: none;
+  border-radius: 0.2rem;
+  color: white;
+}
+
+.template-delete-block {
+  position: relative;
+}
+
+.yes-button {
+  background-color: #f85c5c;
+}
+
+.yes-button:hover {
+  background-color: #830202;
+}
+
+.no-button {
+  background-color: #02b002bd;
+}
+
+.no-button:hover {
+  background-color: rgb(2, 104, 2);
 }

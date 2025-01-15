@@ -1,17 +1,3 @@
-async function getData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-
-    const json = await response.json();
-    console.log(json);
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-
 function addFocusListeners(button, block) {
   const dropdown = document.querySelector(block);
   const dropdownButton = document.querySelector(button);
@@ -199,7 +185,6 @@ function fillArgument(elem, arg) {
   description.value = arg.get("description");
 
   isconstant = elem.querySelector(".argument-isconstant-checkbox");
-  console.log(isconstant);
   isconstant.checked = arg.get("isconstant");
 
   default_value = elem.querySelector(".argument-default-value");
@@ -386,7 +371,6 @@ function argumentToMap(elem) {
 
   m = new Map();
   m.set("name", name);
-  console.log(description);
   m.set("description", description);
   m.set("type", parseInt(type));
   m.set("defaultValue", default_value);
@@ -707,7 +691,6 @@ function templateCopyClick(event) {
   text = getTextFromPreview(preview);
 
   navigator.clipboard.writeText(text);
-  console.log(text);
 
   copySvg.classList.add("hidden");
   successSvg.classList.remove("hidden");
@@ -716,6 +699,16 @@ function templateCopyClick(event) {
     copySvg.classList.remove("hidden");
     successSvg.classList.add("hidden");
   }, 1000);
+}
+
+function templateDeleteClick(event) {
+  buttonEl = event.currentTarget;
+  showConfirmationMessage(buttonEl.closest(".template-delete-block"));
+}
+
+function showConfirmationMessage(deleteBlock) {
+  confirmEl = deleteBlock.querySelector(".template-delete-confirmation");
+  confirmEl.classList.toggle("show");
 }
 
 function getTextFromPreview(elem) {
@@ -743,4 +736,38 @@ function getTextFromPreview(elem) {
     }
   );
   return finalString;
+}
+
+function templateDeleteConfirmationDeclineClick(event) {
+  button = event.currentTarget;
+  confirmEl = button.closest(".template-delete-confirmation");
+  confirmEl.classList.remove("show");
+}
+
+function templateDeleteConfirmationApproveClick(event) {
+  button = event.currentTarget;
+  commandTemplate = button.closest(".command-template");
+  templateID = commandTemplate.id;
+  isDeleted = deleteTemplate(templateID);
+  if (isDeleted) {
+    commandTemplate.remove();
+  }
+}
+
+async function deleteTemplate(id) {
+  let url = "/api/v1/command/" + id;
+  let res = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  let status = res.status;
+  let data = await res.json();
+  if (status != 200) {
+    return false;
+  } else {
+    return true;
+  }
 }
