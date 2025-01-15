@@ -693,6 +693,14 @@ var timeouts = new Map();
 
 function templateCopyClick(event) {
   const button = event.currentTarget;
+
+  copySvg = button.querySelector("#Copy_Button");
+  successSvg = button.querySelector("#Copy_Success");
+
+  if (copySvg.classList.contains("hidden")) {
+    return;
+  }
+
   const preview = button
     .closest(".template-command")
     .querySelector(".preview-command");
@@ -700,6 +708,14 @@ function templateCopyClick(event) {
 
   navigator.clipboard.writeText(text);
   console.log(text);
+
+  copySvg.classList.add("hidden");
+  successSvg.classList.remove("hidden");
+
+  setTimeout(() => {
+    copySvg.classList.remove("hidden");
+    successSvg.classList.add("hidden");
+  }, 1000);
 }
 
 function getTextFromPreview(elem) {
