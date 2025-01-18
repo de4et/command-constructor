@@ -745,13 +745,16 @@ function templateDeleteConfirmationDeclineClick(event) {
 }
 
 function templateDeleteConfirmationApproveClick(event) {
-  button = event.currentTarget;
-  commandTemplate = button.closest(".command-template");
-  templateID = commandTemplate.id;
-  isDeleted = deleteTemplate(templateID);
-  if (isDeleted) {
-    commandTemplate.remove();
-  }
+  const button = event.currentTarget;
+  const commandTemplate = button.closest(".command-template");
+  const templateID = commandTemplate.id;
+  const isDeleted = deleteTemplate(templateID);
+  isDeleted.then((res) => {
+    console.log(res);
+    if (res) {
+      commandTemplate.remove();
+    }
+  });
 }
 
 async function deleteTemplate(id) {
