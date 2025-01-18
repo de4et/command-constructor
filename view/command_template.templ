@@ -4,7 +4,7 @@ import "github.com/de4et/command-constructor/types"
 
 
 templ CommandTemplate(ct *types.CommandTemplate) {
-	<div class="command-template" id={ct.ID}>
+	<div onclick="commandTemplateClick(event)" class="command-template" id={ct.ID}>
 		<span class="template-name">{ct.Name}</span>
 		<div class="template-command">
 			<div class="preview-command preview-command-main"> 
@@ -57,17 +57,48 @@ templ CommandTemplate(ct *types.CommandTemplate) {
 				</button>
 			</div>
 		</div>
+
+		<span class="template-description"></span>
+
+		if ct.Description != "" {
+
+			<svg class="drop-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve">
+			<path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393  c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393  s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"/>
+			</svg>
+
+			// <svg style="margin:auto" xmlns="http://www.w3.org/2000/svg" width="32" height="32" id="down-arrow">
+			// <path d="m21.956 16.364-5.992 5.3-5.992-5.3a1.007 1.007 0 0 0-1.422 1.422l6.69 5.918c.2.2.462.296.724.292a.994.994 0 0 0 .724-.29l6.69-5.918a1.007 1.007 0 0 0-1.422-1.424zm1.422-7.172a1.007 1.007 0 0 0-1.422 0l-5.992 5.3-5.992-5.3a1.007 1.007 0 0 0-1.424 1.422l6.69 5.918c.2.2.462.296.724.292a.993.993 0 0 0 .724-.292l6.69-5.918a1.001 1.001 0 0 0 .002-1.422z"/>
+			// </svg>
+		}
+
 		<div data-name="jsonCT" style="display:none;">{templ.JSONString(ct)}</div>
 		<script>
-			var el = document.currentScript.closest(".command-template");
-			var previewEl = el.querySelector(".preview-command");
-			var text = el.querySelector("div[data-name='jsonCT'").textContent;
-			var json1Object = JSON.parse(text);
-			var deepMap = toMap(json1Object);
-			deepMap.get("templateParams").forEach((arg) => {
-				elem = getPreviewParamElem(arg);
-				previewEl.appendChild(elem);
-			});
+			function insertCommandData() {
+				var el = document.currentScript.closest(".command-template");
+				var previewEl = el.querySelector(".preview-command");
+				var text = el.querySelector("div[data-name='jsonCT'").textContent;
+				var json1Object = JSON.parse(text);
+				var deepMap = toMap(json1Object);
+				deepMap.get("templateParams").forEach((arg) => {
+					elem = getPreviewParamElem(arg);
+					previewEl.appendChild(elem);
+				});
+				el.querySelector(".template-description").innerText = deepMap.get("description");
+			}
+			insertCommandData();
+		</script>
+
+		<script>
+			function addDescriptionListeners() {
+				const templateEl = document.currentScript.closest(".command-template");
+				const descEl = templateEl.querySelector(".template-description");
+				document.addEventListener("click", (event) => {
+					if (!templateEl.contains(event.target)) {
+						descEl.classList.remove("show");
+					}
+				});
+			}
+			addDescriptionListeners();
 		</script>
 	</div>
 }

@@ -678,8 +678,8 @@ var timeouts = new Map();
 function templateCopyClick(event) {
   const button = event.currentTarget;
 
-  copySvg = button.querySelector("#Copy_Button");
-  successSvg = button.querySelector("#Copy_Success");
+  const copySvg = button.querySelector("#Copy_Button");
+  const successSvg = button.querySelector("#Copy_Success");
 
   if (copySvg.classList.contains("hidden")) {
     return;
@@ -770,4 +770,15 @@ async function deleteTemplate(id) {
   } else {
     return true;
   }
+}
+
+function commandTemplateClick(event) {
+  const templateEl = event.currentTarget;
+  const previewEl = templateEl.querySelector(".preview-command");
+  const descrEl = templateEl.querySelector(".template-description");
+  if (previewEl.contains(event.target) || descrEl.contains(event.target))
+    return;
+
+  const descEl = templateEl.querySelector(".template-description");
+  if (descEl.innerText) descEl.classList.toggle("show");
 }

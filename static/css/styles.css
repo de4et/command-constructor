@@ -1046,7 +1046,7 @@ textarea {
 }
 
 .yes-button {
-  background-color: #f85c5c;
+  background-color: #f85c5cd6;
 }
 
 .yes-button:hover {
@@ -1054,9 +1054,29 @@ textarea {
 }
 
 .no-button {
-  background-color: #02b002bd;
+  background-color: #1f841f6e;
 }
 
 .no-button:hover {
   background-color: rgb(2, 104, 2);
+}
+
+.template-description {
+  display: none;
+}
+
+.template-description.show {
+  margin-top: 1rem;
+  display: block;
+  width: fit-content;
+}
+
+.drop-icon {
+  height: 1rem;
+  margin-left: 50%; 
+  fill: #a48d7d;
+}
+
+.command-template:hover .drop-icon {
+  fill:#5e544d;
 }
