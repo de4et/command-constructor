@@ -14,3 +14,6 @@ seed:
 gop:
 	@go run play/play.go
 	
+docker:
+	docker build -t command-constructor .
+	docker run -p 5000:5000 command-constructor

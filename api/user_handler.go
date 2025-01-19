@@ -33,7 +33,6 @@ type AuthResponseParams struct {
 }
 
 func (u *UserHandler) HandleAuthenticate(c *fiber.Ctx) error {
-	time.Sleep(time.Second * 1)
 	var params AuthParams
 	if err := c.BodyParser(&params); err != nil {
 		return ErrWrongParams()

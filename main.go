@@ -21,12 +21,9 @@ var config = fiber.Config{
 	Views:        api.GetEngine(),
 }
 
-// config
-// logger
-// design + html
 func main() {
 	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal(err)
 	}
 
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(dburi))
