@@ -293,11 +293,6 @@ small, .small {
   font-size: 0.875em;
 }
 
-mark, .mark {
-  padding: 0.1875em;
-  color: var(--bs-highlight-color);
-  background-color: var(--bs-highlight-bg);
-}
 
 sub,
 sup {

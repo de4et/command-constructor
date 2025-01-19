@@ -76,7 +76,7 @@ templ CommandTemplate(ct *types.CommandTemplate) {
 			function insertCommandData() {
 				var el = document.currentScript.closest(".command-template");
 				var previewEl = el.querySelector(".preview-command");
-				var text = el.querySelector("div[data-name='jsonCT'").textContent;
+				var text = el.querySelector("div[data-name='jsonCT']").textContent;
 				var json1Object = JSON.parse(text);
 				var deepMap = toMap(json1Object);
 				deepMap.get("templateParams").forEach((arg) => {
@@ -95,6 +95,7 @@ templ CommandTemplate(ct *types.CommandTemplate) {
 				document.addEventListener("click", (event) => {
 					if (!templateEl.contains(event.target)) {
 						descEl.classList.remove("show");
+						templateEl.classList.remove("template-expanded");
 					}
 				});
 			}

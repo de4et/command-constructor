@@ -777,11 +777,58 @@ async function deleteTemplate(id) {
 
 function commandTemplateClick(event) {
   const templateEl = event.currentTarget;
-  const previewEl = templateEl.querySelector(".preview-command");
+  const commandEl = templateEl.querySelector(".template-command");
   const descrEl = templateEl.querySelector(".template-description");
-  if (previewEl.contains(event.target) || descrEl.contains(event.target))
+  if (commandEl.contains(event.target) || descrEl.contains(event.target))
     return;
 
   const descEl = templateEl.querySelector(".template-description");
-  if (descEl.innerText) descEl.classList.toggle("show");
+  if (descEl.innerText) {
+    templateEl.classList.toggle("template-expanded");
+    descEl.classList.toggle("show");
+  }
+}
+
+function searchInput(event) {
+  const searchEl = event.target;
+  const value = searchEl.value;
+  searchCommands(value);
+}
+
+function searchCommands(text) {
+  els = document.querySelectorAll(".command-template");
+  [...els].forEach((el) => {
+    const nameEl = el.querySelector(".template-name");
+    const name = nameEl.innerText;
+    removeHighlighting(nameEl);
+
+    if (text != "") {
+      el.classList.add("hidden");
+    } else {
+      el.classList.remove("hidden");
+    }
+
+    text.split(" ").forEach((word) => {
+      if (word == " " || word == "") return;
+
+      if (name.includes(word)) {
+        el.classList.remove("hidden");
+        highlightWords(nameEl, word);
+      }
+    });
+  });
+}
+
+function highlightWords(elem, word) {
+  const regex = new RegExp(word, "gi");
+  const highlightedHTML = elem.innerHTML.replace(regex, `<mark>$&</mark>`);
+  elem.innerHTML = highlightedHTML;
+}
+
+function removeHighlighting(element) {
+  const marks = element.getElementsByTagName("mark");
+  while (marks.length > 0) {
+    const mark = marks[0];
+    mark.outerHTML = mark.innerHTML;
+  }
 }

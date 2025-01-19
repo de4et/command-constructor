@@ -876,7 +876,7 @@ textarea {
   width: 100%;
   margin-bottom: 0.2rem;
   padding: 0.3rem 1rem;
-  background-color: #ff7c3a1c;
+  background: linear-gradient(to bottom, #ff7c3a1c, transparent 50%, rgba(255, 180, 136, 0.55));;
   transition:.1s all; 
   border: 2px solid #a8a4a4;
   box-shadow:0 2px 3px 0px rgba(0,0,0,0.25);
@@ -1079,4 +1079,12 @@ textarea {
 
 .command-template:hover .drop-icon {
   fill:#5e544d;
+}
+
+.template-expanded {
+  background: #ff7c3a1c;
+}
+
+mark {
+  background-color: #ab9357;
 }
