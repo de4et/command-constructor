@@ -33,7 +33,7 @@ func SetupRoutes(app *fiber.App, store *db.Store) {
 	apiv1.Put("/command/:id", commandHandler.HandleUpdateCommand)
 
 	// App
-	app.Static("/static/", "./static")
+	app.Static("/static/", "static/")
 
 	app.Use(redirect.New(redirect.Config{
 		Rules: map[string]string{

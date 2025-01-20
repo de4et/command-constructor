@@ -42,14 +42,17 @@ func parseToken(tokenStr string) (jwt.MapClaims, error) { // lower case
 		}
 
 		secret := os.Getenv("JWT_SECRET")
+		fmt.Println("secret", secret)
 		return []byte(secret), nil
 	})
 	if err != nil {
+		fmt.Println("1", err)
 		return nil, ErrUnauthorized()
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
+		fmt.Println("2", err)
 		return nil, ErrUnauthorized()
 	}
 	return claims, nil
@@ -82,6 +85,8 @@ func AuthMiddleware(store *db.Store) func(c *fiber.Ctx) error {
 
 		claims, err := parseToken(token)
 		if err != nil {
+			fmt.Println(token)
+			fmt.Println(os.Getenv("JWT_SECRET"))
 			fmt.Println("Failed to parse JWT token:", err)
 			return c.Next()
 		}

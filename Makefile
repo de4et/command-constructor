@@ -1,8 +1,10 @@
 build: 
 	@templ generate
+	echo "111"
 	@go build -o bin/app.exe -v main.go
 
 run: build
+	echo "111"
 	@./bin/app.exe --port 5000
 
 test: 	
@@ -16,4 +18,4 @@ gop:
 	
 docker:
 	docker build -t command-constructor .
-	docker run -p 5000:5000 command-constructor
+	docker run --user root -p 5000:5000 command-constructor

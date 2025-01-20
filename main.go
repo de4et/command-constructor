@@ -13,7 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-const dburi = "mongodb://localhost:27017"
+const dburi = "mongodb://mongodb:27017"
 const dbname = "command-constructor"
 
 var config = fiber.Config{
@@ -30,6 +30,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// err = client.Ping(context.TODO(), nil)
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
 
 	listenAddr := flag.String("port", "5000", "Listen address of API")
 	flag.Parse()

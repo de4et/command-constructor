@@ -735,6 +735,7 @@ function getTextFromPreview(elem) {
       });
     }
   );
+  finalString = str.replace(/\s\s+/g, " ");
   return finalString;
 }
 

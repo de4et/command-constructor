@@ -80,29 +80,35 @@ func (u *UserHandler) HandleDeleteUser(c *fiber.Ctx) error {
 }
 
 func (u *UserHandler) HandleCreateUser(c *fiber.Ctx) error {
+	fmt.Println("trying to create user")
 	var params types.CreateUserParams
 	if err := c.BodyParser(&params); err != nil {
 		return ErrInvalidData()
 	}
+	fmt.Println("1")
 
 	if errs := params.Validate(); len(errs) != 0 {
 		return c.Status(http.StatusBadRequest).JSON(errs)
 	}
 
+	fmt.Println("2")
 	user, err := types.NewUserFromParams(params)
 	if err != nil {
 		return ErrPrivateInternal()
 	}
 
+	fmt.Println("3")
 	ok, err := u.Store.User.IsExist(c.Context(), user.Name)
 	if err != nil {
 		return ErrPrivateInternal()
 	}
 
+	fmt.Println("4")
 	if ok {
 		return ErrAlreadyExists()
 	}
 
+	fmt.Println("5")
 	insertedUser, err := u.Store.User.InsertUser(c.Context(), user)
 	if err != nil {
 		return ErrPrivateInternal()
