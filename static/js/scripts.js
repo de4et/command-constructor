@@ -690,7 +690,8 @@ function templateCopyClick(event) {
     .querySelector(".preview-command");
   text = getTextFromPreview(preview);
 
-  navigator.clipboard.writeText(text);
+  // navigator.clipboard.writeText(text);
+  revealAndCopy(text);
 
   copySvg.classList.add("hidden");
   successSvg.classList.remove("hidden");
@@ -699,6 +700,16 @@ function templateCopyClick(event) {
     copySvg.classList.remove("hidden");
     successSvg.classList.add("hidden");
   }, 1000);
+}
+
+function revealAndCopy(text) {
+  const hiddenInput = document.getElementById("copy-input");
+  hiddenInput.type = "text"; // Temporarily change to text input
+  hiddenInput.value = text;
+  hiddenInput.select(); // Select the text
+
+  document.execCommand("copy"); // Copy the selected text
+  hiddenInput.type = "hidden"; // Change back to hidden
 }
 
 function templateDeleteClick(event) {
@@ -735,7 +746,7 @@ function getTextFromPreview(elem) {
       });
     }
   );
-  finalString = str.replace(/\s\s+/g, " ");
+  finalString = finalString.replace(/\s\s+/g, " ");
   return finalString;
 }
 
