@@ -1,7 +1,7 @@
 
 services:
   app: 
-    image: command-constructor
+    image: de4et/command-constructor
     container_name: cc-backend
     ports:
       - "80:5000"
