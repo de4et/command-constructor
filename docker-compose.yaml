@@ -1,7 +1,7 @@
 
 services:
   app: 
-    image: de4et/command-constructor
+    image: command-constructor
     container_name: cc-backend
     ports:
       - "80:5000"
@@ -16,4 +16,7 @@ services:
     environment:
       MONGO_INITDB_DATABASE: command-constructor
     volumes:
-      - /data/db
+      - mongodbdata:/data/db
+
+volumes:
+  mongodbdata:

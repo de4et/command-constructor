@@ -18,7 +18,7 @@ gop:
 	
 docker:
 	docker build -t command-constructor .
-	docker run --user root -p 5000:5000 command-constructor
+	# docker run --user root -p 5000:5000 command-constructor
 
 docker-push: 
 	docker tag command-constructor:latest de4et/command-constructor:latest

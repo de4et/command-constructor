@@ -1,11 +1,20 @@
 package view
 
+import (
+	"fmt"
+	"os"
+)
+
 templ Head(title string) {
 	<title>{ title }</title>
 	<meta charset="utf-8"/>
 	<link rel="icon" type="image/x-icon" href="/static/img/favicon.ico"/>
     <link href="/static/css/bootstrap.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+	{{
+		stylesStat, _ := os.Stat("./static/css/styles.css")
+		scriptsStat, _ := os.Stat("./static/js/scripts.js")
+	}}
+	<link rel="stylesheet" type="text/css" href={ fmt.Sprintf("/static/css/styles.css?ts=%d", stylesStat.ModTime().Unix()) }>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="/static/js/scripts.js"></script>
+	<script type="text/javascript" src={ fmt.Sprintf("/static/js/scripts.js?ts=%d", scriptsStat.ModTime().Unix()) }></script>
 }
