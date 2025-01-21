@@ -3,7 +3,6 @@ package db
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/de4et/command-constructor/types"
 	"go.mongodb.org/mongo-driver/bson"
@@ -51,10 +50,6 @@ func (s *MongoUserStore) Search(part string) error {
 	var users []*types.User
 	if err := cur.All(context.Background(), &users); err != nil {
 		return err
-	}
-	fmt.Println(users)
-	if len(users) > 0 {
-		fmt.Println(users[0])
 	}
 	return nil
 }

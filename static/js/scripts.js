@@ -729,6 +729,7 @@ function getTextFromPreview(elem) {
 
   [...elem.querySelectorAll(".preview-command-commandparam")].forEach(
     (paramEl) => {
+      if (paramEl.classList.contains("param-excluded")) return;
       [...paramEl.children].forEach((parPart) => {
         switch (parPart.tagName) {
           case "SPAN":

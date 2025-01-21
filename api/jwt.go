@@ -21,6 +21,7 @@ func JWTAuth(store *db.Store) func(c *fiber.Ctx) error {
 		claims, err := parseToken(token)
 		if err != nil {
 			fmt.Println("Failed to parse JWT token:", err)
+			c.ClearCookie("apiToken")
 			return ErrUnauthorized()
 		}
 
@@ -82,9 +83,8 @@ func AuthMiddleware(store *db.Store) func(c *fiber.Ctx) error {
 
 		claims, err := parseToken(token)
 		if err != nil {
-			fmt.Println(token)
-			fmt.Println(os.Getenv("JWT_SECRET"))
 			fmt.Println("Failed to parse JWT token:", err)
+			c.ClearCookie("apiToken")
 			return c.Next()
 		}
 

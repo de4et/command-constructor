@@ -1,10 +1,8 @@
 build: 
 	@templ generate
-	echo "111"
 	@go build -o bin/app.exe -v main.go
 
 run: build
-	echo "111"
 	@./bin/app.exe --port 5000
 
 test: 	
@@ -22,6 +20,9 @@ docker:
 
 docker-push: 
 	docker push de4et/command-constructor:latest
+
+docker-pull:
+	docker pull de4et/command-constructor:latest
 
 docker-start:
 	docker compose up --detach
