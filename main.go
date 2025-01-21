@@ -13,7 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-const dburi = "mongodb://mongodb:27017"
+const dburi = "mongodb://localhost:27017"
 const dbname = "command-constructor"
 
 var config = fiber.Config{

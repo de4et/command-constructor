@@ -911,7 +911,8 @@ textarea {
   z-index: 2;
   word-wrap: break-word;
   min-width: 33%;
-  max-width: 100%;
+  max-width: 20rem;
+  white-space: nowrap;
 }
 
 .preview-param-description.hovered {
