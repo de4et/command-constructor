@@ -52,7 +52,7 @@ func main() {
 		log.Fatal(app.Listen(":80" + *listenAddr))
 	}()
 
-	log.Fatal(app.ListenTLS(":443", os.Getenv("SSL_CERT_PATH"), os.Getenv("SSL_CERT_PATH")))
+	log.Fatal(app.ListenTLS(":443", os.Getenv("SSL_CERT_PATH"), os.Getenv("SSL_KEY_PATH")))
 }
 
 // TODO: finish README
