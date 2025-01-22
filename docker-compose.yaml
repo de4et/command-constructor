@@ -9,7 +9,7 @@ services:
     depends_on:
       - mongodb
     volumes:
-      - ./certs:/certs
+      - /certs:/certs
     environment:
       - SSL_CERT_PATH=/certs/certificate.crt
       - SSL_KEY_PATH=/certs/certificate.key

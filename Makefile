@@ -32,7 +32,3 @@ docker-stop:
 
 send:
 	pscp -r ./ root@94.159.104.84:/root/
-
-
-# Сделать https проверить дб
-# подумать над description

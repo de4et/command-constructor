@@ -49,7 +49,7 @@ func main() {
 	api.SetupRoutes(app, store)
 
 	go func() {
-		log.Fatal(app.Listen(":80" + *listenAddr))
+		log.Fatal(app.Listen(":" + *listenAddr))
 	}()
 
 	log.Fatal(app.ListenTLS(":443", os.Getenv("SSL_CERT_PATH"), os.Getenv("SSL_KEY_PATH")))

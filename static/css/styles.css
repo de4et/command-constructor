@@ -912,7 +912,8 @@ textarea {
   word-wrap: break-word;
   min-width: 33%;
   max-width: 20rem;
-  white-space: pre-wrap;
+  white-space: pre-line;
+  width: max-content;
 }
 
 .preview-param-description.hovered {
