@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"log"
+	"os"
 
 	"github.com/de4et/command-constructor/api"
 	"github.com/de4et/command-constructor/db"
@@ -51,7 +52,7 @@ func main() {
 		log.Fatal(app.Listen(":80" + *listenAddr))
 	}()
 
-	log.Fatal(app.ListenTLS(":443", "/path/to/cert.pem", "/path/to/key.pem"))
+	log.Fatal(app.ListenTLS(":443", os.Getenv("SSL_CERT_PATH"), os.Getenv("SSL_CERT_PATH")))
 }
 
 // TODO: finish README
