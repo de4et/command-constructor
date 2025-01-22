@@ -22,8 +22,4 @@ services:
     environment:
       MONGO_INITDB_DATABASE: command-constructor
     volumes:
-      - mongodbdata:/var/lib/mongodb
-
-volumes:
-  mongodbdata:
-    external: true
+      - /mdb:/data/db
