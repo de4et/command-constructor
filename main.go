@@ -31,10 +31,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// err = client.Ping(context.TODO(), nil)
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
+	err = client.Ping(context.TODO(), nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	listenAddr := flag.String("port", "5000", "Listen address of API")
 	flag.Parse()
@@ -47,7 +47,11 @@ func main() {
 	}
 	api.SetupRoutes(app, store)
 
-	app.Listen(":" + *listenAddr)
+	go func() {
+		log.Fatal(app.Listen(":80" + *listenAddr))
+	}()
+
+	log.Fatal(app.ListenTLS(":443", "/path/to/cert.pem", "/path/to/key.pem"))
 }
 
 // TODO: finish README

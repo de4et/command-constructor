@@ -42,6 +42,13 @@ func SetupRoutes(app *fiber.App, store *db.Store) {
 		StatusCode: http.StatusMovedPermanently,
 	}))
 
+	app.Use(func(c *fiber.Ctx) error {
+		if c.Protocol() == "http" {
+			return c.Redirect("https://"+c.Hostname()+c.OriginalURL(), fiber.StatusMovedPermanently)
+		}
+		return c.Next()
+	})
+
 	app.Get("/main", AuthMiddleware(store), mainHandler.HandleMain)
 	app.Get("/create", AuthMiddleware(store), mainHandler.HandleCreate)
 	app.Get("/edit/:id", AuthMiddleware(store), mainHandler.HandleEdit)

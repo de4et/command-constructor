@@ -5,8 +5,14 @@ services:
     container_name: cc-backend
     ports:
       - "80:5000"
+      - "443:443"
     depends_on:
       - mongodb
+    volumes:
+      - ./certs:/certs
+    environment:
+      - SSL_CERT_PATH=/certs/certificate.crt
+      - SSL_KEY_PATH=/certs/certificate.key
 
   mongodb:
     image: mongo:8.0

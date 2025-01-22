@@ -25,3 +25,5 @@ go.work.sum
 .env
 
 view/*.go
+
+certs/*
