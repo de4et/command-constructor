@@ -10,9 +10,14 @@ services:
       - mongodb
     volumes:
       - /certs:/certs
+    secrets:
+       - db_root_password
+       - db_root_name  
     environment:
       - SSL_CERT_PATH=/certs/certificate.crt
       - SSL_KEY_PATH=/certs/certificate.key
+      - DB_USERNAME_FILE=/run/secrets/db_root_name
+      - DB_PASSWORD_FILE=/run/secrets/db_root_password
 
   mongodb:
     image: mongo:8.0
@@ -21,5 +26,16 @@ services:
       - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: command-constructor
+      MONGO_INITDB_ROOT_USERNAME_FILE: /run/secrets/db_root_name
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    secrets:
+       - db_root_password
+       - db_root_name  
     volumes:
       - /mdb:/data/db
+
+secrets:
+  db_root_name: 
+    file: /secrets/db_root_name.txt
+  db_root_password: 
+    file: /secrets/db_root_password.txt

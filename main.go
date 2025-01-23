@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/de4et/command-constructor/api"
 	"github.com/de4et/command-constructor/db"
@@ -27,7 +29,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(dburi))
+	credential := options.Credential{
+		AuthSource: "admin",
+		Username:   readFile(os.Getenv("DB_USERNAME_FILE")),
+		Password:   readFile(os.Getenv("DB_PASSWORD_FILE")),
+	}
+
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(dburi).SetAuth(credential))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -53,6 +61,16 @@ func main() {
 	}()
 
 	log.Fatal(app.ListenTLS(":443", os.Getenv("SSL_CERT_PATH"), os.Getenv("SSL_KEY_PATH")))
+}
+
+func readFile(path string) string {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		fmt.Printf("Error reading file %s: %v\n", path, err)
+		return ""
+	}
+	fmt.Println(path, string(data))
+	return strings.TrimSpace(string(data))
 }
 
 // TODO: finish README
